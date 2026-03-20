@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Прогресс курса — 0to160</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --bg2: #efecea;
+      --dark: #0f0e0b;
+      --green: #58cc02;
+      --green2: #46a302;
+      --green-pale: #e8f9d4;
+      --gold: #ffc800;
+      --gold-pale: #fff8d6;
+      --tx: #0f0e0b;
+      --tx-dim: rgba(15,14,11,.55);
+      --border: rgba(15,14,11,.1);
+      --radius: 20px;
+      --radius-sm: 12px;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(247,245,240,.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-in {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+      text-decoration: none;
+    }
+    .logo span { color: var(--green); }
+    .back-link {
+      font-weight: 600;
+      color: var(--tx-dim);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all .2s;
+    }
+    .back-link:hover { border-color: var(--green); color: var(--green); }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero-h {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--tx-dim);
+    }
+
+    .progress-circle-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 32px;
+    }
+    .progress-circle-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .progress-circle {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 14;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 1s ease;
+    }
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Unbounded', sans-serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--dark);
+    }
+    .progress-label {
+      text-align: center;
+      font-size: 16px;
+      color: var(--tx-dim);
+      margin-top: -8px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .stat-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--green2);
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--tx-dim);
+    }
+
+    .lessons-list {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .lesson-item:hover { background: var(--green-pale); }
+    .lesson-item:last-child { border-bottom: none; }
+    .lesson-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      width: 40px;
+      color: var(--tx-dim);
+    }
+    .lesson-title {
+      flex: 1;
+      font-weight: 600;
+    }
+    .lesson-status {
+      font-size: 20px;
+      margin-left: 16px;
+    }
+    .status-done { color: var(--green2); }
+    .status-partial { color: var(--gold); }
+    .status-todo { color: var(--tx-dim); opacity: 0.4; }
+
+    .cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+    .btn-continue {
+      background: var(--green);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 16px 40px;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s;
+    }
+    .btn-continue:hover {
+      background: var(--green2);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a href="index.html" class="logo">0<span>to</span>160</a>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <h1 class="hero-h">Твой прогресс</h1>
+    <p class="hero-sub">Сколько осталось до 160? Продолжай!</p>
+  </div>
+
+  <div class="progress-circle-wrap">
+    <svg class="progress-circle-bg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="none" stroke="var(--bg2)" stroke-width="14"/>
+      <circle id="progressCircle" class="progress-circle" cx="100" cy="100" r="90" stroke-dasharray="565" stroke-dashoffset="565"/>
+    </svg>
+    <div class="progress-text" id="progressPercent">0%</div>
+    <div class="progress-label">Курс пройден</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" id="lessonsDone">0</div>
+      <div class="stat-label">уроков пройдено</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="totalXP">0</div>
+      <div class="stat-label">XP собрано</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="currentStreak">0</div>
+      <div class="stat-label">текущая серия</div>
+    </div>
+  </div>
+
+  <div class="lessons-list" id="lessonsList"></div>
+
+  <div class="cta">
+    <a href="#" id="continueBtn" class="btn-continue">Продолжить обучение →</a>
+  </div>
+</div>
+
+<script>
+// Список всех уроков (можно расширять до 20)
+const allLessons = [
+  { id: 1, title: "Что такое Duolingo English Test", file: "det_lesson1.html" },
+  { id: 2, title: "Как набрать 130+ за 2 недели", file: "det_lesson2.html" },
+  { id: 3, title: "Технические требования и подготовка комнаты", file: "det_lesson3.html" },
+  { id: 4, title: "Read and Complete — заполни пропущенные буквы", file: "det_lesson4.html" },
+  { id: 5, title: "Interactive Reading — реальные слова среди фейковых", file: "det_lesson5.html" },
+  { id: 6, title: "Fill in the Blanks — заполни пропуски в предложениях", file: "det_lesson6.html" },
+  { id: 7, title: "Read Aloud — прочитай текст вслух", file: "det_lesson7.html" },
+  // Добавляй следующие уроки сюда
+  // { id: 8, title: "Write About the Photo", file: "det_lesson8.html" },
+  // ...
+  { id: 20, title: "Финальный тест и советы перед сдачей", file: "det_lesson20.html" }
+];
+
+function getLessonProgress(id) {
+  const stored = localStorage.getItem(`det_lesson${id}_score`);
+  return stored ? JSON.parse(stored).pct || 0 : 0;
+}
+
+function renderProgress() {
+  let done = 0;
+  let totalXP = 0;
+  let lastCompleted = 0;
+
+  allLessons.forEach(lesson => {
+    const pct = getLessonProgress(lesson.id);
+    if (pct === 100) {
+      done++;
+      lastCompleted = lesson.id;
+      totalXP += 150; // примерное XP за урок, можно уточнить
+    }
+  });
+
+  const totalLessons = allLessons.length;
+  const progress = totalLessons > 0 ? Math.round((done / totalLessons) * 100) : 0;
+
+  // Кольцо
+  const circle = document.getElementById('progressCircle');
+  const offset = 565 - (565 * progress / 100);
+  circle.style.strokeDashoffset = offset;
+  document.getElementById('progressPercent').textContent = progress + '%';
+
+  // Статистика
+  document.getElementById('lessonsDone').textContent = done;
+  document.getElementById('totalXP').textContent = totalXP;
+  document.getElementById('currentStreak').textContent = localStorage.getItem('det_streak')?.c || 0;
+
+  // Кнопка продолжить
+  const btn = document.getElementById('continueBtn');
+  if (lastCompleted < allLessons.length) {
+    const nextId = lastCompleted + 1;
+    const nextLesson = allLessons.find(l => l.id === nextId);
+    if (nextLesson) {
+      btn.href = nextLesson.file;
+      btn.textContent = `Продолжить → Урок ${nextId}`;
+    }
+  } else {
+    btn.textContent = "Курс завершён! 🎉";
+    btn.style.background = 'var(--gold)';
+  }
+
+  // Список уроков
+  const list = document.getElementById('lessonsList');
+  list.innerHTML = '';
+
+  allLessons.forEach(lesson => {
+    const pct = getLessonProgress(lesson.id);
+    const item = document.createElement('div');
+    item.className = 'lesson-item';
+
+    let status = 'status-todo';
+    let icon = '○';
+    if (pct === 100) {
+      status = 'status-done';
+      icon = '✓';
+    } else if (pct > 0) {
+      status = 'status-partial';
+      icon = '◐';
+    }
+
+    item.innerHTML = `
+      <div class="lesson-num">${lesson.id}</div>
+      <div class="lesson-title">${lesson.title}</div>
+      <div class="lesson-status ${status}">${icon}</div>
+    `;
+
+    if (pct === 100) {
+      item.style.background = 'var(--green-pale)';
+    }
+
+    list.appendChild(item);
+  });
+}
+
+window.addEventListener('load', renderProgress);
+</script>
+</body>
+</html>
