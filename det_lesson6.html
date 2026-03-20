@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 6: Fill in the Blanks</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Вставь полный CSS из предыдущих уроков (det_lesson1.html или det_lesson5.html) */
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Каждая ошибка — шаг к 160. Попробуй снова!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-green">Урок 6 из 20</span>
+    <span class="chip chip-gold">✍️ Comprehension · 14 мин</span>
+  </div>
+  <h1 class="hero-h">Fill in the Blanks<br><span class="hl">заполни пропуски в предложениях</span></h1>
+  <p class="hero-sub">Один из самых "дорогих" типов — сильно влияет на Comprehension и Literacy. Русскоязычные теряют здесь из-за коллокаций и фразовых глаголов.</p>
+  <div class="hero-meta">
+    <div class="meta-item">📝 <strong>~10–15 вопросов в тесте</strong></div>
+    <div class="meta-item">❓ <strong>10 вопросов практики</strong></div>
+    <div class="meta-item">💎 <strong>+200 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Бесплатно</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('strategy',this)">⚡ Стратегия</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">💡 Почему этот тип важен</div>
+    <div class="hook-h">Один из самых "тяжёлых" по баллам — до 15–20% от Comprehension</div>
+    <div class="hook-body">Здесь проверяется не только грамматика, но и знание устойчивых выражений (коллокаций). Многие набирают 70–80%, а с практикой — 130–140+.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">📝</span>Как выглядит задание</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">Тебе дают предложение с 1–2 пропусками. Под каждым — 4–6 вариантов. Выбери правильное слово (иногда 2 правильных).</p>
+    <div style="background:var(--bg2);padding:20px;border-radius:var(--radius-sm);margin:16px 0">
+      <p><strong>The new policy is expected to <span style="color:var(--red)">significantly</span> ___ the company's profits.</strong></p>
+      <p>Варианты: a) increase  b) decrease  c) affect  d) impact  e) rise</p>
+      <p style="color:var(--green2);font-weight:700">Правильно: a) increase / e) rise (оба могут подойти, но increase точнее)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">❌</span>Топ-ошибки русскоязычных</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>1. Путают коллокации</strong><br>make a decision ❌ → do a decision  
+        take a decision / make a mistake / do research
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>2. Не знают фразовые глаголы</strong><br>look forward to, put up with, run out of, come up with
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>3. Выбирают "похожее" слово</strong><br>borrow / lend, raise / rise, lie / lay
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>4. Игнорируют формальность</strong><br>kids → children (в академическом тексте правильнее children)
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('strategy',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Стратегия на 130+ →</button>
+  </div>
+</div>
+
+<!-- STRATEGY -->
+<div class="sec" id="t-strategy">
+  <div class="hook">
+    <div class="hook-label">🎯 Как набирать 130–140+</div>
+    <div class="hook-h">6 шагов, чтобы почти не ошибаться</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">⚡</span>Метод</div>
+    <ol style="font-size:14px;line-height:1.8;color:var(--tx-dim);padding-left:20px">
+      <li><strong>Прочитай предложение целиком</strong> — без контекста выбирать опасно</li>
+      <li><strong>Определи часть речи</strong>: noun / verb / adj / adv / preposition</li>
+      <li><strong>Ищи коллокацию</strong>: какое слово чаще стоит рядом (make progress, not do progress)</li>
+      <li><strong>Проверь время и форму</strong>: -ed / -ing / 3-я форма</li>
+      <li><strong>Вычёркивай явно неправильные</strong>: если два варианта похожи — бери более формальный / академический</li>
+      <li><strong>Если 2 пропуска</strong> — сначала заполни один, чтобы понять контекст второго</li>
+    </ol>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">Лайфхак для СНГ</div>
+    Запомни 10 самых частых коллокаций, где ошибаются:  
+    make a decision / take responsibility / do research / have an effect / pay attention / give advice / take part / make progress / reach a conclusion / draw a conclusion
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[2])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ (10 вопросов) -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Практика Fill in the Blanks</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд</div></div>
+  </div>
+
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Коллокация</span></div><div class="q-text">She decided to ___ the offer because it was too low.</div><div class="opts" id="q1-o">
+    <button class="opt" id="q1-A" onclick="dlA(1,'A','B','c')"><span class="ol">A</span>except</button>
+    <button class="opt" id="q1-B" onclick="dlA(1,'B','B','c')"><span class="ol">B</span>accept</button>
+    <button class="opt" id="q1-C" onclick="dlA(1,'C','B','c')"><span class="ol">C</span>expect</button>
+    <button class="opt" id="q1-D" onclick="dlA(1,'D','B','c')"><span class="ol">D</span>aspect</button>
+  </div><div class="expl" id="q1-e">✅ <strong>accept</strong> — принять предложение. except = кроме.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Фразовый</span></div><div class="q-text">The company plans to ___ its market share next year.</div><div class="opts" id="q2-o">
+    <button class="opt" id="q2-A" onclick="dlA(2,'A','B','c')"><span class="ol">A</span>rise</button>
+    <button class="opt" id="q2-B" onclick="dlA(2,'B','B','c')"><span class="ol">B</span>raise</button>
+    <button class="opt" id="q2-C" onclick="dlA(2,'C','B','c')"><span class="ol">C</span>arise</button>
+    <button class="opt" id="q2-D" onclick="dlA(2,'D','B','c')"><span class="ol">D</span>risen</button>
+  </div><div class="expl" id="q2-e">✅ <strong>raise</strong> — поднять (transitive). rise — само поднимается.</div></div>
+
+  <!-- Добавь остальные 8 вопросов. Примеры правильных ответов для _cm: -->
+  <!-- 3: The results were quite ___ → surprising (C) -->
+  <!-- 4: He is responsible ___ the project → for (A) -->
+  <!-- 5: We look forward ___ meeting you → to (B) -->
+  <!-- 6: The team needs to ___ up with new ideas → come (D) -->
+  <!-- 7: She has a great ___ for learning languages → aptitude (A) -->
+  <!-- 8: The decision will ___ a significant impact → have (C) -->
+  <!-- 9: They decided to ___ part in the competition → take (B) -->
+  <!-- 10: The research was ___ out carefully → carried (D) -->
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <!-- ... остальной score-блок как в предыдущих уроках -->
+    <div class="sc-btns">
+      <a href="det_lesson7.html" class="btn-next">Урок 7: Read Aloud →</a>
+      <button class="btn-sec" onclick="showTab('strategy',document.querySelectorAll('.tab')[1])">Повторить стратегию</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Скопируй весь JS из предыдущих уроков
+// Измени lkey: 'det_lesson6'
+// Правильные ответы:
+window._cm = {
+  1: 'B',   // accept
+  2: 'B',   // raise
+  3: 'C',   // surprising
+  4: 'A',   // for
+  5: 'B',   // to
+  6: 'D',   // come
+  7: 'A',   // aptitude
+  8: 'C',   // have
+  9: 'B',   // take
+  10: 'D'   // carried
+};
+</script>
+</body>
+</html>
