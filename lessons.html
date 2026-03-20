@@ -16,8 +16,6 @@
       --teal: #1cb0f6;
       --gold: #ffc800;
       --gold-pale: #fff8d6;
-      --red: #ff4b4b;
-      --purple: #9f6ff0;
       --tx: #0f0e0b;
       --tx-dim: rgba(15,14,11,.55);
       --border: rgba(15,14,11,.1);
@@ -104,17 +102,33 @@
       overflow: hidden;
       transition: all .25s ease;
       position: relative;
+      text-decoration: none;
+      color: inherit;
+      display: block;
     }
     .lesson-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0,0,0,.08);
       border-color: var(--green);
     }
+    .lesson-card.card-locked {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .lesson-card.card-locked::after {
+      content: "🔒 Скоро";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      font-size: 32px;
+      font-weight: 900;
+      color: rgba(136,104,0,0.15);
+      pointer-events: none;
+    }
 
     .lesson-header {
       padding: 20px 24px;
       background: linear-gradient(135deg, #f0f9ff, #e8f9d4);
-      position: relative;
     }
     .lesson-num {
       font-family: 'JetBrains Mono', monospace;
@@ -175,21 +189,6 @@
       transition: width .6s ease;
     }
 
-    .card-locked {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    .card-locked::after {
-      content: "🔒 Скоро";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-15deg);
-      font-size: 32px;
-      font-weight: 900;
-      color: rgba(136,104,0,0.15);
-      pointer-events: none;
-    }
-
     @media (max-width: 600px) {
       .lessons-grid { grid-template-columns: 1fr; }
     }
@@ -212,33 +211,75 @@
 <div class="lessons-grid" id="lessonsList"></div>
 
 <script>
-// Список уроков (можно расширять)
+// Список уроков 1–7
 const lessons = [
-  { id: 1, title: "Что такое Duolingo English Test", file: "det_lesson1.html", free: true, desc: "Формат, баллы, сравнение с IELTS/TOEFL" },
-  { id: 2, title: "Как набрать 130+ за 2 недели", file: "det_lesson2.html", free: true, desc: "План на 14 дней, приоритеты, ежедневная рутина" },
-  { id: 3, title: "Технические требования и подготовка комнаты", file: "det_lesson3.html", free: true, desc: "Чек-лист, чтобы не получить бан" },
-  { id: 4, title: "Read and Complete — заполни буквы", file: "det_lesson4.html", free: false, desc: "Самый лёгкий тип, много баллов за literacy" },
-  // Добавляй остальные по мере создания
-  // { id: 5, title: "...", file: "det_lesson5.html", free: false, desc: "..." },
+  { 
+    id: 1, 
+    title: "Что такое Duolingo English Test", 
+    file: "det_lesson1.html", 
+    free: true, 
+    desc: "Формат, баллы, сравнение с IELTS/TOEFL" 
+  },
+  { 
+    id: 2, 
+    title: "Как набрать 130+ за 2 недели", 
+    file: "det_lesson2.html", 
+    free: true, 
+    desc: "План на 14 дней, приоритеты, ежедневная рутина" 
+  },
+  { 
+    id: 3, 
+    title: "Технические требования и подготовка комнаты", 
+    file: "det_lesson3.html", 
+    free: true, 
+    desc: "Чек-лист, чтобы не получить бан" 
+  },
+  { 
+    id: 4, 
+    title: "Read and Complete — заполни пропущенные буквы", 
+    file: "det_lesson4.html", 
+    free: true, 
+    desc: "Самый лёгкий тип, много баллов за Literacy" 
+  },
+  { 
+    id: 5, 
+    title: "Interactive Reading — реальные слова среди фейковых", 
+    file: "det_lesson5.html", 
+    free: true, 
+    desc: "Быстрый тип, тренируем словарный запас" 
+  },
+  { 
+    id: 6, 
+    title: "Fill in the Blanks — заполни пропуски в предложениях", 
+    file: "det_lesson6.html", 
+    free: true, 
+    desc: "Коллокации, фразовые глаголы, грамматика" 
+  },
+  { 
+    id: 7, 
+    title: "Read Aloud — прочитай текст вслух", 
+    file: "det_lesson7.html", 
+    free: true, 
+    desc: "Произношение, интонация, беглость речи" 
+  }
 ];
 
 function renderLessons() {
   const container = document.getElementById('lessonsList');
+  if (!container) return;
+
   container.innerHTML = '';
 
   lessons.forEach(lesson => {
     const card = document.createElement('a');
     card.href = lesson.file;
     card.className = 'lesson-card';
-    card.style.textDecoration = 'none';
-    card.style.color = 'inherit';
 
-    // Проверяем прогресс из localStorage
-    const progress = localStorage.getItem(`det_lesson${lesson.id}_score`) 
-      ? JSON.parse(localStorage.getItem(`det_lesson${lesson.id}_score`)).pct || 0 
-      : 0;
+    // Прогресс из localStorage
+    const stored = localStorage.getItem(`det_lesson${lesson.id}_score`);
+    const progress = stored ? JSON.parse(stored).pct || 0 : 0;
 
-    // Если урок не первый и предыдущий не пройден хотя бы на 50% — блокируем
+    // Блокировка: предыдущий урок <50%
     const isLocked = lesson.id > 1 && 
       (!localStorage.getItem(`det_lesson${lesson.id-1}_score`) || 
        JSON.parse(localStorage.getItem(`det_lesson${lesson.id-1}_score`)).pct < 50);
@@ -263,7 +304,7 @@ function renderLessons() {
             <div class="progress-bar" style="width: ${progress}%"></div>
           </div>
         </div>
-        <span style="font-weight:600; color: ${progress === 100 ? 'var(--green2)' : 'var(--tx-dim)'}">
+        <span style="font-weight:600; color: ${progress === 100 ? 'var(--green2)' : progress > 0 ? 'var(--gold)' : 'var(--tx-dim)'}">
           ${progress}%
         </span>
       </div>
