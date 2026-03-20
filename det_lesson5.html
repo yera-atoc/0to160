@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 5: Interactive Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Вставь сюда весь CSS из предыдущих уроков (det_lesson1.html или det_lesson4.html) */
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Каждая ошибка — шаг к 160. Попробуй снова!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-green">Урок 5 из 20</span>
+    <span class="chip chip-gold">🔤 Literacy · 10 мин</span>
+  </div>
+  <h1 class="hero-h">Interactive Reading<br><span class="hl">реальные слова среди фейковых</span></h1>
+  <p class="hero-sub">Быстрый тип вопроса: тебе дают сетку 4×4 или 5×5 слов — кликай только настоящие английские слова. Один из самых простых способов поднять Literacy и Comprehension.</p>
+  <div class="hero-meta">
+    <div class="meta-item">🧩 <strong>~8–12 сеток в тесте</strong></div>
+    <div class="meta-item">❓ <strong>10 вопросов практики</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Бесплатно</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('strategy',this)">⚡ Стратегия</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">💡 Почему этот тип важен</div>
+    <div class="hook-h">Очень быстрый и почти безошибочный, если знаешь 3000–4000 слов</div>
+    <div class="hook-body">Здесь не нужно писать или говорить — просто кликай настоящие слова. Многие русскоязычные набирают 90–100%, потому что достаточно интуиции + знание частых слов.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🔤</span>Как выглядит задание</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">Тебе показывают сетку 16–25 слов (4×4 или 5×5). Некоторые — реальные английские слова, другие — выдуманные. Кликай только настоящие. Таймер ~30–40 секунд на сетку.</p>
+    <div style="background:var(--bg2);padding:20px;border-radius:var(--radius-sm);margin:16px 0;text-align:center">
+      <p style="font-weight:700;margin-bottom:12px">Пример сетки (кликабельные слова подсвечены зелёным):</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:400px;margin:0 auto">
+        <div style="padding:12px;background:var(--green-pale);border-radius:8px">apple</div>
+        <div style="padding:12px;background:#fff;border:1px solid var(--border);border-radius:8px">blorx</div>
+        <div style="padding:12px;background:var(--green-pale);border-radius:8px">beautiful</div>
+        <div style="padding:12px;background:#fff;border:1px solid var(--border);border-radius:8px">quizzle</div>
+        <!-- ... и т.д. -->
+      </div>
+      <p style="margin-top:16px;color:var(--green2)">Правильно кликнуто: apple, beautiful</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">❌</span>Топ-ошибки русскоязычных</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>1. Кликают слова, которые "похожи" на русские</strong><br>например: "familia" (фейк), "problema" (фейк)
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>2. Пропускают редкие, но реальные слова</strong><br>accommodate, phenomenon, hierarchy, threshold
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>3. Кликают слишком быстро без проверки</strong><br>фейковые слова часто выглядят правдоподобно: "excellant", "recieve"
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>4. Не знают академический словарь уровня B2–C1</strong><br>consequently, nevertheless, furthermore, whereas
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('strategy',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Стратегия на 130+ →</button>
+  </div>
+</div>
+
+<!-- STRATEGY -->
+<div class="sec" id="t-strategy">
+  <div class="hook">
+    <div class="hook-label">🎯 Как набирать почти 100%</div>
+    <div class="hook-h">4 правила, чтобы кликать только правильные слова</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">⚡</span>Стратегия</div>
+    <ol style="font-size:14px;line-height:1.8;color:var(--tx-dim);padding-left:20px">
+      <li><strong>Ищи знакомые окончания</strong>: -tion, -ment, -able, -ly, -ous, -ic, -al — почти всегда реальные</li>
+      <li><strong>Пропускай слова с русским оттенком</strong>: familia, problema, informacja, kniga — 99% фейк</li>
+      <li><strong>Кликай академические слова</strong>: consequently, moreover, nevertheless, whereas, furthermore</li>
+      <li><strong>Если сомневаешься — не кликай</strong>. Лучше пропустить 1–2 слова, чем кликнуть фейк (штраф больше)</li>
+    </ol>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">Лайфхак</div>
+    Запомни 20 фейковых "ловушек", которые часто встречаются: blorx, quizzle, familar, recieve, seperate, occured, sucess, definately, exagerate, accomodate, rythym, wierd, millenium, neccesary, embarass, occured, judgement, arguement, publically, superceed
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[2])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ (10 вопросов — каждый вопрос = 1 слово: реальное или фейк) -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Практика: реальное или фейк?</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 слов · 3 жизни · 10 секунд на слово</div></div>
+  </div>
+
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Слово</span></div><div class="q-text">accommodate</div><div class="opts" id="q1-o">
+    <button class="opt" id="q1-A" onclick="dlA(1,'A','A','w')"><span class="ol">A</span>Реальное</button>
+    <button class="opt" id="q1-B" onclick="dlA(1,'B','A','w')"><span class="ol">B</span>Фейк</button>
+  </div><div class="expl" id="q1-e">✅ <strong>Реальное</strong> — значит "размещать, приспосабливать". Часто пишут с ошибкой "accomodate" — это фейк.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Слово</span></div><div class="q-text">recieve</div><div class="opts" id="q2-o">
+    <button class="opt" id="q2-A" onclick="dlA(2,'A','B','w')"><span class="ol">A</span>Реальное</button>
+    <button class="opt" id="q2-B" onclick="dlA(2,'B','B','w')"><span class="ol">B</span>Фейк</button>
+  </div><div class="expl" id="q2-e">✅ <strong>Фейк</strong>. Правильно: receive (i перед e).</div></div>
+
+  <!-- Остальные 8 вопросов (правильные ответы в _cm ниже) -->
+  <!-- 3: phenomenon → Реальное (A) -->
+  <!-- 4: blorx → Фейк (B) -->
+  <!-- 5: consequently → Реальное (A) -->
+  <!-- 6: familly → Фейк (B) -->
+  <!-- 7: hierarchy → Реальное (A) -->
+  <!-- 8: millenium → Фейк (B) -->
+  <!-- 9: nevertheless → Реальное (A) -->
+  <!-- 10: superceed → Фейк (B) -->
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div class="sc-btns">
+      <a href="det_lesson6.html" class="btn-next">Урок 6: Fill in the Blanks →</a>
+      <button class="btn-sec" onclick="showTab('strategy',document.querySelectorAll('.tab')[1])">Повторить стратегию</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Скопируй весь JS из предыдущих уроков
+// Измени lkey: 'det_lesson5'
+// Правильные ответы:
+window._cm = {
+  1: 'A',   // accommodate — реальное
+  2: 'B',   // recieve — фейк
+  3: 'A',   // phenomenon
+  4: 'B',   // blorx
+  5: 'A',   // consequently
+  6: 'B',   // familly
+  7: 'A',   // hierarchy
+  8: 'B',   // millenium
+  9: 'A',   // nevertheless
+  10: 'B'   // superceed
+};
+// Остальной код (dlA, showTab, restartLesson и т.д.) — тот же
+</script>
+</body>
+</html>
