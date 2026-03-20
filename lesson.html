@@ -2,16 +2,278 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Уроки — 0to160</title>
-  <link rel="stylesheet" href="тут_твой_основной_css_или_скопируй_стиль_из_index">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --bg2: #efecea;
+      --dark: #0f0e0b;
+      --green: #58cc02;
+      --green2: #46a302;
+      --green-pale: #e8f9d4;
+      --teal: #1cb0f6;
+      --gold: #ffc800;
+      --gold-pale: #fff8d6;
+      --red: #ff4b4b;
+      --purple: #9f6ff0;
+      --tx: #0f0e0b;
+      --tx-dim: rgba(15,14,11,.55);
+      --border: rgba(15,14,11,.1);
+      --radius: 20px;
+      --radius-sm: 12px;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      padding: 80px 20px 40px;
+      min-height: 100vh;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(247,245,240,.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-in {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+      text-decoration: none;
+    }
+    .logo span { color: var(--green); }
+    .back-link {
+      font-weight: 600;
+      color: var(--tx-dim);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all .2s;
+    }
+    .back-link:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero-h {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--tx-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .lessons-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .lesson-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all .25s ease;
+      position: relative;
+    }
+    .lesson-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.08);
+      border-color: var(--green);
+    }
+
+    .lesson-header {
+      padding: 20px 24px;
+      background: linear-gradient(135deg, #f0f9ff, #e8f9d4);
+      position: relative;
+    }
+    .lesson-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green2);
+      margin-bottom: 4px;
+    }
+    .lesson-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .lesson-desc {
+      font-size: 14px;
+      color: var(--tx-dim);
+      line-height: 1.5;
+    }
+
+    .lesson-meta {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--tx-dim);
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .badge-free {
+      background: var(--green-pale);
+      color: var(--green2);
+    }
+    .badge-paid {
+      background: var(--gold-pale);
+      color: #8a6800;
+    }
+
+    .progress-wrap {
+      height: 6px;
+      background: var(--bg2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+      transition: width .6s ease;
+    }
+
+    .card-locked {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .card-locked::after {
+      content: "🔒 Скоро";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      font-size: 32px;
+      font-weight: 900;
+      color: rgba(136,104,0,0.15);
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .lessons-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Уроки подготовки к DET</h1>
-  <ul>
-    <li><a href="det_lesson1.html">Урок 1: Что такое Duolingo English Test</a></li>
-    <li><a href="det_lesson2.html">Урок 2: Как набрать 130+ за 2 недели</a></li>
-    <!-- Добавь остальные позже -->
-  </ul>
-  <a href="index.html">← На главную</a>
+
+<nav>
+  <div class="nav-in">
+    <a href="index.html" class="logo">0<span>to</span>160</a>
+    <a href="index.html" class="back-link">← На главную</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-h">Все уроки</h1>
+  <p class="hero-sub">20 шагов от нуля до 160. Проходи последовательно — каждый урок открывает следующий.</p>
+</div>
+
+<div class="lessons-grid" id="lessonsList"></div>
+
+<script>
+// Список уроков (можно расширять)
+const lessons = [
+  { id: 1, title: "Что такое Duolingo English Test", file: "det_lesson1.html", free: true, desc: "Формат, баллы, сравнение с IELTS/TOEFL" },
+  { id: 2, title: "Как набрать 130+ за 2 недели", file: "det_lesson2.html", free: true, desc: "План на 14 дней, приоритеты, ежедневная рутина" },
+  { id: 3, title: "Технические требования и подготовка комнаты", file: "det_lesson3.html", free: true, desc: "Чек-лист, чтобы не получить бан" },
+  { id: 4, title: "Read and Complete — заполни буквы", file: "det_lesson4.html", free: false, desc: "Самый лёгкий тип, много баллов за literacy" },
+  // Добавляй остальные по мере создания
+  // { id: 5, title: "...", file: "det_lesson5.html", free: false, desc: "..." },
+];
+
+function renderLessons() {
+  const container = document.getElementById('lessonsList');
+  container.innerHTML = '';
+
+  lessons.forEach(lesson => {
+    const card = document.createElement('a');
+    card.href = lesson.file;
+    card.className = 'lesson-card';
+    card.style.textDecoration = 'none';
+    card.style.color = 'inherit';
+
+    // Проверяем прогресс из localStorage
+    const progress = localStorage.getItem(`det_lesson${lesson.id}_score`) 
+      ? JSON.parse(localStorage.getItem(`det_lesson${lesson.id}_score`)).pct || 0 
+      : 0;
+
+    // Если урок не первый и предыдущий не пройден хотя бы на 50% — блокируем
+    const isLocked = lesson.id > 1 && 
+      (!localStorage.getItem(`det_lesson${lesson.id-1}_score`) || 
+       JSON.parse(localStorage.getItem(`det_lesson${lesson.id-1}_score`)).pct < 50);
+
+    if (isLocked) {
+      card.classList.add('card-locked');
+      card.href = '#';
+    }
+
+    card.innerHTML = `
+      <div class="lesson-header">
+        <div class="lesson-num">Урок ${lesson.id}</div>
+        <div class="lesson-title">${lesson.title}</div>
+        <div class="lesson-desc">${lesson.desc}</div>
+      </div>
+      <div class="lesson-meta">
+        <span class="badge ${lesson.free ? 'badge-free' : 'badge-paid'}">
+          ${lesson.free ? 'Бесплатно' : 'Практика'}
+        </span>
+        <div style="flex:1; margin:0 12px;">
+          <div class="progress-wrap">
+            <div class="progress-bar" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        <span style="font-weight:600; color: ${progress === 100 ? 'var(--green2)' : 'var(--tx-dim)'}">
+          ${progress}%
+        </span>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+window.addEventListener('load', renderLessons);
+</script>
 </body>
 </html>
