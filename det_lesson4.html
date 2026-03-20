@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 4: Read and Complete</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Вставь сюда весь CSS из det_lesson1.html или det_lesson2.html полностью */
+/* Чтобы не дублировать, предполагаю, что ты скопируешь <style> блок оттуда */
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Каждая ошибка — шаг ближе к 160. Попробуй снова!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-green">Урок 4 из 20</span>
+    <span class="chip chip-gold">📖 Literacy · 12 мин</span>
+  </div>
+  <h1 class="hero-h">Read and Complete<br><span class="hl">заполни пропущенные буквы</span></h1>
+  <p class="hero-sub">Самый лёгкий и один из самых важных типов. Даёт много баллов за Literacy. Русскоязычные часто теряют здесь из-за незнания суффиксов и коллокаций.</p>
+  <div class="hero-meta">
+    <div class="meta-item">🔤 <strong>~10–15 вопросов в тесте</strong></div>
+    <div class="meta-item">❓ <strong>10 вопросов практики</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Бесплатно</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('strategy',this)">⚡ Стратегия</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">💡 Почему этот тип важен</div>
+    <div class="hook-h">Один из самых простых способов поднять Literacy до 120–140</div>
+    <div class="hook-body">Здесь не нужно думать о смысле — достаточно знать английские суффиксы, приставки и частые окончания слов. Многие набирают здесь 90–100% баллов.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">📖</span>Как выглядит задание</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">Тебе дают предложение с 1–3 пропусками букв в словах. Нужно выбрать правильный вариант из 4–6 предложенных.</p>
+    <div class="example" style="background:var(--bg2);padding:16px;border-radius:var(--radius-sm);margin:16px 0">
+      <p style="font-weight:700">The company has experienced rapid <span style="color:var(--red)">gro___</span> in recent years.</p>
+      <p>Варианты: growth / grown / growing / grows</p>
+      <p style="color:var(--green2);font-weight:700">Правильно: growth</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">❌</span>Топ-ошибки русскоязычных</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>1. Не знают суффиксы</strong><br>-tion / -sion / -ment / -ance / -ence / -ity / -ness / -able / -ible
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>2. Путают похожие слова</strong><br>effect / affect, rise / raise, lie / lay, borrow / lend
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>3. Игнорируют часть речи</strong><br>Нужен noun, а выбирают verb
+      </div>
+      <div style="padding:14px;background:var(--red-pale);border-radius:var(--radius-sm)">
+        <strong>4. Не смотрят на контекст</strong><br>Слово должно логически подходить по смыслу
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('strategy',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Стратегия на 130+ →</button>
+  </div>
+</div>
+
+<!-- STRATEGY -->
+<div class="sec" id="t-strategy">
+  <div class="hook">
+    <div class="hook-label">🎯 Стратегия на максимум</div>
+    <div class="hook-h">5 шагов, чтобы почти никогда не ошибаться</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">⚡</span>Метод Teacher Luke + адаптация</div>
+    <ol style="font-size:14px;line-height:1.8;color:var(--tx-dim);padding-left:20px">
+      <li><strong>Сначала прочитай всё предложение целиком</strong> — не начинай с пропусков</li>
+      <li><strong>Определи часть речи</strong>: noun? verb? adjective? adverb?</li>
+      <li><strong>Смотри на суффикс</strong>: -tion = noun, -ly = adverb, -able = adjective и т.д.</li>
+      <li><strong>Проверь смысл</strong>: слово должно логически подходить</li>
+      <li><strong>Если два варианта похожи</strong> — выбирай более формальный / академический (чаще правильно)</li>
+    </ol>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">Лайфхак для СНГ</div>
+    Запомни топ-суффиксы:  
+    Noun: -tion, -sion, -ment, -ance, -ence, -ity, -ness, -ship  
+    Adjective: -able, -ible, -al, -ic, -ous, -ful, -less  
+    Verb: -ize, -ise, -en, -fy  
+    Adverb: -ly
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[2])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ (10 вопросов) -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Практика Read and Complete</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Суффикс</span></div><div class="q-text">The scientist made an important <span style="color:var(--red)">discover___</span> last year.</div><div class="opts" id="q1-o">
+    <button class="opt" id="q1-A" onclick="dlA(1,'A','C','s')"><span class="ol">A</span>discovery</button>
+    <button class="opt" id="q1-B" onclick="dlA(1,'B','C','s')"><span class="ol">B</span>discovering</button>
+    <button class="opt" id="q1-C" onclick="dlA(1,'C','C','s')"><span class="ol">C</span>discovery</button>
+    <button class="opt" id="q1-D" onclick="dlA(1,'D','C','s')"><span class="ol">D</span>discovered</button>
+  </div><div class="expl" id="q1-e">✅ <strong>discovery</strong> — noun после артикля "an". Суффикс -y → noun.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Смысл</span></div><div class="q-text">She needs to <span style="color:var(--red)">impr___</span> her English before the exam.</div><div class="opts" id="q2-o">
+    <button class="opt" id="q2-A" onclick="dlA(2,'A','A','s')"><span class="ol">A</span>improve</button>
+    <button class="opt" id="q2-B" onclick="dlA(2,'B','A','s')"><span class="ol">B</span>improved</button>
+    <button class="opt" id="q2-C" onclick="dlA(2,'C','A','s')"><span class="ol">C</span>improvement</button>
+    <button class="opt" id="q2-D" onclick="dlA(2,'D','A','s')"><span class="ol">D</span>improving</button>
+  </div><div class="expl" id="q2-e">✅ <strong>improve</strong> — после "to" идёт инфинитив без "to".</div></div>
+
+  <!-- Добавь ещё 8 вопросов по аналогии. Вот быстрый список для _cm (правильные буквы): -->
+  <!-- 3: The meeting was very <product___> → productive (C) -->
+  <!-- 4: He is respons___ for the project → responsible (B) -->
+  <!-- 5: The results were quite surpr___ → surprising (D) -->
+  <!-- 6: We need more inform___ about the event → information (A) -->
+  <!-- 7: This book is very inform___ → informative (C) -->
+  <!-- 8: She spoke with great conf___ → confidence (B) -->
+  <!-- 9: The decision was made after careful consider___ → consideration (D) -->
+  <!-- 10: The company plans to exp___ its business → expand (A) -->
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div class="sc-btns">
+      <a href="det_lesson5.html" class="btn-next">Урок 5: Interactive Reading →</a>
+      <button class="btn-sec" onclick="showTab('strategy',document.querySelectorAll('.tab')[1])">Повторить стратегию</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Скопируй весь JS из det_lesson1.html или det_lesson2.html
+// Измени только lkey: 'det_lesson4'
+// И добавь правильные ответы:
+window._cm = {
+  1: 'C',
+  2: 'A',
+  3: 'C',  // productive
+  4: 'B',  // responsible
+  5: 'D',  // surprising
+  6: 'A',  // information
+  7: 'C',  // informative
+  8: 'B',  // confidence
+  9: 'D',  // consideration
+  10: 'A'  // expand
+};
+// Остальной скрипт (dlA, showTab, restartLesson, playCoin и т.д.) — тот же
+</script>
+</body>
+</html>
