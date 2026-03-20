@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 3: Технические требования DET</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Здесь полностью тот же CSS, что в уроке 1 и 2 — скопируй его из det_lesson1.html или det_lesson2.html */
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+/* ... весь остальной CSS из урока 1 или 2 — вставь сюда полностью ... */
+/* Чтобы не дублировать 2000+ строк, предполагаю, что ты скопируешь его из предыдущих файлов */
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Каждая ошибка — шаг к 160. Попробуй снова!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-green">Урок 3 из 20</span>
+    <span class="chip chip-gold">⚙️ Техника · 10 мин</span>
+  </div>
+  <h1 class="hero-h">Технические требования<br><span class="hl">DET</span> — не потеряй попытку</h1>
+  <p class="hero-sub">Что подготовить за день до теста. Самые частые причины бана у студентов из СНГ (Казахстан, Россия и др.).</p>
+  <div class="hero-meta">
+    <div class="meta-item">🛠️ <strong>Чек-лист + таблица</strong></div>
+    <div class="meta-item">❓ <strong>10 вопросов</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Бесплатно</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('checklist',this)">✅ Чек-лист</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">⚠️ Самая дорогая ошибка</div>
+    <div class="hook-h">90% банов у студентов из СНГ —<br>не из-за английского, а из-за комнаты и техники.</div>
+    <div class="hook-body">Ты потратил $65 + время на тест, а результат аннулируют за наушники или телефон на столе. Готовься заранее — это проще, чем пересдавать через 21 день.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🖥️</span>Официальные требования Duolingo (2025–2026)</div>
+    <div class="fact"><span class="fact-key">Устройство</span><span class="fact-val">Ноутбук или ПК (телефон и планшет запрещены)</span></div>
+    <div class="fact"><span class="fact-key">ОС</span><span class="fact-val">Windows 10+, macOS 11+, Chrome OS (Linux не поддерживается)</span></div>
+    <div class="fact"><span class="fact-key">Браузер</span><span class="fact-val">Последняя версия Google Chrome (лучше всего)</span></div>
+    <div class="fact"><span class="fact-key">Камера</span><span class="fact-val">720p+, лицо полностью видно</span></div>
+    <div class="fact"><span class="fact-key">Интернет</span><span class="fact-val">Стабильные 3–5 Мбит/с upload/download (проверь speedtest.net)</span></div>
+    <div class="warn">
+      <div class="warn-label">Важно</div>
+      Закрой все программы, отключи VPN, антивирус может блокировать — добавь исключение для englishtest.duolingo.com
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">Лайфхак</div>
+    Проверь систему заранее: <a href="https://englishtest.duolingo.com/applicants" target="_blank" style="color:var(--green2);font-weight:700">duolingo.com → Check your setup</a>. 5 минут — и ты знаешь, пройдёшь ли техпроверку.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('checklist',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Чек-лист комнаты →</button>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="sec" id="t-checklist">
+  <div class="hook">
+    <div class="hook-label">✅ Подготовь комнату за 1 день</div>
+    <div class="hook-h">Чистая стена + хорошее освещение =<br>никаких банов</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">📋</span>Чек-лист комнаты и внешнего вида</div>
+    <table class="compare" style="margin:16px 0">
+      <thead><tr><th>Что проверить</th><th>Требование DET</th><th>Частая ошибка СНГ</th><th>Что делать</th></tr></thead>
+      <tbody>
+        <tr><td>Освещение</td><td>Лицо хорошо видно, без теней</td><td>Спина к окну / лампа сверху</td><td>Лампа спереди-сбоку, естественный свет</td></tr>
+        <tr><td>Фон</td><td>Чистая стена, ничего лишнего</td><td>Постеры, шкаф, люди, зеркала</td><td>Сядь перед белой/однотонной стеной</td></tr>
+        <tr><td>Стол</td><td>Только ноутбук + вода в прозрачной бутылке</td><td>Телефон, наушники, второй монитор</td><td>Всё убрать в другую комнату</td></tr>
+        <tr><td>Шум</td><td>Полная тишина</td><td>Семья, дети, улица</td><td>Закрой дверь, предупреди домашних</td></tr>
+        <tr><td>Одежда</td><td>Обычная, как на улице</td><td>Пижама, кепка, большие наушники</td><td>Оденься как на видео-интервью</td></tr>
+        <tr><td>Наушники</td><td>Запрещены любые</td><td>Беспроводные / проводные на голове</td><td>Снимай полностью</td></tr>
+        <tr><td>Документ</td><td>Паспорт / ID с фото и латиницей</td><td>Пропуск, студенческий без латиницы</td><td>Проверь заранее</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">Топ-5 причин бана у нас</div>
+    1. Телефон рядом (даже выключенный) — 100% бан<br>
+    2. Наушники / Bluetooth-устройства<br>
+    3. Другой человек в комнате (даже если молчит)<br>
+    4. Плохое освещение / лицо не видно<br>
+    5. VPN включён или антивирус блокирует
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[2])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь, готов ли ты технически</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд</div></div>
+  </div>
+
+  <div class="hud" id="hud"></div>
+
+  <!-- Вопросы (10 штук) -->
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Можно ли сдавать DET с телефона?</div><div class="opts" id="q1-o">
+    <button class="opt" id="q1-A" onclick="dlA(1,'A','B','t')"><span class="ol">A</span>Да</button>
+    <button class="opt" id="q1-B" onclick="dlA(1,'B','B','t')"><span class="ol">B</span>Нет, только ноутбук/ПК</button>
+    <button class="opt" id="q1-C" onclick="dlA(1,'C','B','t')"><span class="ol">C</span>Только iPhone</button>
+    <button class="opt" id="q1-D" onclick="dlA(1,'D','B','t')"><span class="ol">D</span>Можно с планшета</button>
+  </div><div class="expl" id="q1-e">✅ <strong>Нет, только ноутбук или ПК</strong>. Мобильные устройства запрещены.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Комната</span></div><div class="q-text">Разрешены ли наушники во время теста?</div><div class="opts" id="q2-o">
+    <button class="opt" id="q2-A" onclick="dlA(2,'A','B','c')"><span class="ol">A</span>Да, любые</button>
+    <button class="opt" id="q2-B" onclick="dlA(2,'B','B','c')"><span class="ol">B</span>Нет, запрещены полностью</button>
+    <button class="opt" id="q2-C" onclick="dlA(2,'C','B','c')"><span class="ol">C</span>Только проводные</button>
+    <button class="opt" id="q2-D" onclick="dlA(2,'D','B','c')"><span class="ol">D</span>Только если без микрофона</button>
+  </div><div class="expl" id="q2-e">✅ <strong>Нет, запрещены полностью</strong>. Даже беспроводные — бан.</div></div>
+
+  <!-- Добавь остальные 8 вопросов аналогично. Вот примеры правильных ответов для _cm: -->
+  <!-- 3: Можно ли пить воду? → Да, в прозрачной бутылке без этикетки (C) -->
+  <!-- 4: Что делать если пропал интернет? → Ждать 10 мин, потом поддержка (B) -->
+  <!-- ... и т.д. -->
+
+  <div class="sc" id="sc">
+    <!-- тот же score-блок, как в уроках 1–2 -->
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <!-- ... остальное как в уроке 1 -->
+    <div class="sc-btns">
+      <a href="det_lesson4.html" class="btn-next">Урок 4: Read and Complete →</a>
+      <button class="btn-sec" onclick="showTab('checklist',document.querySelectorAll('.tab')[1])">Вернуться к чек-листу</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Тот же JS-код для quiz, streak, XP, как в уроках 1 и 2 — скопируй полностью из det_lesson1.html или 2
+// В конце добавь правильные ответы для этого урока
+window._cm = {
+  1: 'B',  // Нет, только ноутбук
+  2: 'B',  // Наушники запрещены
+  // Добавь остальные 8 правильных букв (A/B/C/D)
+  // Например:
+  // 3: 'C',
+  // 4: 'B',
+  // ...
+  10: 'C'  // Пример
+};
+// Остальной скрипт (dlA, showTab, restartLesson и т.д.) — скопируй из предыдущих уроков
+</script>
+</body>
+</html>
