@@ -148,9 +148,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 .btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
 
 .tab-nav{display:flex;gap:10px;margin-top:16px}
-.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block;user-select:none}
 .nb-prev:hover{border-color:var(--gold);color:#8a6800}
-.nb-next{flex:1;background:var(--gold);color:var(--dark)!important};color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next{flex:1;background:var(--gold);color:var(--dark)!important;user-select:none};color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
 .nb-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
 
 @keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
@@ -310,7 +310,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('sending',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Как отправить результаты →</button>
+    <div onclick="showTab('sending',document.querySelectorAll('.tab')[1])" class="nb-next" role="button">Далее: Как отправить результаты →</div>
   </div>
 </div>
 
@@ -367,8 +367,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('results',document.querySelectorAll('.tab')[0])" class="nb-prev">← Результаты</button>
-    <button onclick="showTab('retake',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Если нужна пересдача →</button>
+    <div onclick="showTab('results',document.querySelectorAll('.tab')[0])" class="nb-prev" role="button">← Результаты</div>
+    <div onclick="showTab('retake',document.querySelectorAll('.tab')[2])" class="nb-next" role="button">Далее: Если нужна пересдача →</div>
   </div>
 </div>
 
@@ -440,8 +440,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('sending',document.querySelectorAll('.tab')[1])" class="nb-prev">← Отправка</button>
-    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Финальный тест →</button>
+    <div onclick="showTab('sending',document.querySelectorAll('.tab')[1])" class="nb-prev" role="button">← Отправка</div>
+    <div onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next" role="button">Финальный тест →</div>
   </div>
 </div>
 

@@ -148,9 +148,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 .btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
 
 .tab-nav{display:flex;gap:10px;margin-top:16px}
-.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block;user-select:none}
 .nb-prev:hover{border-color:var(--purple);color:var(--purple)}
-.nb-next{flex:1;background:var(--purple);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next{flex:1;background:var(--purple);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block;user-select:none}
 .nb-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
 
 @keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
@@ -231,9 +231,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 
 <div class="tabs-wrap"><div class="tabs">
   <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
-  <div class="tab" onclick="showTab('patterns',this)">🚩 Паттерны</div>
-  <div class="tab" onclick="showTab('game',this)">🎮 Игра</div>
+  <div class="tab" onclick="showTab('peel',this)">🏗️ PEEL</div>
+  <div class="tab" onclick="showTab('timing',this)">⏱️ Тайминг</div>
   <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div>
 </div></div>
 
 <div class="cnt">
@@ -281,7 +282,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Структура PEEL →</button>
+    <div onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-next" role="button">Далее →</div>
   </div>
 </div>
 
@@ -355,8 +356,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
-    <button onclick="showTab('timing',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Тайминг →</button>
+    <div onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev" role="button">← Назад</div>
+    <div onclick="showTab('timing',document.querySelectorAll('.tab')[2])" class="nb-next" role="button">Далее →</div>
   </div>
 </div>
 
@@ -425,8 +426,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-prev">← PEEL</button>
-    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Тест →</button>
+    <div onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-prev" role="button">← Назад</div>
+    <div onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next" role="button">Тест →</div>
   </div>
 </div>
 
