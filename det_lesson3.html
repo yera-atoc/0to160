@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 3: Технические требования DET</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:100px}
+
+nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.pill-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.pill-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--green);color:var(--green)}
+
+.hero{background:var(--dark);padding:40px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 30%,rgba(28,176,246,.08),transparent 60%),radial-gradient(ellipse 40% 40% at 10% 80%,rgba(88,204,2,.06),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green) 30%,var(--gold) 70%,transparent)}
+.hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
+.hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.chip-green{background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.25);color:#86e900}
+.chip-gold{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.22);color:var(--gold)}
+.chip-teal{background:rgba(28,176,246,.12);border:1px solid rgba(28,176,246,.22);color:#5bc8ff}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.hero-h .hl{color:var(--teal)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35);font-weight:500}
+.meta-item strong{color:rgba(255,255,255,.75)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.08);margin-top:24px}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0%;transition:width .8s ease}
+
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100}
+.tabs{display:flex;overflow-x:auto;max-width:780px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 18px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.tab.on{color:var(--green2);border-bottom-color:var(--green)}
+.tab:hover:not(.on){color:var(--tx-dim)}
+
+.cnt{max-width:780px;margin:0 auto;padding:28px 20px}
+.sec{display:none}.sec.on{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden}
+.hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(28,176,246,.1),transparent 70%);pointer-events:none}
+.hook-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.hook-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}
+.hook-h .hl{color:var(--teal)}
+.hook-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8}
+.hook-body strong{color:rgba(255,255,255,.85);font-weight:600}
+
+.sec-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+
+.tip{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#2a5c00}
+.tip-label{font-size:9px;font-weight:700;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.warn{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#5a4000}
+.warn-label{font-size:9px;font-weight:700;color:#8a6800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.danger{background:var(--red-pale);border:1px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#8a0000}
+.danger-label{font-size:9px;font-weight:700;color:var(--red);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.info{background:var(--teal-pale);border:1px solid rgba(28,176,246,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#0a4060}
+.info-label{font-size:9px;font-weight:700;color:#0a82b8;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:#fff;cursor:pointer;transition:all .2s;user-select:none}
+.check-item:hover{border-color:var(--green)}
+.check-item.checked{background:var(--green-pale);border-color:var(--green)}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.check-item.checked .check-box{background:var(--green);border-color:var(--green);color:#fff}
+.check-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.check-item.checked .check-title{color:var(--green2)}
+.check-desc{font-size:12px;color:var(--tx-dim);line-height:1.6}
+
+/* REQUIRE GRID */
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.req-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:18px;transition:border-color .2s}
+.req-card:hover{border-color:var(--teal)}
+.req-icon{font-size:28px;margin-bottom:10px}
+.req-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.req-ok{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#2a5c00;margin-bottom:4px;line-height:1.5}
+.req-no{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#8a0000;margin-bottom:4px;line-height:1.5}
+.req-ok::before{content:'✓';flex-shrink:0;font-weight:700}
+.req-no::before{content:'✗';flex-shrink:0;font-weight:700}
+
+/* ROOM SETUP */
+.room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.room-card{border-radius:var(--radius-sm);padding:16px;text-align:center;border:1.5px solid var(--border);background:#fff}
+.room-emoji{font-size:28px;margin-bottom:8px}
+.room-title{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.room-desc{font-size:11px;color:var(--tx-dim);line-height:1.5}
+.room-card.ok{border-color:var(--green);background:var(--green-pale)}
+.room-card.ok .room-title{color:var(--green2)}
+.room-card.bad{border-color:var(--red);background:var(--red-pale)}
+.room-card.bad .room-title{color:var(--red)}
+
+/* QUIZ */
+.hud{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px}
+.lives{display:flex;gap:4px;background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:100px;padding:6px 14px}
+.lives span{font-size:15px;transition:all .3s}
+.lives span.lost{opacity:.1;filter:grayscale(1);transform:scale(.6)}
+.timer-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--dark)}
+.xp-hud{display:flex;align-items:center;gap:5px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#5a20c0}
+
+.qc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint)}
+.q-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--teal-pale);color:#0a82b8}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:13px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}60%{transform:translateX(6px)}}
+
+.sc{background:var(--dark);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius);padding:36px 24px;text-align:center;display:none;margin-top:16px;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),var(--gold),transparent)}
+.sc.on{display:block;animation:fadeUp .4s ease}
+.sc-em{font-size:52px;display:block;margin-bottom:12px}
+.sc-score{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.sc-label{color:rgba(255,255,255,.3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.sc-bar-wrap{background:rgba(255,255,255,.08);border-radius:100px;height:6px;max-width:280px;margin:0 auto 16px;overflow:hidden}
+.sc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--gold));transition:width 1.4s ease;width:0%}
+.sc-msg{color:rgba(255,255,255,.6);font-size:15px;font-weight:600;margin-bottom:20px;line-height:1.6}
+.sc-badges{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.sc-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 15px;text-align:center}
+.sb-ic{font-size:18px;display:block;margin-bottom:4px}
+.sb-l{color:rgba(255,255,255,.3);font-size:9px;font-weight:700;display:block;letter-spacing:.1em;text-transform:uppercase}
+.sb-v{color:#fff;font-weight:700;font-size:13px}
+.sc-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto}
+.btn-next{display:block;text-align:center;background:var(--green);color:#fff;border:none;border-radius:100px;padding:16px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-next:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
+
+.tab-nav{display:flex;gap:10px;margin-top:16px}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev:hover{border-color:var(--green);color:var(--green)}
+.nb-next{flex:1;background:var(--green);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next:hover{background:var(--green2);transform:translateY(-2px)}
+
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.go{position:fixed;inset:0;background:rgba(15,14,11,.95);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)}
+.go.on{display:flex;animation:fadeUp .3s ease}
+.go-icon{font-size:64px;margin-bottom:16px}
+.go-h{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.go-s{color:rgba(255,255,255,.45);font-size:14px;margin-bottom:28px;line-height:1.75;max-width:280px}
+.go-btn{background:var(--red);color:#fff;border:none;border-radius:100px;padding:15px 36px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;margin-bottom:10px;width:100%;max-width:270px}
+.go-btn2{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:13px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;width:100%;max-width:270px}
+
+.retry{background:var(--red-pale);border:1px solid rgba(255,75,75,.2);color:#8a0000;border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.rb{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif}
+.sk{background:rgba(15,14,11,.08);color:var(--tx-dim);border:none;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif}
+
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:13px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+
+@keyframes bIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.streak-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:400;background:var(--dark);border:1px solid rgba(88,204,2,.3);border-radius:14px;padding:12px 26px;text-align:center;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.streak-banner.in{display:block;animation:bIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.sb-title{font-size:10px;font-weight:700;color:var(--green);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.sb-val{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff}
+
+.ts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.ts-i{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px}
+.ts-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ts-bw{background:rgba(255,255,255,.08);border-radius:100px;height:4px;overflow:hidden;margin-bottom:5px}
+.ts-bf{height:100%;border-radius:100px;transition:width .9s ease}
+.ts-n{font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+
+@media(max-width:500px){.opts{grid-template-columns:1fr}.req-grid{grid-template-columns:1fr}.room-grid{grid-template-columns:1fr 1fr}.cnt{padding:16px 14px}}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Ничего страшного — попробуй ещё раз!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-green">Урок 3 из 20</span>
+    <span class="chip chip-teal">💻 Техника · 8 мин</span>
+  </div>
+  <h1 class="hero-h">Технические<br><span class="hl">требования DET</span></h1>
+  <p class="hero-sub">Камера, микрофон, интернет, комната. Один технический сбой — и тест аннулируют. Подготовь всё заранее.</p>
+  <div class="hero-meta">
+    <div class="meta-item">📋 <strong>Чеклист на день теста</strong></div>
+    <div class="meta-item">❓ <strong>10 вопросов</strong></div>
+    <div class="meta-item">💎 <strong>+100 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Бесплатно</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('tech',this)">💻 Техника</div>
+  <div class="tab" onclick="showTab('room',this)">🏠 Комната</div>
+  <div class="tab" onclick="showTab('rules',this)">📋 Правила</div>
+  <div class="tab" onclick="showTab('checklist',this)">✅ Чеклист</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- TECH -->
+<div class="sec on" id="t-tech">
+  <div class="hook">
+    <div class="hook-label">💻 Главное про технику</div>
+    <div class="hook-h">Тест аннулируют если<br><span class="hl">техника подведёт</span> во время теста</div>
+    <div class="hook-body">Duolingo очень строго следит за техническими условиями. Плохая камера, фоновый шум, слабый интернет — всё это может стоить тебе результата. Проверь всё за день до теста.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">💻</span>Требования к устройству</div>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">🖥️</div>
+        <div class="req-title">Компьютер / ноутбук</div>
+        <div class="req-ok">Windows 10+ или macOS 10.14+</div>
+        <div class="req-ok">Минимум 4 ГБ оперативной памяти</div>
+        <div class="req-ok">Браузер Google Chrome (обязательно!)</div>
+        <div class="req-no">Планшеты и смартфоны — нельзя</div>
+        <div class="req-no">Firefox, Safari, Edge — не поддерживаются</div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">📷</div>
+        <div class="req-title">Камера</div>
+        <div class="req-ok">Встроенная веб-камера ноутбука</div>
+        <div class="req-ok">Внешняя USB камера 720p+</div>
+        <div class="req-ok">Лицо должно быть хорошо освещено</div>
+        <div class="req-no">Телефон как камера — нельзя</div>
+        <div class="req-no">Камера в стороне или сзади — нельзя</div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🎤</div>
+        <div class="req-title">Микрофон</div>
+        <div class="req-ok">Встроенный микрофон ноутбука</div>
+        <div class="req-ok">Наушники с микрофоном</div>
+        <div class="req-ok">USB микрофон</div>
+        <div class="req-no">Bluetooth наушники — могут глючить</div>
+        <div class="req-no">Громкоговорители вместо наушников</div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">📶</div>
+        <div class="req-title">Интернет</div>
+        <div class="req-ok">Минимум 2 Мбит/с загрузка</div>
+        <div class="req-ok">Минимум 2 Мбит/с выгрузка</div>
+        <div class="req-ok">Кабель надёжнее Wi-Fi</div>
+        <div class="req-no">Мобильный интернет — рискованно</div>
+        <div class="req-no">VPN во время теста — запрещено</div>
+      </div>
+    </div>
+    <div class="warn">
+      <div class="warn-label">⚠️ Только Chrome</div>
+      Duolingo English Test работает исключительно в браузере Google Chrome. Установи его заранее и проверь что он обновлён до последней версии.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🔧</span>Как проверить технику заранее</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">За день до теста зайди на <strong style="color:var(--dark)">englishtest.duolingo.com</strong> и пройди системную проверку. Она покажет:</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px">📷</span><span>Работает ли камера и видит ли она тебя</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px">🎤</span><span>Слышит ли микрофон твой голос</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px">📶</span><span>Достаточно ли скорости интернета</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px">🌐</span><span>Правильная ли версия Chrome</span>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">✨ Лайфхак</div>
+      Проведи тестовый прогон в условиях реального теста — та же комната, то же время суток, те же наушники. Это устранит неожиданности в день X.
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('room',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Требования к комнате →</button>
+  </div>
+</div>
+
+<!-- ROOM -->
+<div class="sec" id="t-room">
+  <div class="hook">
+    <div class="hook-label">🏠 Правила комнаты</div>
+    <div class="hook-h">Modераторы видят<br><span class="hl">всю твою комнату</span></div>
+    <div class="hook-body">Во время теста тебя снимают на камеру. Модераторы Duolingo смотрят записи и могут аннулировать результат если условия нарушены. Отнесись к этому серьёзно.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">✅</span>Идеальная комната для DET</div>
+    <div class="room-grid">
+      <div class="room-card ok">
+        <div class="room-emoji">💡</div>
+        <div class="room-title">Хорошее освещение</div>
+        <div class="room-desc">Свет спереди или сбоку — лицо должно быть чётко видно</div>
+      </div>
+      <div class="room-card ok">
+        <div class="room-emoji">🤫</div>
+        <div class="room-title">Тишина</div>
+        <div class="room-desc">Закрытая дверь, без телевизора, без детей и животных рядом</div>
+      </div>
+      <div class="room-card ok">
+        <div class="room-emoji">🧹</div>
+        <div class="room-title">Чистый стол</div>
+        <div class="room-desc">Только компьютер. Никаких бумаг, книг, телефона на виду</div>
+      </div>
+      <div class="room-card bad">
+        <div class="room-emoji">🪟</div>
+        <div class="room-title">Свет сзади</div>
+        <div class="room-desc">Окно позади тебя делает лицо тёмным — модераторы не видят тебя</div>
+      </div>
+      <div class="room-card bad">
+        <div class="room-emoji">👥</div>
+        <div class="room-title">Другие люди</div>
+        <div class="room-desc">Никто не должен входить или находиться в комнате во время теста</div>
+      </div>
+      <div class="room-card bad">
+        <div class="room-emoji">📱</div>
+        <div class="room-title">Телефон рядом</div>
+        <div class="room-desc">Телефон должен быть вне зоны видимости камеры и выключен</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🪑</span>Правильная посадка</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:20px;flex-shrink:0">✅</span>
+        <div><strong style="color:#2a5c00">Камера на уровне глаз</strong><br><span style="color:#2a5c00;opacity:.8">Если камера ниже — подложи что-то под ноутбук. Смотреть вниз — плохое впечатление.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:20px;flex-shrink:0">✅</span>
+        <div><strong style="color:#2a5c00">Лицо занимает центр кадра</strong><br><span style="color:#2a5c00;opacity:.8">Не слишком близко (видна только часть лица) и не слишком далеко (лицо маленькое).</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:20px;flex-shrink:0">❌</span>
+        <div><strong style="color:#8a0000">Не уходи из кадра</strong><br><span style="color:#8a0000;opacity:.8">Если твоё лицо исчезает с экрана — это нарушение. Оставайся перед камерой всё время.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:20px;flex-shrink:0">❌</span>
+        <div><strong style="color:#8a0000">Не смотри в сторону часто</strong><br><span style="color:#8a0000;opacity:.8">Частые взгляды в сторону выглядят как чтение подсказок. Смотри на экран.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('tech',document.querySelectorAll('.tab')[0])" class="nb-prev">← Техника</button>
+    <button onclick="showTab('rules',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Правила теста →</button>
+  </div>
+</div>
+
+<!-- RULES -->
+<div class="sec" id="t-rules">
+  <div class="hook">
+    <div class="hook-label">📋 Что можно и нельзя</div>
+    <div class="hook-h">Нарушение правил =<br><span class="hl">аннулирование теста</span></div>
+    <div class="hook-body">Duolingo очень серьёзно относится к честности. Деньги за тест не возвращают. Изучи правила заранее чтобы не потерять $65 из-за случайной ошибки.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">🚫</span>Строго запрещено</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <div><strong style="color:#8a0000">Другой человек в комнате</strong><br><span style="color:#8a0000;opacity:.8">Даже если он просто сидит и молчит — это нарушение.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <div><strong style="color:#8a0000">Открытые вкладки браузера</strong><br><span style="color:#8a0000;opacity:.8">Во время теста можно иметь открытой только одну вкладку — сам тест.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <div><strong style="color:#8a0000">VPN или прокси</strong><br><span style="color:#8a0000;opacity:.8">Любые средства изменения IP-адреса запрещены во время теста.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <div><strong style="color:#8a0000">Шпаргалки или заметки</strong><br><span style="color:#8a0000;opacity:.8">Никаких бумаг, телефона с подсказками, открытых приложений-переводчиков.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--red-pale);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <div><strong style="color:#8a0000">Уходить из кадра</strong><br><span style="color:#8a0000;opacity:.8">Лицо должно быть в кадре всё время теста. Любой выход из кадра фиксируется.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">✅</span>Что разрешено</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px;flex-shrink:0">✅</span>
+        <span style="color:#2a5c00">Пить воду — но поставь стакан заранее, не вставай</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px;flex-shrink:0">✅</span>
+        <span style="color:#2a5c00">Наушники — проводные предпочтительнее</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px;flex-shrink:0">✅</span>
+        <span style="color:#2a5c00">Говорить вслух — ты должен проговаривать ответы</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:18px;flex-shrink:0">✅</span>
+        <span style="color:#2a5c00">Делать паузы при говорении — это нормально</span>
+      </div>
+    </div>
+    <div class="danger" style="margin-top:14px">
+      <div class="danger-label">🚨 Если что-то пошло не так</div>
+      Если интернет пропал или программа зависла — не паникуй. Перезагрузи и войди снова. Тест сохраняется. Если проблема серьёзная — пиши в поддержку Duolingo сразу.
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('room',document.querySelectorAll('.tab')[1])" class="nb-prev">← Комната</button>
+    <button onclick="showTab('checklist',document.querySelectorAll('.tab')[3])" class="nb-next">Далее: Чеклист →</button>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="sec" id="t-checklist">
+  <div class="hook">
+    <div class="hook-label">✅ Твой чеклист</div>
+    <div class="hook-h">Отметь всё<br><span class="hl">за день до теста</span></div>
+    <div class="hook-body">Нажми на каждый пункт чтобы отметить его выполненным. Начинай тест только когда все галочки стоят.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">💻</span>Техника</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Google Chrome установлен и обновлён</div><div class="check-desc">Зайди в Настройки → Справка → О Google Chrome → проверь обновления</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Камера работает и показывает лицо</div><div class="check-desc">Открой Google Meet или Zoom для проверки. Лицо в центре, хорошо освещено</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Микрофон слышит голос</div><div class="check-desc">Запись голосового сообщения в WhatsApp — простой тест. Слышно ли тебя?</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Интернет стабильный (2+ Мбит/с)</div><div class="check-desc">Проверь на speedtest.net. Лучше подключись кабелем</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">VPN отключён</div><div class="check-desc">Убедись что никакие прокси или VPN не активны</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Системная проверка на сайте Duolingo пройдена</div><div class="check-desc">englishtest.duolingo.com → System Check</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🏠</span>Комната и обстановка</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Комната тихая — закрыта дверь</div><div class="check-desc">Предупреди домашних чтобы не беспокоили 1.5 часа</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Стол чистый — только компьютер</div><div class="check-desc">Убери все книги, телефон, бумаги из зоны видимости камеры</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Освещение хорошее — свет спереди</div><div class="check-desc">Лампа перед тобой, а не позади. Лицо чётко видно</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Телефон выключен или в другой комнате</div><div class="check-desc">Уведомления не должны отвлекать и телефон не виден в камеру</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🧠</span>Ты сам</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Хорошо поспал (7–8 часов)</div><div class="check-desc">Усталый мозг хуже вспоминает слова и медленнее думает</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Поел за 1–2 часа до теста</div><div class="check-desc">Не на голодный желудок и не сразу после еды</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Воды стакан рядом</div><div class="check-desc">Поставь заранее чтобы не вставать во время теста</div></div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div><div class="check-title">Зашёл на сайт за 15 минут до начала</div><div class="check-desc">Не торопись — спокойно войди в аккаунт, проверь технику ещё раз</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">✨ Финальный совет</div>
+    Сделай скриншот этого чеклиста или сохрани в заметки. За день до теста — пройди по каждому пункту. Спокойный студент с хорошей техникой набирает на 10–15 баллов больше нервного.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('rules',document.querySelectorAll('.tab')[2])" class="nb-prev">← Правила</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[4])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">В каком браузере нужно сдавать DET?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','C','t')"><span class="ol">A</span>Safari</button><button class="opt" id="q1-B" onclick="dlA(1,'B','C','t')"><span class="ol">B</span>Firefox</button><button class="opt" id="q1-C" onclick="dlA(1,'C','C','t')"><span class="ol">C</span>Google Chrome</button><button class="opt" id="q1-D" onclick="dlA(1,'D','C','t')"><span class="ol">D</span>Edge</button></div><div class="expl" id="q1-e">✅ <strong>Google Chrome</strong> — единственный поддерживаемый браузер. Safari, Firefox и Edge не работают с DET.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Можно ли сдавать DET на планшете или смартфоне?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','B','t')"><span class="ol">A</span>Да, на любом устройстве</button><button class="opt" id="q2-B" onclick="dlA(2,'B','B','t')"><span class="ol">B</span>Нет — только компьютер или ноутбук</button><button class="opt" id="q2-C" onclick="dlA(2,'C','B','t')"><span class="ol">C</span>Да, если установить Chrome</button><button class="opt" id="q2-D" onclick="dlA(2,'D','B','t')"><span class="ol">D</span>Только на iPad</button></div><div class="expl" id="q2-e">✅ <strong>Только компьютер или ноутбук</strong> — планшеты и смартфоны не поддерживаются даже с Chrome.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Правила</span></div><div class="q-text">Что произойдёт если кто-то войдёт в комнату во время теста?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','C','r')"><span class="ol">A</span>Ничего страшного</button><button class="opt" id="q3-B" onclick="dlA(3,'B','C','r')"><span class="ol">B</span>Тест поставят на паузу</button><button class="opt" id="q3-C" onclick="dlA(3,'C','C','r')"><span class="ol">C</span>Результат могут аннулировать</button><button class="opt" id="q3-D" onclick="dlA(3,'D','C','r')"><span class="ol">D</span>Потеряешь 5 баллов</button></div><div class="expl" id="q3-e">✅ <strong>Результат могут аннулировать</strong> — наличие другого человека в комнате — серьёзное нарушение правил DET.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Какая минимальная скорость интернета нужна для DET?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','B','t')"><span class="ol">A</span>0.5 Мбит/с</button><button class="opt" id="q4-B" onclick="dlA(4,'B','B','t')"><span class="ol">B</span>2 Мбит/с загрузка и выгрузка</button><button class="opt" id="q4-C" onclick="dlA(4,'C','B','t')"><span class="ol">C</span>10 Мбит/с</button><button class="opt" id="q4-D" onclick="dlA(4,'D','B','t')"><span class="ol">D</span>50 Мбит/с</button></div><div class="expl" id="q4-e">✅ <strong>2 Мбит/с загрузка и выгрузка</strong> — минимум. Но чем больше — тем лучше. Кабель надёжнее Wi-Fi.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Правила</span></div><div class="q-text">Можно ли использовать VPN во время теста?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','B','r')"><span class="ol">A</span>Да, если платный</button><button class="opt" id="q5-B" onclick="dlA(5,'B','B','r')"><span class="ol">B</span>Нет — строго запрещено</button><button class="opt" id="q5-C" onclick="dlA(5,'C','B','r')"><span class="ol">C</span>Да, если скрытый</button><button class="opt" id="q5-D" onclick="dlA(5,'D','B','r')"><span class="ol">D</span>Можно только платный VPN</button></div><div class="expl" id="q5-e">✅ <strong>Строго запрещено</strong> — VPN и прокси запрещены. Duolingo может отследить их использование и аннулировать результат.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Комната</span></div><div class="q-text">Где должен находиться источник света во время теста?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','C','r')"><span class="ol">A</span>Сзади тебя</button><button class="opt" id="q6-B" onclick="dlA(6,'B','C','r')"><span class="ol">B</span>Над головой</button><button class="opt" id="q6-C" onclick="dlA(6,'C','C','r')"><span class="ol">C</span>Спереди или сбоку</button><button class="opt" id="q6-D" onclick="dlA(6,'D','C','r')"><span class="ol">D</span>Не важно</button></div><div class="expl" id="q6-e">✅ <strong>Спереди или сбоку</strong> — свет сзади создаёт силуэт, лицо становится тёмным и модераторы не видят тебя нормально.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Правила</span></div><div class="q-text">Сколько вкладок браузера можно иметь открытыми во время теста?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','B','r')"><span class="ol">A</span>Без ограничений</button><button class="opt" id="q7-B" onclick="dlA(7,'B','B','r')"><span class="ol">B</span>Только одну — сам тест</button><button class="opt" id="q7-C" onclick="dlA(7,'C','B','r')"><span class="ol">C</span>До 3 вкладок</button><button class="opt" id="q7-D" onclick="dlA(7,'D','B','r')"><span class="ol">D</span>Словарь разрешён</button></div><div class="expl" id="q7-e">✅ <strong>Только одну — сам тест</strong> — все другие вкладки должны быть закрыты. Открытые вкладки могут быть расценены как использование подсказок.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Чеклист</span></div><div class="q-text">За сколько времени нужно зайти на сайт перед тестом?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','r')"><span class="ol">A</span>За 1 минуту</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','r')"><span class="ol">B</span>За 5 минут</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','r')"><span class="ol">C</span>За 15 минут</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','r')"><span class="ol">D</span>За 1 час</button></div><div class="expl" id="q8-e">✅ <strong>За 15 минут</strong> — чтобы спокойно войти в аккаунт, ещё раз проверить технику и не торопиться.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Комната</span></div><div class="q-text">Что нельзя держать на столе во время теста?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','D','r')"><span class="ol">A</span>Стакан воды</button><button class="opt" id="q9-B" onclick="dlA(9,'B','D','r')"><span class="ol">B</span>Наушники</button><button class="opt" id="q9-C" onclick="dlA(9,'C','D','r')"><span class="ol">C</span>Ноутбук</button><button class="opt" id="q9-D" onclick="dlA(9,'D','D','r')"><span class="ol">D</span>Телефон, бумаги, книги</button></div><div class="expl" id="q9-e">✅ <strong>Телефон, бумаги, книги</strong> — всё это должно быть убрано со стола и из зоны видимости камеры.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Где проверить системные требования перед тестом?</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','C','t')"><span class="ol">A</span>В настройках Windows</span></button><button class="opt" id="q10-B" onclick="dlA(10,'B','C','t')"><span class="ol">B</span>На YouTube</button><button class="opt" id="q10-C" onclick="dlA(10,'C','C','t')"><span class="ol">C</span>englishtest.duolingo.com → System Check</button><button class="opt" id="q10-D" onclick="dlA(10,'D','C','t')"><span class="ol">D</span>В настройках Chrome</button></div><div class="expl" id="q10-e">✅ <strong>englishtest.duolingo.com → System Check</strong> — официальная проверка системы от Duolingo. Пройди её за день до теста.</div></div>
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div id="ts" style="margin-bottom:16px"></div>
+    <div class="sc-btns">
+      <a href="det_lesson4.html" class="btn-next">Урок 4: Read and Complete →</a>
+      <button class="btn-sec" onclick="showTab('checklist',document.querySelectorAll('.tab')[3])">Повторить чеклист</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// CHECKLIST
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  if(el.classList.contains('checked')){
+    box.textContent='✓';box.style.background='var(--green)';box.style.borderColor='var(--green)';box.style.color='#fff';
+  } else {
+    box.textContent='✓';box.style.background='';box.style.borderColor='';box.style.color='transparent';
+  }
+}
+
+let _ctx=null;
+function getCtx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function playCoin(){try{const ctx=getCtx(),t=ctx.currentTime;[[1046.5,0,.09],[1318.5,.07,.07]].forEach(([f,dt,v])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+dt);g.gain.linearRampToValueAtTime(v,t+dt+.01);g.gain.exponentialRampToValueAtTime(.001,t+dt+.22);o.connect(g);g.connect(ctx.destination);o.start(t+dt);o.stop(t+dt+.25);});}catch(e){}}
+function playWrong(){try{const ctx=getCtx(),t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(100,t+.22);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3);}catch(e){}}
+function playStreak(){try{const ctx=getCtx(),t=ctx.currentTime+.04;[392,493.88,587.33].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const nt=t+i*.09;g.gain.setValueAtTime(0,nt);g.gain.linearRampToValueAtTime(.04,nt+.03);g.gain.exponentialRampToValueAtTime(.001,nt+1.8);o.start(nt);o.stop(nt+2);});}catch(e){}}
+function boom(){const c=['#58cc02','#1cb0f6','#ffc800','#9f6ff0','#ff4b4b'];for(let i=0;i<60;i++)setTimeout(()=>{const e=document.createElement('div'),s=5+Math.random()*10;e.style.cssText=`position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.5}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(e);setTimeout(()=>e.remove(),3200);},i*18);}
+
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function aXP(n){const prev=gXP(),next=prev+n;localStorage.setItem('det_xp',JSON.stringify({xp:next}));_S.sXP+=n;const hdr=document.getElementById('xp-hdr');if(hdr)hdr.textContent=next;const el=document.getElementById('hud-xp');if(el)el.textContent=next;const f=document.createElement('div');f.className='xpf';f.textContent='+'+n+' XP';f.style.cssText='top:160px;right:20px';document.body.appendChild(f);setTimeout(()=>f.remove(),1800);}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+function uStr(){const td=new Date().toDateString(),yd=new Date(Date.now()-86400000).toDateString();let d=JSON.parse(localStorage.getItem('det_streak')||'{"c":0,"l":""}');if(d.l===td)return d.c;d.c=(d.l===yd)?d.c+1:1;d.l=td;localStorage.setItem('det_streak',JSON.stringify(d));return d.c;}
+
+let _sbt;
+function showStreakBanner(cons){const b=document.getElementById('strk-banner');document.getElementById('strk-val').textContent='×'+cons;b.className='streak-banner in';playStreak();clearTimeout(_sbt);_sbt=setTimeout(()=>{b.className='streak-banner out';setTimeout(()=>b.className='streak-banner',400);},2000);}
+
+let _S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson3',over:false,_ret:false};
+function rHUD(){const h=document.getElementById('hud');if(!h)return;const hts=Array.from({length:3},(_,i)=>`<span id="h${i}"${i>=_S.lives?' class="lost"':''}>❤️</span>`).join('');h.innerHTML=`<div class="lives">${hts}</div><div class="timer-wrap"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(15,14,11,.08)" stroke-width="3"/><circle id="t-arc" cx="22" cy="22" r="18" fill="none" stroke="#58cc02" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear,stroke .3s"/></svg><div class="timer-num" id="t-n">15</div></div><div class="xp-hud">💎 <span id="hud-xp">${gXP()}</span></div>`;}
+function stTmr(q){stpTmr();_S.tLeft=15;uTUI(15);_S.timer=setInterval(()=>{_S.tLeft--;uTUI(_S.tLeft);if(_S.tLeft<=0){stpTmr();tOut(q);}},1000);}
+function stpTmr(){clearInterval(_S.timer);_S.timer=null;}
+function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElementById('t-n');if(!arc||!n)return;arc.style.strokeDashoffset=113*(1-s/15);arc.style.stroke=s<=5?'#ff4b4b':s<=8?'#ffc800':'#58cc02';n.textContent=s;n.style.color=s<=5?'#ff4b4b':'';}
+function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
+function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
+function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson3',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
+function dlA(q,ch,ck,tag){
+  if(_S.ans[q]||_S.over)return;
+  const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
+  document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);
+  const chosen=document.getElementById('q'+q+'-'+ch),corBtn=document.getElementById('q'+q+'-'+ck),isOk=ch===ck;
+  if(!_S.tStats[tag])_S.tStats[tag]={ok:0,total:0};_S.tStats[tag].total++;
+  if(isOk){chosen.classList.add('ok');_S.score++;_S.cons++;_S.tStats[tag].ok++;aXP(10+(fast?5:0));if(fast)_S.fast++;playCoin();if(_S.cons===3||_S.cons===5||_S.cons===7||_S.cons===10)showStreakBanner(_S.cons);if(_S.score===_S.total)boom();}
+  else{chosen.classList.add('no');chosen.style.animation='shake .35s ease';setTimeout(()=>chosen.style.animation='',400);corBtn.classList.add('reveal');_S.cons=0;lLife();}
+  const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');setTimeout(()=>ep.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  document.getElementById('pb').style.width=(Object.keys(_S.ans).length/_S.total*100)+'%';
+  if(!_S.over){const nq=q+1;if(nq<=_S.total&&!_S.ans[nq])setTimeout(()=>stTmr(nq),1000);}
+  chkDone();
+}
+function chkDone(){if(Object.keys(_S.ans).length===_S.total&&!_S.over)setTimeout(finSes,700);}
+function finSes(){if(_S.wrong.length>0&&!_S._ret)showRetry();else showScore();}
+function showRetry(){const n=_S.wrong.length;const bar=document.createElement('div');bar.className='retry';const w=n===1?'ошибка':n<=4?'ошибки':'ошибок';bar.innerHTML=`🔁 ${n} ${w} — повтори! <button class="rb" onclick="doRetry()">Повторить</button><button class="sk" onclick="skipR()">Пропустить</button>`;document.getElementById('sc').before(bar);}
+function doRetry(){_S._ret=true;document.querySelector('.retry')?.remove();const tr=[..._S.wrong];_S.wrong=[];tr.forEach(q=>{delete _S.ans[q];document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});const ep=document.getElementById('q'+q+'-e');if(ep)ep.classList.remove('on');});_S.lives=3;for(let i=0;i<3;i++){const h=document.getElementById('h'+i);if(h)h.classList.remove('lost');}setTimeout(()=>stTmr(tr[0]),500);}
+function skipR(){_S._ret=true;document.querySelector('.retry')?.remove();showScore();}
+function showScore(){
+  const sc=document.getElementById('sc');if(!sc)return;sc.classList.add('on');
+  const pct=Math.round(_S.score/_S.total*100);
+  const msgs=['Повтори материал 📖','Хорошее начало! 🌱','Неплохо 🎯','Хорошо! 👍','Отлично! ✨','Идеально! 🏆'];
+  const ems=['😔','🙂','😊','😄','🌟','🏆'];
+  const idx=Math.min(Math.floor(_S.score/_S.total*5),5);
+  document.getElementById('sc-em').textContent=ems[idx];
+  document.getElementById('sc-n').textContent=_S.score+'/'+_S.total;
+  document.getElementById('sc-m').textContent=msgs[idx];
+  setTimeout(()=>document.getElementById('sc-b').style.width=pct+'%',100);
+  document.getElementById('sc-str').textContent=uStr();
+  document.getElementById('sc-xp').textContent='+'+_S.sXP;
+  document.getElementById('sc-fast').textContent=_S.fast;
+  rTS();
+  localStorage.setItem(_S.lkey,JSON.stringify({score:_S.score,max:_S.total,pct,xp:_S.sXP,date:new Date().toISOString()}));
+  sc.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct===100)boom();
+}
+function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={t:'#1cb0f6',r:'#58cc02'}[t]||'#58cc02';const lbl={t:'Техника',r:'Правила'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
+
+function showTab(id,el){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));const s=document.getElementById('t-'+id);if(s)s.classList.add('on');if(el)el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+window._cm={1:'C',2:'B',3:'C',4:'B',5:'B',6:'C',7:'B',8:'C',9:'D',10:'C'};
+window.addEventListener('load',()=>{
+  document.getElementById('str-n').textContent=gStr();
+  document.getElementById('xp-hdr').textContent=gXP();
+  rHUD();setTimeout(()=>stTmr(1),1200);
+});
+</script>
+</body>
+</html>
