@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 4: Read and Complete</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --accent:#58cc02;--accent-pale:#e8f9d4;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Manrope",sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:80px}
+nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Unbounded",sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.pill{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700}
+.pill-s{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);color:#8a6800}
+.pill-x{background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);color:#5a20c0}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--green);color:var(--green)}
+
+.hero{background:var(--dark);padding:40px 20px 0;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 20% 30%,rgba(88,204,2,.08),transparent 60%);pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#58cc02 30%,var(--gold) 70%,transparent)}
+.hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
+.hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.chip-acc{background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.25);color:#86e900}
+.chip-lock{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.25);color:var(--gold)}
+.hero-h{font-family:"Unbounded",sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.hero-h .hl{color:#58cc02}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.mi{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
+.mi strong{color:rgba(255,255,255,.75)}
+
+.cnt{max-width:780px;margin:0 auto;padding:28px 20px}
+
+.preview-hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.preview-hook::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(88,204,2,.12),transparent 70%);pointer-events:none}
+.ph-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#58cc02;margin-bottom:14px}
+.ph-h{font-family:"Unbounded",sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:12px}
+.ph-h .hl{color:#58cc02}
+.ph-body{font-size:14px;color:rgba(255,255,255,.45);line-height:1.8}
+.ph-body strong{color:rgba(255,255,255,.8)}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.card-title{font-family:"Unbounded",sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.ci{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-pale)}
+
+.items{display:flex;flex-direction:column;gap:10px}
+.item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .2s}
+.item:hover{background:#fff;border-color:#58cc02}
+.item-icon{font-size:20px;flex-shrink:0}
+.item-text{font-size:13px;color:var(--tx-dim);line-height:1.6}
+.item-text strong{color:var(--dark)}
+
+.blur-wrap{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+.blur-inner{filter:blur(7px);pointer-events:none;user-select:none;opacity:.5}
+.blur-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10}
+.blur-badge{background:rgba(15,14,11,.88);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 28px;text-align:center;backdrop-filter:blur(8px)}
+.bb-icon{font-size:28px;margin-bottom:8px}
+.bb-h{font-family:"Unbounded",sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.bb-s{font-size:12px;color:rgba(255,255,255,.4)}
+
+.fake-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px}
+.fake-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.fake-item{background:var(--bg2);border-radius:var(--radius-sm);padding:14px}
+.fi-tag{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:700;color:#58cc02;margin-bottom:5px}
+.fi-ex{font-size:12px;color:var(--tx-faint)}
+
+.paywall{background:var(--dark);border-radius:var(--radius);padding:40px 28px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(88,204,2,.2)}
+.paywall::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(88,204,2,.1),transparent 60%);pointer-events:none}
+.paywall::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#58cc02,var(--gold),transparent)}
+.pw-lock{font-size:44px;margin-bottom:18px}
+.pw-h{font-family:"Unbounded",sans-serif;font-size:clamp(20px,4vw,30px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;position:relative;z-index:1}
+.pw-h span{color:var(--gold)}
+.pw-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:400px;margin:0 auto 24px;position:relative;z-index:1}
+.pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:460px;margin:0 auto 24px;text-align:left;position:relative;z-index:1}
+.pw-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.pw-feat::before{content:"✓";color:#58cc02;font-weight:700;flex-shrink:0}
+.pw-price{margin-bottom:20px;position:relative;z-index:1}
+.pw-num{font-family:"Unbounded",sans-serif;font-size:44px;font-weight:900;color:#fff;line-height:1}
+.pw-num sup{font-size:20px;color:rgba(255,255,255,.4);font-weight:600}
+.pw-per{font-size:12px;color:rgba(255,255,255,.25);margin-top:5px}
+.pw-btn{display:block;background:#58cc02;color:#fff;font-size:16px;font-weight:700;padding:17px 40px;border-radius:100px;text-decoration:none;transition:all .2s;font-family:"Manrope",sans-serif;box-shadow:0 4px 24px rgba(88,204,2,.35);max-width:340px;margin:0 auto 12px;position:relative;z-index:1}
+.pw-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(88,204,2,.45);filter:brightness(1.1)}
+.pw-kaspi{font-size:12px;color:rgba(255,255,255,.25);position:relative;z-index:1}
+.pw-guar{font-size:11px;color:rgba(255,255,255,.18);margin-top:14px;position:relative;z-index:1}
+.back-btn{display:block;text-align:center;background:#fff;color:var(--tx-dim);border:1.5px solid var(--border);border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:"Manrope",sans-serif;text-decoration:none;transition:all .2s;margin-top:12px}
+.back-btn:hover{border-color:var(--green);color:var(--green)}
+@media(max-width:500px){.fake-row{grid-template-columns:1fr}.pw-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill pill-s">🔥 <span id="str-n">0</span></div>
+    <div class="pill pill-x">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-acc">Урок 4 из 20</span>
+    <span class="chip chip-lock">🔒 Платный урок</span>
+  </div>
+  <h1 class="hero-h">Read and <span class="hl">Complete</span></h1>
+  <p class="hero-sub">Заполни пропущенные буквы в словах. Суффиксы, контекст, паттерны — всё что нужно для максимального балла.</p>
+  <div class="hero-meta">
+    <div class="mi">📚 <strong>Полный урок</strong></div>
+    <div class="mi">✏️ <strong>Практика</strong></div>
+    <div class="mi">💎 <strong>+150 XP</strong></div>
+    <div class="mi">🔒 <strong>4 900 ₸</strong></div>
+  </div>
+</div></div>
+
+<div class="cnt">
+
+<div class="preview-hook">
+  <div class="ph-label">👁️ Превью урока</div>
+  <div class="ph-h">Узнаешь как угадывать слова<br>с точностью <span class="hl">85%+</span></div>
+  <div class="ph-body">Большинство студентов просто угадывают буквы. После этого урока ты будешь знать <strong>систему</strong> — суффиксы, контекст, паттерны которые встречаются в каждом тексте DET.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="ci">📋</span>Что внутри урока</div>
+  <div class="items">
+    <div class="item"><div class="item-icon">🎯</div><div class="item-text"><strong>3-шаговая стратегия</strong> — как читать текст, на что смотреть первым</div></div>
+    <div class="item"><div class="item-icon">🔑</div><div class="item-text"><strong>12 суффиксов DET</strong> — выучи и угадывай часть речи автоматически</div></div>
+    <div class="item"><div class="item-icon">🔍</div><div class="item-text"><strong>5 ключевых префиксов</strong> — подсказки значения незнакомых слов</div></div>
+    <div class="item"><div class="item-icon">✏️</div><div class="item-text"><strong>3 интерактивных текста</strong> — наука, бизнес, экология — как в реальном тесте</div></div>
+    <div class="item"><div class="item-icon">⚡</div><div class="item-text"><strong>10 вопросов теста</strong> — с таймером, жизнями и объяснениями</div></div>
+  </div>
+</div>
+
+<div class="blur-wrap">
+  <div class="blur-inner">
+    <div class="fake-card">
+      <div class="card-title"><span class="ci">🔑</span>Ключевые материалы</div>
+      <div class="fake-row">
+        <div class="fake-item"><div class="fi-tag">-tion / -sion</div><div class="fi-ex">education, decision</div></div>
+        <div class="fake-item"><div class="fi-tag">-ment</div><div class="fi-ex">development, government</div></div>
+        <div class="fake-item"><div class="fi-tag">-ness</div><div class="fi-ex">happiness, darkness</div></div>
+        <div class="fake-item"><div class="fi-tag">-ity</div><div class="fi-ex">community, capacity</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="blur-over">
+    <div class="blur-badge">
+      <div class="bb-icon">🔒</div>
+      <div class="bb-h">Материал закрыт</div>
+      <div class="bb-s">Купи доступ чтобы продолжить</div>
+    </div>
+  </div>
+</div>
+
+<div class="paywall">
+  <div class="pw-lock">🔓</div>
+  <h2 class="pw-h">Открой <span>все 17 уроков</span><br>одним платежом</h2>
+  <p class="pw-sub">Уроки 4–20 + 500+ вопросов практики + симуляция реального теста. Единоразово — навсегда.</p>
+  <div class="pw-grid">
+    <div class="pw-feat">Уроки 4–20 полностью</div>
+    <div class="pw-feat">500+ практических вопросов</div>
+    <div class="pw-feat">Все 9 типов вопросов DET</div>
+    <div class="pw-feat">Симуляция реального теста</div>
+    <div class="pw-feat">Примеры ответов на 160</div>
+    <div class="pw-feat">Доступ навсегда + обновления</div>
+  </div>
+  <div class="pw-price">
+    <div class="pw-num">4 900 <sup>₸</sup></div>
+    <div class="pw-per">единоразово · доступ навсегда</div>
+  </div>
+  <a href="https://wa.me/+77772327571?text=Хочу+купить+0to160+доступ+к+урокам" class="pw-btn">Купить доступ →</a>
+  <div class="pw-kaspi">💳 Оплата через Kaspi · WhatsApp подтверждение</div>
+  <div class="pw-guar">✓ Возврат денег в течение 24 часов если не понравится</div>
+</div>
+
+<a href="lessons.html" class="back-btn">← Вернуться к урокам</a>
+</div>
+
+<script>
+function gXP(){return(JSON.parse(localStorage.getItem("det_xp")||'{"xp":0}')).xp||0;}
+function gStr(){return(JSON.parse(localStorage.getItem("det_streak")||'{"c":0}')).c||0;}
+window.addEventListener("load",()=>{
+  document.getElementById("str-n").textContent=gStr();
+  document.getElementById("xp-hdr").textContent=gXP();
+});
+</script>
+</body>
+</html>
