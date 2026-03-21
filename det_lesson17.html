@@ -691,7 +691,7 @@ function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;
 if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
 function spk(w){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(w));u.lang='en-GB';u.rate=0.8;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
 
-window._cm={1:'C',2:'D',3:'C',4:'B',5:'D',6:'C',7:'B',8:'C',9:'C',10:'D'};
+window._cm={1:'C',2:'C',3:'C',4:'C',5:'C',6:'C',7:'B',8:'B',9:'C',10:'C'};
 window.addEventListener('load',()=>{
   document.getElementById('str-n').textContent=gStr();
   document.getElementById('xp-hdr').textContent=gXP();
