@@ -9,248 +9,651 @@
 :root{
   --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
   --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
   --gold:#ffc800;--gold-pale:#fff8d6;
   --red:#ff4b4b;--red-pale:#ffe0e0;
   --purple:#9f6ff0;--purple-pale:#f0e8ff;
-  --accent:#1cb0f6;--accent-pale:#e0f4ff;--accent-hex:28,176,246;
   --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
-  --border:rgba(15,14,11,.1);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
   --radius:20px;--radius-sm:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:80px}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:100px;visibility:hidden}
+
 nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
 .nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
 .logo span{color:var(--green)}
 .nav-right{display:flex;align-items:center;gap:10px}
-.pill{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700}
-.pill-s{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);color:#8a6800}
-.pill-x{background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);color:#5a20c0}
+.pill-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.pill-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
 .back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
-.back-link:hover{border-color:var(--green);color:var(--green)}
+.back-link:hover{border-color:var(--purple);color:var(--purple)}
 
-.hero{background:var(--dark);padding:40px 20px 0;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(28,176,246,.08),transparent 60%),radial-gradient(ellipse 40% 40% at 10% 80%,rgba(88,204,2,.05),transparent 60%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent) 30%,var(--gold) 70%,transparent)}
+.hero{background:var(--dark);padding:40px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(159,111,240,.08),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple) 30%,var(--gold) 70%,transparent)}
 .hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
 .hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
 .chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
-.chip-acc{background:rgba(28,176,246,.15);border:1px solid rgba(28,176,246,.25);color:#5bc8ff}
-.chip-lock{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.25);color:var(--gold)}
+.chip-purple{background:rgba(159,111,240,.15);border:1px solid rgba(159,111,240,.25);color:#c89fff}
+.chip-gold{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.22);color:var(--gold)}
 .hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
-.hero-h .hl{color:var(--accent)}
+.hero-h .hl{color:var(--purple)}
 .hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
 .hero-meta{display:flex;gap:20px;flex-wrap:wrap}
-.mi{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
-.mi strong{color:rgba(255,255,255,.75)}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
+.meta-item strong{color:rgba(255,255,255,.75)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.08);margin-top:24px}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));width:0%;transition:width .8s ease}
+
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100}
+.tabs{display:flex;overflow-x:auto;max-width:780px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 18px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.tab.on{color:var(--purple);border-bottom-color:var(--purple)}
+.tab:hover:not(.on){color:var(--tx-dim)}
 
 .cnt{max-width:780px;margin:0 auto;padding:28px 20px}
-
-.preview-hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
-.preview-hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(28,176,246,.12),transparent 70%);pointer-events:none}
-.ph-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
-.ph-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:12px}
-.ph-h .hl{color:var(--accent)}
-.ph-body{font-size:14px;color:rgba(255,255,255,.45);line-height:1.8}
-.ph-body strong{color:rgba(255,255,255,.8)}
+.sec{display:none}.sec.on{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
 
 .card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
-.card-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.ci{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-pale)}
+.hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden}
+.hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(159,111,240,.12),transparent 70%);pointer-events:none}
+.hook-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.hook-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}
+.hook-h .hl{color:var(--purple)}
+.hook-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8}
+.hook-body strong{color:rgba(255,255,255,.85)}
 
-.items{display:flex;flex-direction:column;gap:10px}
-.item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .2s}
-.item:hover{background:#fff;border-color:var(--accent)}
-.item-icon{font-size:20px;flex-shrink:0}
-.item-text{font-size:13px;color:var(--tx-dim);line-height:1.6}
-.item-text strong{color:var(--dark)}
+.sec-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 
-/* AUDIO DEMO */
-.audio-demo{background:var(--dark);border-radius:var(--radius-sm);padding:20px;margin-bottom:14px;border:1px solid rgba(255,255,255,.07)}
-.ad-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.ad-text{font-size:15px;color:#fff;line-height:1.9;margin-bottom:14px;font-weight:500}
-.ad-text .stress{color:var(--accent);text-decoration:underline;text-decoration-style:dotted}
-.ad-text .pause{color:rgba(255,255,255,.25);font-size:12px;margin:0 4px;font-family:'JetBrains Mono',monospace}
-.ad-controls{display:flex;gap:10px;flex-wrap:wrap}
-.ad-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;border:none;transition:all .2s}
-.ad-play{background:var(--accent);color:#fff}
-.ad-play:hover{filter:brightness(1.1)}
-.ad-slow{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1)}
-.ad-slow:hover{background:rgba(255,255,255,.14)}
+.tip{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#2a5c00}
+.tip-label{font-size:9px;font-weight:700;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.warn{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#5a4000}
+.warn-label{font-size:9px;font-weight:700;color:#8a6800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
 
-.blur-wrap{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
-.blur-inner{filter:blur(7px);pointer-events:none;user-select:none;opacity:.5}
-.blur-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10}
-.blur-badge{background:rgba(15,14,11,.88);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 28px;text-align:center;backdrop-filter:blur(8px)}
-.bb-icon{font-size:28px;margin-bottom:8px}
-.bb-h{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
-.bb-s{font-size:12px;color:rgba(255,255,255,.4)}
+/* WORD GAME */
+.word-game{margin:14px 0}
+.wg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wg-title{font-size:12px;font-weight:700;color:var(--tx-dim);letter-spacing:.06em;text-transform:uppercase}
+.wg-score{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--purple)}
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.word-btn{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px 12px;font-size:15px;font-weight:700;font-family:'Manrope',sans-serif;color:var(--dark);cursor:pointer;text-align:center;transition:all .18s;position:relative}
+.word-btn:hover:not(.revealed){border-color:var(--purple);background:var(--purple-pale);transform:translateY(-2px)}
+.word-btn.real{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.word-btn.fake{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important;text-decoration:line-through}
+.word-btn .badge{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;font-size:10px;display:none;align-items:center;justify-content:center;font-weight:700}
+.word-btn.real .badge{display:flex;background:var(--green);color:#fff}
+.word-btn.fake .badge{display:flex;background:var(--red);color:#fff}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}60%{transform:translateX(5px)}}
+.round-result{margin-top:10px;padding:12px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;display:none}
+.round-result.show{display:block}
 
-.fake-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px}
-.sound-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-.sg-card{background:var(--bg2);border-radius:var(--radius-sm);padding:14px;text-align:center}
-.sg-ipa{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--accent);margin-bottom:4px}
-.sg-ru{font-size:11px;color:var(--tx-faint)}
-.sg-ex{font-size:11px;color:var(--tx-dim);margin-top:4px}
+/* PATTERN GRID */
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.pattern-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:18px}
+.pat-head{font-size:11px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.pat-real{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pat-fake{display:flex;flex-wrap:wrap;gap:6px}
+.wr{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.wr.r{background:var(--green-pale);color:var(--green2)}
+.wr.f{background:var(--red-pale);color:var(--red);text-decoration:line-through;opacity:.8}
 
-.paywall{background:var(--dark);border-radius:var(--radius);padding:40px 28px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(28,176,246,.2)}
-.paywall::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(28,176,246,.1),transparent 60%);pointer-events:none}
-.paywall::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--gold),transparent)}
-.pw-lock{font-size:44px;margin-bottom:18px}
-.pw-h{font-family:'Unbounded',sans-serif;font-size:clamp(20px,4vw,30px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;position:relative;z-index:1}
-.pw-h span{color:var(--gold)}
-.pw-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:400px;margin:0 auto 24px;position:relative;z-index:1}
-.pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:460px;margin:0 auto 24px;text-align:left;position:relative;z-index:1}
-.pw-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
-.pw-feat::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
-.pw-price{margin-bottom:20px;position:relative;z-index:1}
-.pw-num{font-family:'Unbounded',sans-serif;font-size:44px;font-weight:900;color:#fff;line-height:1}
-.pw-num sup{font-size:20px;color:rgba(255,255,255,.4);font-weight:600}
-.pw-per{font-size:12px;color:rgba(255,255,255,.25);margin-top:5px}
-.pw-btn{display:block;background:var(--accent);color:#fff;font-size:16px;font-weight:700;padding:17px 40px;border-radius:100px;text-decoration:none;transition:all .2s;font-family:'Manrope',sans-serif;box-shadow:0 4px 24px rgba(28,176,246,.35);max-width:340px;margin:0 auto 12px;position:relative;z-index:1}
-.pw-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(28,176,246,.45);filter:brightness(1.1)}
-.pw-kaspi{font-size:12px;color:rgba(255,255,255,.25);position:relative;z-index:1}
-.pw-guar{font-size:11px;color:rgba(255,255,255,.18);margin-top:14px;position:relative;z-index:1}
-.back-btn{display:block;text-align:center;background:#fff;color:var(--tx-dim);border:1.5px solid var(--border);border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;text-decoration:none;transition:all .2s;margin-top:12px}
-.back-btn:hover{border-color:var(--green);color:var(--green)}
-@media(max-width:500px){.sound-grid{grid-template-columns:1fr 1fr}.pw-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
+/* QUIZ */
+.hud{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px}
+.lives{display:flex;gap:4px;background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:100px;padding:6px 14px}
+.lives span{font-size:15px;transition:all .3s}
+.lives span.lost{opacity:.1;filter:grayscale(1);transform:scale(.6)}
+.timer-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--dark)}
+.xp-hud{display:flex;align-items:center;gap:5px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#5a20c0}
+.qc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint)}
+.q-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--purple-pale);color:var(--purple)}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:13px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+
+.sc{background:var(--dark);border:1px solid rgba(159,111,240,.2);border-radius:var(--radius);padding:36px 24px;text-align:center;display:none;margin-top:16px;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--gold),transparent)}
+.sc.on{display:block;animation:fadeUp .4s ease}
+.sc-em{font-size:52px;display:block;margin-bottom:12px}
+.sc-score{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.sc-label{color:rgba(255,255,255,.3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.sc-bar-wrap{background:rgba(255,255,255,.08);border-radius:100px;height:6px;max-width:280px;margin:0 auto 16px;overflow:hidden}
+.sc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width 1.4s ease;width:0%}
+.sc-msg{color:rgba(255,255,255,.6);font-size:15px;font-weight:600;margin-bottom:20px;line-height:1.6}
+.sc-badges{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.sc-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 15px;text-align:center}
+.sb-ic{font-size:18px;display:block;margin-bottom:4px}
+.sb-l{color:rgba(255,255,255,.3);font-size:9px;font-weight:700;display:block;letter-spacing:.1em;text-transform:uppercase}
+.sb-v{color:#fff;font-weight:700;font-size:13px}
+.sc-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto}
+.btn-next{display:block;text-align:center;background:var(--green);color:#fff;border:none;border-radius:100px;padding:16px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-next:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
+
+.tab-nav{display:flex;gap:10px;margin-top:16px}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev:hover{border-color:var(--purple);color:var(--purple)}
+.nb-next{flex:1;background:var(--purple);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.go{position:fixed;inset:0;background:rgba(15,14,11,.95);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)}
+.go.on{display:flex;animation:fadeUp .3s ease}
+.go-icon{font-size:64px;margin-bottom:16px}
+.go-h{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.go-s{color:rgba(255,255,255,.45);font-size:14px;margin-bottom:28px;line-height:1.75;max-width:280px}
+.go-btn{background:var(--red);color:#fff;border:none;border-radius:100px;padding:15px 36px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;margin-bottom:10px;width:100%;max-width:270px}
+.go-btn2{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:13px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;width:100%;max-width:270px}
+.retry{background:var(--red-pale);border:1px solid rgba(255,75,75,.2);color:#8a0000;border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.rb{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif}
+.sk{background:rgba(15,14,11,.08);color:var(--tx-dim);border:none;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif}
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:13px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+@keyframes bIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.streak-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:400;background:var(--dark);border:1px solid rgba(159,111,240,.3);border-radius:14px;padding:12px 26px;text-align:center;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.streak-banner.in{display:block;animation:bIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.sb-title{font-size:10px;font-weight:700;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.sb-val{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff}
+.ts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.ts-i{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px}
+.ts-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ts-bw{background:rgba(255,255,255,.08);border-radius:100px;height:4px;overflow:hidden;margin-bottom:5px}
+.ts-bf{height:100%;border-radius:100px;transition:width .9s ease}
+.ts-n{font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+@media(max-width:500px){.opts{grid-template-columns:1fr}.word-grid{grid-template-columns:1fr 1fr}.pattern-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
 </style>
 </head>
 <body>
 
+<!-- GATE -->
+<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(159,111,240,.07),transparent 60%);pointer-events:none"></div>
+  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+  <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
+  <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
+  <a href="activate.html" style="display:block;background:#9f6ff0;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;position:relative;z-index:1">Ввести код активации →</a>
+  <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:13px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
+</div>
+
 <nav><div class="nav-in">
   <a href="index.html" class="logo">0<span>to</span>160</a>
   <div class="nav-right">
-    <div class="pill pill-s">🔥 <span id="str-n">0</span></div>
-    <div class="pill pill-x">💎 <span id="xp-hdr">0</span></div>
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
     <a href="lessons.html" class="back-link">← Уроки</a>
   </div>
 </div></nav>
 
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Попробуй ещё раз!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Ещё раз</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
 <div class="hero"><div class="hero-in">
   <div class="hero-chips">
-    <span class="chip chip-acc">Урок 7 из 20</span>
-    <span class="chip chip-lock">🔒 Платный урок</span>
+    <span class="chip chip-orange">Урок 7 из 20</span>
+    <span class="chip chip-gold">🎤 Произношение · 16 мин</span>
   </div>
-  <h1 class="hero-h">Read <span class="hl">Aloud</span></h1>
-  <p class="hero-sub">Прочитай текст вслух убедительно. Произношение, паузы, интонация — именно это слышит AI. Узнай что именно он оценивает.</p>
+  <h1 class="hero-h">Interactive<br><span class="hl">Reading</span></h1>
+  <p class="hero-sub">Настоящее слово или выдуманное? Узнай паттерны которые Duolingo использует для фейков и повысь точность с 60% до 85%+.</p>
   <div class="hero-meta">
-    <div class="mi">🎤 <strong>Произношение</strong></div>
-    <div class="mi">⏸️ <strong>Паузы и ритм</strong></div>
-    <div class="mi">💎 <strong>+150 XP</strong></div>
-    <div class="mi">🔒 <strong>4 900 ₸</strong></div>
+    <div class="meta-item">🧠 <strong>4 раздела</strong></div>
+    <div class="meta-item">🎮 <strong>Игра с 3 раундами</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
   </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('patterns',this)">🚩 Паттерны</div>
+  <div class="tab" onclick="showTab('game',this)">🎮 Игра</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
 </div></div>
 
 <div class="cnt">
 
-  <div class="preview-hook">
-    <div class="ph-label">🎤 Превью урока</div>
-    <div class="ph-h">AI слышит не только слова.<br>Он слышит <span class="hl">как ты дышишь.</span></div>
-    <div class="ph-body">Read Aloud — единственный тип где оценивается <strong>произношение, ритм и беглость</strong> одновременно. Большинство студентов читают как роботы. После этого урока — будешь звучать естественно.</div>
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">🎤 Что такое Read Aloud</div>
+    <div class="hook-h">AI слышит не только слова.<br><span class="hl">Он слышит как ты дышишь.</span></div>
+    <div class="hook-body">Read Aloud — единственный тип где оценивается произношение, ритм и беглость одновременно. Большинство студентов читают как роботы. После этого урока — будешь звучать естественно.</div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="ci">📋</span>Что внутри урока</div>
-    <div class="items">
-      <div class="item"><div class="item-icon">🎯</div><div class="item-text"><strong>Что оценивает AI</strong> — произношение, беглость, интонация, паузы. Знаешь что ищет система → знаешь как получить максимум</div></div>
-      <div class="item"><div class="item-icon">🔊</div><div class="item-text"><strong>10 звуков которые выдают акцент</strong> — [θ], [ð], [æ], [ŋ] и другие проблемные для русскоязычных</div></div>
-      <div class="item"><div class="item-icon">⏸️</div><div class="item-text"><strong>Техника пауз и интонации</strong> — где делать паузы, как читать знаки препинания, нисходящая vs восходящая интонация</div></div>
-      <div class="item"><div class="item-icon">📖</div><div class="item-text"><strong>5 тренировочных текстов</strong> — от простого к сложному, с разметкой ударений и пауз</div></div>
-      <div class="item"><div class="item-icon">⚡</div><div class="item-text"><strong>10 вопросов теста</strong> — стратегия, произношение, типичные ошибки</div></div>
-    </div>
-  </div>
-
-  <!-- AUDIO DEMO — free preview -->
-  <div class="audio-demo">
-    <div class="ad-label">🎧 Пример разметки текста из урока</div>
-    <div class="ad-text">
-      The <span class="stress">scien</span>tists <span class="ad-pause">|</span> con<span class="stress">duc</span>ted ex<span class="stress">ten</span>sive re<span class="stress">search</span> <span class="ad-pause">||</span> on the ef<span class="stress">fects</span> of cli<span class="stress">mate</span> change <span class="ad-pause">|</span> on ma<span class="stress">rine</span> e<span class="stress">co</span>systems.
-    </div>
-    <div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:12px">
-      <span style="color:var(--accent)">подчёркнуто</span> = ударный слог &nbsp;·&nbsp; <span style="color:rgba(255,255,255,.25);font-family:'JetBrains Mono',monospace">|</span> = короткая пауза &nbsp;·&nbsp; <span style="color:rgba(255,255,255,.25);font-family:'JetBrains Mono',monospace">||</span> = длинная пауза
-    </div>
-    <div class="ad-controls">
-      <button class="ad-btn ad-play" onclick="readAloud()">▶ Послушать пример</button>
-      <button class="ad-btn ad-slow" onclick="readAloudSlow()">🐢 Медленно</button>
-    </div>
-  </div>
-
-  <!-- BLURRED CONTENT -->
-  <div class="blur-wrap">
-    <div class="blur-inner">
-      <div class="fake-card">
-        <div class="card-title"><span class="ci">🔊</span>Сложные звуки для русскоязычных</div>
-        <div class="sound-grid">
-          <div class="sg-card"><div class="sg-ipa">[θ]</div><div class="sg-ru">нет в русском</div><div class="sg-ex">think, three, through</div></div>
-          <div class="sg-card"><div class="sg-ipa">[ð]</div><div class="sg-ru">нет в русском</div><div class="sg-ex">the, this, that</div></div>
-          <div class="sg-card"><div class="sg-ipa">[æ]</div><div class="sg-ru">между «э» и «а»</div><div class="sg-ex">cat, man, back</div></div>
-          <div class="sg-card"><div class="sg-ipa">[ŋ]</div><div class="sg-ru">нг без «г»</div><div class="sg-ex">sing, running, long</div></div>
-          <div class="sg-card"><div class="sg-ipa">[w]</div><div class="sg-ru">не «в»!</div><div class="sg-ex">water, world, what</div></div>
-          <div class="sg-card"><div class="sg-ipa">[h]</div><div class="sg-ru">не «х»!</div><div class="sg-ex">have, him, ahead</div></div>
-        </div>
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🤖</span>Что оценивает AI</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--teal-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🔊</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px">Произношение</div><div style="font-size:13px;color:#0a4060;line-height:1.6">Насколько правильно ты произносишь каждый звук. Особенно [θ], [ð], [w], [æ].</div></div>
       </div>
-    </div>
-    <div class="blur-over">
-      <div class="blur-badge">
-        <div class="bb-icon">🔒</div>
-        <div class="bb-h">Материал закрыт</div>
-        <div class="bb-s">Купи доступ чтобы продолжить</div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🎵</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px">Интонация и ритм</div><div style="font-size:13px;color:#2a5c00;line-height:1.6">Естественные подъёмы и спады голоса. Монотонная речь снижает балл.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--gold-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">⏸️</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px">Паузы</div><div style="font-size:13px;color:#5a4000;line-height:1.6">Паузы на знаках препинания, логические паузы между смысловыми группами.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--purple-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🏃</div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px">Беглость</div><div style="font-size:13px;color:#5a20c0;line-height:1.6">Плавность без длинных пауз и запинок. Не нужно читать быстро — нужно читать без остановок.</div></div>
       </div>
     </div>
   </div>
 
-  <!-- PAYWALL -->
-  <div class="paywall">
-    <div class="pw-lock">🔓</div>
-    <h2 class="pw-h">Открой <span>все 17 уроков</span><br>одним платежом</h2>
-    <p class="pw-sub">Уроки 4–20 + 500+ вопросов практики + симуляция реального теста. Единоразово — навсегда.</p>
-    <div class="pw-grid">
-      <div class="pw-feat">Уроки 4–20 полностью</div>
-      <div class="pw-feat">500+ практических вопросов</div>
-      <div class="pw-feat">Все 9 типов вопросов DET</div>
-      <div class="pw-feat">Симуляция реального теста</div>
-      <div class="pw-feat">Примеры ответов на 160</div>
-      <div class="pw-feat">Доступ навсегда + обновления</div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🎯</span>3 шага стратегии</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--teal-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:#0a82b8;flex-shrink:0;width:28px">1</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:14px">Прочитай текст глазами первые 5 секунд</div><div style="font-size:13px;color:#0a4060;line-height:1.65">Найди длинные слова, знаки препинания, незнакомые слова. Сделай мысленный план.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--green-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:var(--green2);flex-shrink:0;width:28px">2</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:14px">Читай группами слов, не по одному</div><div style="font-size:13px;color:#2a5c00;line-height:1.65">«The scientists | conducted research | on climate change» — не «The-scientists-conducted...». Смысловые группы звучат естественно.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--gold-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:#8a6800;flex-shrink:0;width:28px">3</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:14px">Не останавливайся на ошибке</div><div style="font-size:13px;color:#5a4000;line-height:1.65">Если споткнулся — продолжай. Пауза хуже неправильного произношения. AI оценивает поток речи.</div></div>
+      </div>
     </div>
-    <div class="pw-price">
-      <div class="pw-num">4 900 <sup>₸</sup></div>
-      <div class="pw-per">единоразово · доступ навсегда</div>
-    </div>
-    <a href="https://wa.me/+77772327571?text=Хочу+купить+0to160+доступ+к+урокам" class="pw-btn">Купить доступ →</a>
-    <div class="pw-kaspi">💳 Оплата через Kaspi · WhatsApp подтверждение</div>
-    <div class="pw-guar">✓ Возврат денег в течение 24 часов если не понравится</div>
   </div>
 
-  <a href="lessons.html" class="back-btn">← Вернуться к урокам</a>
+  <!-- AUDIO DEMO -->
+  <div style="background:var(--dark);border-radius:var(--radius);padding:28px;margin-bottom:14px;border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent)"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:16px">🎧 Пример разметки текста</div>
+    <div style="font-size:15px;color:#fff;line-height:2;margin-bottom:14px;font-weight:500">
+      The <span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">scien</span>tists <span style="color:rgba(255,255,255,.25);font-size:12px;font-family:'JetBrains Mono',monospace">|</span> con<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">duc</span>ted ex<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">ten</span>sive re<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">search</span> <span style="color:rgba(255,255,255,.25);font-size:12px;font-family:'JetBrains Mono',monospace">||</span> on the ef<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">fects</span> of cli<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">mate</span> change.
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:14px">
+      <span style="color:var(--teal)">подчёркнуто</span> = ударный слог &nbsp;·&nbsp;
+      <span style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.4)">|</span> = короткая пауза &nbsp;·&nbsp;
+      <span style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.4)">||</span> = длинная пауза
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button onclick="readAloud()" style="display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:700;font-family:Manrope,sans-serif;cursor:pointer;border:none;background:var(--teal);color:#fff;transition:all .2s">▶ Послушать пример</button>
+      <button onclick="readAloudSlow()" style="display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:700;font-family:Manrope,sans-serif;cursor:pointer;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1)">🐢 Медленно</button>
+    </div>
+  </div>
 
+  <div class="tip">
+    <div class="tip-label">✨ Скорость</div>
+    Читай чуть медленнее чем в обычной речи. AI распознаёт слова лучше когда они чётко разделены. Медленно и чётко > быстро и нечётко.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('sounds',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Сложные звуки →</button>
+  </div>
 </div>
 
-<script>
-function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
-function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+<!-- SOUNDS -->
+<div class="sec" id="t-sounds">
+  <div class="hook">
+    <div class="hook-label">🔊 Сложные звуки</div>
+    <div class="hook-h">10 звуков которые<br><span class="hl">выдают русский акцент</span></div>
+    <div class="hook-body">AI распознаёт нетипичные паттерны произношения. Исправь эти звуки — и твой балл за произношение вырастет значительно.</div>
+  </div>
 
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🔊</span>Звуки которых нет в русском</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('think three through')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[θ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">язык между зубами + выдох</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>think</strong>, three, through, both, math</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «с», не «т»</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('the this that')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[ð] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">язык между зубами + голос</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>the</strong>, this, that, there, though</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «з», не «д»</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('cat man back black')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[æ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">между «э» и «а» — рот широко</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>cat</strong>, man, back, black, that</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не просто «э»</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('sing running long')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[ŋ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">нг — но без «г» в конце</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>sing</strong>, running, long, king</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «нг» полностью</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('water world what')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[w] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">губы трубочкой → «у» быстро</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>water</strong>, world, what, woman</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «в»!</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('have him ahead')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[h] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">мягкий выдох без трения</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>have</strong>, him, ahead, behind</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «х» как в «хорошо»</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--tx-faint);margin-top:12px">👆 Нажми на карточку чтобы услышать звук</p>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">💡</span>Звуки которые произносятся иначе чем в русском</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[r]</span>
+        <div>Язык НЕ касается нёба. Завёрнут назад. «red», «right», «research» — совсем не как русское «р».</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[l]</span>
+        <div>В конце слова — тёмное «л». «feel», «school», «global» — не такое чёткое как в начале.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[t]</span>
+        <div>В середине слова между гласными превращается в быстрое [d]: «water» → «wader», «better» → «bedder».</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[v]</span>
+        <div>Верхние зубы на нижнюю губу. Не «б» и не «ф»: «very», «voice», «environment».</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">✨ Как тренировать</div>
+    Метод shadowing — включай английские подкасты или видео и повторяй вслух сразу за диктором. 15 минут в день в течение недели = заметный результат.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('technique',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Техника чтения →</button>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="sec" id="t-technique">
+  <div class="hook">
+    <div class="hook-label">⏸️ Техника</div>
+    <div class="hook-h">Паузы и ударения —<br><span class="hl">секрет естественной речи</span></div>
+    <div class="hook-body">Носители языка не читают каждое слово отдельно. Они читают смысловыми группами с правильными паузами. Это и есть беглость которую оценивает AI.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">⏸️</span>Где делать паузы</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--teal)">
+        <div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:6px">После запятой — короткая пауза</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal)">«However, <span style="opacity:.5">|</span> the results suggest...»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--teal)">
+        <div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:6px">После точки — длинная пауза</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal)">«...showed significant results. <span style="opacity:.5">||</span> The study...»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--green)">
+        <div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:6px">Между смысловыми группами</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--green2)">«The scientists <span style="opacity:.5">|</span> at the university <span style="opacity:.5">|</span> conducted research»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--gold)">
+        <div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:6px">Перед вводными словами</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8a6800">«The study, <span style="opacity:.5">|</span> which was conducted over five years, <span style="opacity:.5">|</span> showed...»</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🎵</span>Ударения в предложении</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">В английском предложении выделяются <strong>content words</strong> — существительные, глаголы, прилагательные, наречия. Function words (артикли, предлоги, местоимения) произносятся слабее.</p>
+    <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Пример:</div>
+      <div style="font-size:15px;line-height:2;color:var(--dark)">
+        The <strong style="color:var(--teal)">scientists</strong> <em style="color:var(--tx-faint)">(слабо)</em> <strong style="color:var(--teal)">published</strong> a <strong style="color:var(--teal)">significant</strong> <strong style="color:var(--teal)">study</strong> on <strong style="color:var(--teal)">climate change</strong>.
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--tx-dim);line-height:1.7">Жирным — ударные слова. «the», «a», «on» — произносятся быстро и тихо. Это делает речь естественной.</div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ Главная ошибка</div>
+    Студенты читают каждое слово с одинаковым ударением. Это звучит как робот. Выделяй content words — и речь сразу станет живее.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('sounds',document.querySelectorAll('.tab')[1])" class="nb-prev">← Звуки</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Тест →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Что делать если споткнулся на слове?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','D','s')"><span class="ol">A</span>Остановиться и повторить</button><button class="opt" id="q1-B" onclick="dlA(1,'B','D','s')"><span class="ol">B</span>Начать сначала</button><button class="opt" id="q1-C" onclick="dlA(1,'C','D','s')"><span class="ol">C</span>Сделать длинную паузу</button><button class="opt" id="q1-D" onclick="dlA(1,'D','D','s')"><span class="ol">D</span>Продолжить без остановки</button></div><div class="expl" id="q1-e">✅ <strong>Продолжить</strong> — пауза хуже неправильного произношения. AI оценивает поток речи. Никогда не начинай сначала.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Звук [θ] в слове «think» — как его правильно произносить?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','C','p')"><span class="ol">A</span>Как русское «с»</button><button class="opt" id="q2-B" onclick="dlA(2,'B','C','p')"><span class="ol">B</span>Как русское «т»</button><button class="opt" id="q2-C" onclick="dlA(2,'C','C','p')"><span class="ol">C</span>Язык между зубами + выдох</button><button class="opt" id="q2-D" onclick="dlA(2,'D','C','p')"><span class="ol">D</span>Как русское «ф»</button></div><div class="expl" id="q2-e">✅ <strong>Язык между зубами + выдох</strong> — этот звук нет в русском языке. Кончик языка слегка выходит между зубами.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Какие слова произносятся с ударением в предложении?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','B','s')"><span class="ol">A</span>Артикли и предлоги</button><button class="opt" id="q3-B" onclick="dlA(3,'B','B','s')"><span class="ol">B</span>Существительные, глаголы, прилагательные</button><button class="opt" id="q3-C" onclick="dlA(3,'C','B','s')"><span class="ol">C</span>Все слова одинаково</button><button class="opt" id="q3-D" onclick="dlA(3,'D','B','s')"><span class="ol">D</span>Только первое слово</button></div><div class="expl" id="q3-e">✅ <strong>Content words</strong> — существительные, глаголы, прилагательные, наречия. Артикли и предлоги произносятся слабее.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Чем отличается звук [w] от русского «в»?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','C','p')"><span class="ol">A</span>Они одинаковые</button><button class="opt" id="q4-B" onclick="dlA(4,'B','C','p')"><span class="ol">B</span>[w] тише чем «в»</button><button class="opt" id="q4-C" onclick="dlA(4,'C','C','p')"><span class="ol">C</span>[w] — губы трубочкой, «в» — зубы на губу</button><button class="opt" id="q4-D" onclick="dlA(4,'D','C','p')"><span class="ol">D</span>Разная длина</button></div><div class="expl" id="q4-e">✅ <strong>Губы трубочкой</strong> — [w] образуется губами без участия зубов. «water», «world», «what» — не «ватер», «ворлд».</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Что нужно сделать за первые 5 секунд до начала чтения?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','C','s')"><span class="ol">A</span>Начать читать сразу</button><button class="opt" id="q5-B" onclick="dlA(5,'B','C','s')"><span class="ol">B</span>Выучить текст наизусть</button><button class="opt" id="q5-C" onclick="dlA(5,'C','C','s')"><span class="ol">C</span>Просмотреть текст глазами — найти сложные слова и знаки</button><button class="opt" id="q5-D" onclick="dlA(5,'D','C','s')"><span class="ol">D</span>Переводить текст</button></div><div class="expl" id="q5-e">✅ <strong>Просмотреть глазами</strong> — найди длинные слова, знаки препинания, незнакомые слова. Сделай план паузы.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Как правильно читать — по словам или группами?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','B','s')"><span class="ol">A</span>Каждое слово отдельно</button><button class="opt" id="q6-B" onclick="dlA(6,'B','B','s')"><span class="ol">B</span>Смысловыми группами</button><button class="opt" id="q6-C" onclick="dlA(6,'C','B','s')"><span class="ol">C</span>Как можно быстрее</button><button class="opt" id="q6-D" onclick="dlA(6,'D','B','s')"><span class="ol">D</span>По слогам</button></div><div class="expl" id="q6-e">✅ <strong>Смысловыми группами</strong> — «The scientists | at the university | published results». Это делает речь естественной.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Что такое звук [ŋ] в словах sing, running, long?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','C','p')"><span class="ol">A</span>«нг» полностью</button><button class="opt" id="q7-B" onclick="dlA(7,'B','C','p')"><span class="ol">B</span>Только «н»</button><button class="opt" id="q7-C" onclick="dlA(7,'C','C','p')"><span class="ol">C</span>«нг» но без «г» в конце</button><button class="opt" id="q7-D" onclick="dlA(7,'D','C','p')"><span class="ol">D</span>Тихое «г»</button></div><div class="expl" id="q7-e">✅ <strong>«нг» без «г»</strong> — звук производится в горле. Слышно «нг» но «г» не отрывается отдельно.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Что такое shadowing и зачем он нужен?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','s')"><span class="ol">A</span>Чтение в темноте</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','s')"><span class="ol">B</span>Перевод текста</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','s')"><span class="ol">C</span>Повторение вслух вслед за диктором</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','s')"><span class="ol">D</span>Запись своего голоса</button></div><div class="expl" id="q8-e">✅ <strong>Повторение за диктором</strong> — включаешь подкаст и повторяешь вслух сразу. Лучший метод для развития беглости и произношения.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Скорость</span></div><div class="q-text">Какая скорость чтения оптимальна для Read Aloud?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','C','s')"><span class="ol">A</span>Как можно быстрее</button><button class="opt" id="q9-B" onclick="dlA(9,'B','C','s')"><span class="ol">B</span>Очень медленно по слогам</button><button class="opt" id="q9-C" onclick="dlA(9,'C','C','s')"><span class="ol">C</span>Чуть медленнее обычной речи — чётко и плавно</button><button class="opt" id="q9-D" onclick="dlA(9,'D','C','s')"><span class="ol">D</span>Скорость не важна</button></div><div class="expl" id="q9-e">✅ <strong>Чуть медленнее</strong> — AI распознаёт слова лучше. Медленно и чётко > быстро и нечётко. Но не по слогам!</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Как правильно произносить [h] в словах have, him?</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','C','p')"><span class="ol">A</span>Как русское «х» в слове «хорошо»</button><button class="opt" id="q10-B" onclick="dlA(10,'B','C','p')"><span class="ol">B</span>Не произносить</button><button class="opt" id="q10-C" onclick="dlA(10,'C','C','p')"><span class="ol">C</span>Мягкий выдох без трения</button><button class="opt" id="q10-D" onclick="dlA(10,'D','C','p')"><span class="ol">D</span>Как «г» в украинском</button></div><div class="expl" id="q10-e">✅ <strong>Мягкий выдох</strong> — [h] намного мягче русского «х». Представь что дышишь на стекло чтобы протереть его.</div></div>
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div id="ts" style="margin-bottom:16px"></div>
+    <div class="sc-btns">
+      <a href="det_lesson8.html" class="btn-next">Урок 8: Write About the Photo →</a>
+      <button class="btn-sec" onclick="showTab('sounds',document.querySelectorAll('.tab')[1])">Повторить звуки</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// ACCESS CHECK
+(function(){
+  if(localStorage.getItem('det_access') !== 'granted'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var g=document.getElementById('gate');
+      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
+    });
+    return;
+  }
+  document.body.style.visibility='visible';
+})();
+
+// WORD GAME
+const ROUNDS=[
+  {words:[{w:'government',r:true},{w:'achievation',r:false},{w:'important',r:true},{w:'developation',r:false},{w:'community',r:true},{w:'significous',r:false},{w:'establish',r:true},{w:'runness',r:false},{w:'research',r:true}]},
+  {words:[{w:'sustainable',r:true},{w:'sustainative',r:false},{w:'innovation',r:true},{w:'innovatement',r:false},{w:'awareness',r:true},{w:'awarement',r:false},{w:'effective',r:true},{w:'effectiful',r:false},{w:'substantial',r:true}]},
+  {words:[{w:'gradually',r:true},{w:'gradualish',r:false},{w:'reliable',r:true},{w:'reliabment',r:false},{w:'significant',r:true},{w:'significate',r:false},{w:'achievement',r:true},{w:'achievation',r:false},{w:'blemish',r:true}]}
+];
+let gameState={1:{clicks:{},done:false},2:{clicks:{},done:false},3:{clicks:{},done:false}};
+
+function buildRound(n){
+  const grid=document.getElementById(`r${n}-grid`);
+  const round=ROUNDS[n-1];grid.innerHTML='';
+  round.words.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className='word-btn';
+    btn.innerHTML=`${item.w}<span class="badge">${item.r?'✓':'✗'}</span>`;
+    btn.onclick=()=>handleWordClick(n,i,item,btn);
+    grid.appendChild(btn);
+  });
+  updateRoundScore(n);
+}
+function handleWordClick(rn,i,item,btn){
+  if(gameState[rn].done||gameState[rn].clicks[i])return;
+  gameState[rn].clicks[i]=true;btn.classList.add('revealed');
+  if(item.r){btn.classList.add('real');playCoin();}
+  else{btn.classList.add('fake');btn.style.animation='shake .35s ease';setTimeout(()=>btn.style.animation='',400);playWrong();}
+  updateRoundScore(rn);checkRoundDone(rn);
+}
+function updateRoundScore(rn){
+  const round=ROUNDS[rn-1];
+  const realCount=round.words.filter(w=>w.r).length;
+  const found=Object.keys(gameState[rn].clicks).filter(i=>round.words[i].r).length;
+  document.getElementById(`r${rn}-score`).textContent=`${found}/${realCount}`;
+}
+function checkRoundDone(rn){
+  const round=ROUNDS[rn-1];
+  const allReal=round.words.map((w,i)=>({...w,i})).filter(w=>w.r);
+  const allFound=allReal.every(w=>gameState[rn].clicks[w.i]);
+  const anyFake=round.words.map((w,i)=>({...w,i})).filter(w=>!w.r).some(w=>gameState[rn].clicks[w.i]);
+  if(allFound){
+    gameState[rn].done=true;
+    const grid=document.getElementById(`r${rn}-grid`);
+    const btns=grid.querySelectorAll('.word-btn');
+    btns.forEach((btn,i)=>{if(!round.words[i].r&&!gameState[rn].clicks[i])btn.classList.add('fake','revealed');});
+    const el=document.getElementById(`r${rn}-result`);
+    el.innerHTML=`<div style="padding:12px 14px;background:${!anyFake?'var(--green-pale)':'var(--gold-pale)'};border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:${!anyFake?'#2a5c00':'#5a4000'}">${!anyFake?'🏆 Идеально!':'✅ Все нашёл, но были лишние клики'}</div>`;
+    el.classList.add('show');
+    if(!anyFake)boom();
+  }
+}
+
+// AUDIO
+let _ctx=null;
+function getCtx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function playCoin(){try{const ctx=getCtx(),t=ctx.currentTime;[[1046.5,0,.09],[1318.5,.07,.07]].forEach(([f,dt,v])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+dt);g.gain.linearRampToValueAtTime(v,t+dt+.01);g.gain.exponentialRampToValueAtTime(.001,t+dt+.22);o.connect(g);g.connect(ctx.destination);o.start(t+dt);o.stop(t+dt+.25);});}catch(e){}}
+function playWrong(){try{const ctx=getCtx(),t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(100,t+.22);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3);}catch(e){}}
+function playStreak(){try{const ctx=getCtx(),t=ctx.currentTime+.04;[392,493.88,587.33].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const nt=t+i*.09;g.gain.setValueAtTime(0,nt);g.gain.linearRampToValueAtTime(.04,nt+.03);g.gain.exponentialRampToValueAtTime(.001,nt+1.8);o.start(nt);o.stop(nt+2);});}catch(e){}}
+function boom(){const c=['#9f6ff0','#58cc02','#ffc800','#1cb0f6','#ff4b4b'];for(let i=0;i<60;i++)setTimeout(()=>{const e=document.createElement('div'),s=5+Math.random()*10;e.style.cssText=`position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.5}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(e);setTimeout(()=>e.remove(),3200);},i*18);}
+
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function aXP(n){const prev=gXP(),next=prev+n;localStorage.setItem('det_xp',JSON.stringify({xp:next}));_S.sXP+=n;const hdr=document.getElementById('xp-hdr');if(hdr)hdr.textContent=next;const el=document.getElementById('hud-xp');if(el)el.textContent=next;const f=document.createElement('div');f.className='xpf';f.textContent='+'+n+' XP';f.style.cssText='top:160px;right:20px';document.body.appendChild(f);setTimeout(()=>f.remove(),1800);}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+function uStr(){const td=new Date().toDateString(),yd=new Date(Date.now()-86400000).toDateString();let d=JSON.parse(localStorage.getItem('det_streak')||'{"c":0,"l":""}');if(d.l===td)return d.c;d.c=(d.l===yd)?d.c+1:1;d.l=td;localStorage.setItem('det_streak',JSON.stringify(d));return d.c;}
+let _sbt;
+function showStreakBanner(cons){const b=document.getElementById('strk-banner');document.getElementById('strk-val').textContent='×'+cons;b.className='streak-banner in';playStreak();clearTimeout(_sbt);_sbt=setTimeout(()=>{b.className='streak-banner out';setTimeout(()=>b.className='streak-banner',400);},2000);}
+
+let _S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson7',over:false,_ret:false};
+function rHUD(){const h=document.getElementById('hud');if(!h)return;const hts=Array.from({length:3},(_,i)=>`<span id="h${i}"${i>=_S.lives?' class="lost"':''}>❤️</span>`).join('');h.innerHTML=`<div class="lives">${hts}</div><div class="timer-wrap"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(15,14,11,.08)" stroke-width="3"/><circle id="t-arc" cx="22" cy="22" r="18" fill="none" stroke="#9f6ff0" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear,stroke .3s"/></svg><div class="timer-num" id="t-n">15</div></div><div class="xp-hud">💎 <span id="hud-xp">${gXP()}</span></div>`;}
+function stTmr(q){stpTmr();_S.tLeft=15;uTUI(15);_S.timer=setInterval(()=>{_S.tLeft--;uTUI(_S.tLeft);if(_S.tLeft<=0){stpTmr();tOut(q);}},1000);}
+function stpTmr(){clearInterval(_S.timer);_S.timer=null;}
+function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElementById('t-n');if(!arc||!n)return;arc.style.strokeDashoffset=113*(1-s/15);arc.style.stroke=s<=5?'#ff4b4b':s<=8?'#ffc800':'#9f6ff0';n.textContent=s;n.style.color=s<=5?'#ff4b4b':'';}
+function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
+function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
+function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson7',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
+function dlA(q,ch,ck,tag){
+  if(_S.ans[q]||_S.over)return;
+  const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
+  document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);
+  const chosen=document.getElementById('q'+q+'-'+ch),corBtn=document.getElementById('q'+q+'-'+ck),isOk=ch===ck;
+  if(!_S.tStats[tag])_S.tStats[tag]={ok:0,total:0};_S.tStats[tag].total++;
+  if(isOk){chosen.classList.add('ok');_S.score++;_S.cons++;_S.tStats[tag].ok++;aXP(10+(fast?5:0));if(fast)_S.fast++;playCoin();if(_S.cons===3||_S.cons===5||_S.cons===7||_S.cons===10)showStreakBanner(_S.cons);if(_S.score===_S.total)boom();}
+  else{chosen.classList.add('no');chosen.style.animation='shake .35s ease';setTimeout(()=>chosen.style.animation='',400);corBtn.classList.add('reveal');_S.cons=0;lLife();}
+  const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');setTimeout(()=>ep.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  document.getElementById('pb').style.width=(Object.keys(_S.ans).length/_S.total*100)+'%';
+  if(!_S.over){const nq=q+1;if(nq<=_S.total&&!_S.ans[nq])setTimeout(()=>stTmr(nq),1000);}
+  chkDone();
+}
+function chkDone(){if(Object.keys(_S.ans).length===_S.total&&!_S.over)setTimeout(finSes,700);}
+function finSes(){if(_S.wrong.length>0&&!_S._ret)showRetry();else showScore();}
+function showRetry(){const n=_S.wrong.length;const bar=document.createElement('div');bar.className='retry';const w=n===1?'ошибка':n<=4?'ошибки':'ошибок';bar.innerHTML=`🔁 ${n} ${w} — повтори! <button class="rb" onclick="doRetry()">Повторить</button><button class="sk" onclick="skipR()">Пропустить</button>`;document.getElementById('sc').before(bar);}
+function doRetry(){_S._ret=true;document.querySelector('.retry')?.remove();const tr=[..._S.wrong];_S.wrong=[];tr.forEach(q=>{delete _S.ans[q];document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});const ep=document.getElementById('q'+q+'-e');if(ep)ep.classList.remove('on');});_S.lives=3;for(let i=0;i<3;i++){const h=document.getElementById('h'+i);if(h)h.classList.remove('lost');}setTimeout(()=>stTmr(tr[0]),500);}
+function skipR(){_S._ret=true;document.querySelector('.retry')?.remove();showScore();}
+function showScore(){
+  const sc=document.getElementById('sc');if(!sc)return;sc.classList.add('on');
+  const pct=Math.round(_S.score/_S.total*100);
+  const msgs=['Повтори паттерны 📖','Хорошее начало! 🌱','Неплохо 🎯','Хорошо! 👍','Отлично! ✨','Идеально! 🏆'];
+  const ems=['😔','🙂','😊','😄','🌟','🏆'];
+  const idx=Math.min(Math.floor(_S.score/_S.total*5),5);
+  document.getElementById('sc-em').textContent=ems[idx];
+  document.getElementById('sc-n').textContent=_S.score+'/'+_S.total;
+  document.getElementById('sc-m').textContent=msgs[idx];
+  setTimeout(()=>document.getElementById('sc-b').style.width=pct+'%',100);
+  document.getElementById('sc-str').textContent=uStr();
+  document.getElementById('sc-xp').textContent='+'+_S.sXP;
+  document.getElementById('sc-fast').textContent=_S.fast;
+  rTS();
+  localStorage.setItem(_S.lkey,JSON.stringify({score:_S.score,max:_S.total,pct,xp:_S.sXP,date:new Date().toISOString()}));
+  sc.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct===100)boom();
+}
+function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={w:'#9f6ff0',s:'#58cc02',p:'#1cb0f6'}[t]||'#58cc02';const lbl={w:'Слова',s:'Стратегия',p:'Паттерны'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
+function showTab(id,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  const s=document.getElementById('t-'+id);if(s)s.classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='game'){buildRound(1);buildRound(2);buildRound(3);}
+}
+
+
+// SPEECH
 let _v=null;
 function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
 if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
-
-function speak(text, rate){
+function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+function readAloud(){spk('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');}
+function readAloudSlow(){
   if(!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-GB';u.rate=rate||0.9;
-  if(_v)u.voice=_v;
-  window.speechSynthesis.speak(u);
+  const u=new SpeechSynthesisUtterance('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');
+  u.lang='en-GB';u.rate=0.55;if(_v)u.voice=_v;window.speechSynthesis.speak(u);
 }
-function readAloud(){ speak('The scientists conducted extensive research on the effects of climate change on marine ecosystems.', 0.88); }
-function readAloudSlow(){ speak('The scientists conducted extensive research on the effects of climate change on marine ecosystems.', 0.6); }
 
+window._cm={1:'C',2:'D',3:'C',4:'B',5:'D',6:'C',7:'B',8:'C',9:'C',10:'D'};
 window.addEventListener('load',()=>{
-  if(window.speechSynthesis)_pv();
   document.getElementById('str-n').textContent=gStr();
   document.getElementById('xp-hdr').textContent=gXP();
+  rHUD();
+  buildRound(1);buildRound(2);buildRound(3);
+  setTimeout(()=>stTmr(1),1200);
 });
 </script>
 </body>
