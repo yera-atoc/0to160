@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 9: Write About the Topic</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:100px;visibility:hidden}
+
+nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.pill-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.pill-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--purple);color:var(--purple)}
+
+.hero{background:var(--dark);padding:40px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(159,111,240,.08),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple) 30%,var(--gold) 70%,transparent)}
+.hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
+.hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.chip-purple{background:rgba(159,111,240,.15);border:1px solid rgba(159,111,240,.25);color:#c89fff}
+.chip-gold{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.22);color:var(--gold)}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.hero-h .hl{color:var(--purple)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
+.meta-item strong{color:rgba(255,255,255,.75)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.08);margin-top:24px}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));width:0%;transition:width .8s ease}
+
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100}
+.tabs{display:flex;overflow-x:auto;max-width:780px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 18px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.tab.on{color:var(--purple);border-bottom-color:var(--purple)}
+.tab:hover:not(.on){color:var(--tx-dim)}
+
+.cnt{max-width:780px;margin:0 auto;padding:28px 20px}
+.sec{display:none}.sec.on{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden}
+.hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(159,111,240,.12),transparent 70%);pointer-events:none}
+.hook-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.hook-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}
+.hook-h .hl{color:var(--purple)}
+.hook-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8}
+.hook-body strong{color:rgba(255,255,255,.85)}
+
+.sec-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+
+.tip{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#2a5c00}
+.tip-label{font-size:9px;font-weight:700;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.warn{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#5a4000}
+.warn-label{font-size:9px;font-weight:700;color:#8a6800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+
+/* WORD GAME */
+.word-game{margin:14px 0}
+.wg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wg-title{font-size:12px;font-weight:700;color:var(--tx-dim);letter-spacing:.06em;text-transform:uppercase}
+.wg-score{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--purple)}
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.word-btn{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px 12px;font-size:15px;font-weight:700;font-family:'Manrope',sans-serif;color:var(--dark);cursor:pointer;text-align:center;transition:all .18s;position:relative}
+.word-btn:hover:not(.revealed){border-color:var(--purple);background:var(--purple-pale);transform:translateY(-2px)}
+.word-btn.real{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.word-btn.fake{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important;text-decoration:line-through}
+.word-btn .badge{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;font-size:10px;display:none;align-items:center;justify-content:center;font-weight:700}
+.word-btn.real .badge{display:flex;background:var(--green);color:#fff}
+.word-btn.fake .badge{display:flex;background:var(--red);color:#fff}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}60%{transform:translateX(5px)}}
+.round-result{margin-top:10px;padding:12px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;display:none}
+.round-result.show{display:block}
+
+/* PATTERN GRID */
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.pattern-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:18px}
+.pat-head{font-size:11px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.pat-real{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pat-fake{display:flex;flex-wrap:wrap;gap:6px}
+.wr{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.wr.r{background:var(--green-pale);color:var(--green2)}
+.wr.f{background:var(--red-pale);color:var(--red);text-decoration:line-through;opacity:.8}
+
+/* QUIZ */
+.hud{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px}
+.lives{display:flex;gap:4px;background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:100px;padding:6px 14px}
+.lives span{font-size:15px;transition:all .3s}
+.lives span.lost{opacity:.1;filter:grayscale(1);transform:scale(.6)}
+.timer-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--dark)}
+.xp-hud{display:flex;align-items:center;gap:5px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#5a20c0}
+.qc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint)}
+.q-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--purple-pale);color:var(--purple)}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:13px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+
+.sc{background:var(--dark);border:1px solid rgba(159,111,240,.2);border-radius:var(--radius);padding:36px 24px;text-align:center;display:none;margin-top:16px;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--gold),transparent)}
+.sc.on{display:block;animation:fadeUp .4s ease}
+.sc-em{font-size:52px;display:block;margin-bottom:12px}
+.sc-score{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.sc-label{color:rgba(255,255,255,.3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.sc-bar-wrap{background:rgba(255,255,255,.08);border-radius:100px;height:6px;max-width:280px;margin:0 auto 16px;overflow:hidden}
+.sc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width 1.4s ease;width:0%}
+.sc-msg{color:rgba(255,255,255,.6);font-size:15px;font-weight:600;margin-bottom:20px;line-height:1.6}
+.sc-badges{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.sc-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 15px;text-align:center}
+.sb-ic{font-size:18px;display:block;margin-bottom:4px}
+.sb-l{color:rgba(255,255,255,.3);font-size:9px;font-weight:700;display:block;letter-spacing:.1em;text-transform:uppercase}
+.sb-v{color:#fff;font-weight:700;font-size:13px}
+.sc-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto}
+.btn-next{display:block;text-align:center;background:var(--green);color:#fff;border:none;border-radius:100px;padding:16px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-next:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
+
+.tab-nav{display:flex;gap:10px;margin-top:16px}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev:hover{border-color:var(--purple);color:var(--purple)}
+.nb-next{flex:1;background:var(--purple);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.go{position:fixed;inset:0;background:rgba(15,14,11,.95);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)}
+.go.on{display:flex;animation:fadeUp .3s ease}
+.go-icon{font-size:64px;margin-bottom:16px}
+.go-h{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.go-s{color:rgba(255,255,255,.45);font-size:14px;margin-bottom:28px;line-height:1.75;max-width:280px}
+.go-btn{background:var(--red);color:#fff;border:none;border-radius:100px;padding:15px 36px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;margin-bottom:10px;width:100%;max-width:270px}
+.go-btn2{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:13px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;width:100%;max-width:270px}
+.retry{background:var(--red-pale);border:1px solid rgba(255,75,75,.2);color:#8a0000;border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.rb{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif}
+.sk{background:rgba(15,14,11,.08);color:var(--tx-dim);border:none;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif}
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:13px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+@keyframes bIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.streak-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:400;background:var(--dark);border:1px solid rgba(159,111,240,.3);border-radius:14px;padding:12px 26px;text-align:center;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.streak-banner.in{display:block;animation:bIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.sb-title{font-size:10px;font-weight:700;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.sb-val{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff}
+.ts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.ts-i{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px}
+.ts-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ts-bw{background:rgba(255,255,255,.08);border-radius:100px;height:4px;overflow:hidden;margin-bottom:5px}
+.ts-bf{height:100%;border-radius:100px;transition:width .9s ease}
+.ts-n{font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+@media(max-width:500px){.opts{grid-template-columns:1fr}.word-grid{grid-template-columns:1fr 1fr}.pattern-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(159,111,240,.07),transparent 60%);pointer-events:none"></div>
+  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+  <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
+  <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
+  <a href="activate.html" style="display:block;background:#9f6ff0;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;position:relative;z-index:1">Ввести код активации →</a>
+  <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:13px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
+</div>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Попробуй ещё раз!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Ещё раз</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-orange">Урок 9 из 20</span>
+    <span class="chip chip-gold">✍️ Письмо · 22 мин</span>
+  </div>
+  <h1 class="hero-h">Interactive<br><span class="hl">Reading</span></h1>
+  <p class="hero-sub">Настоящее слово или выдуманное? Узнай паттерны которые Duolingo использует для фейков и повысь точность с 60% до 85%+.</p>
+  <div class="hero-meta">
+    <div class="meta-item">🧠 <strong>4 раздела</strong></div>
+    <div class="meta-item">🎮 <strong>Игра с 3 раундами</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('patterns',this)">🚩 Паттерны</div>
+  <div class="tab" onclick="showTab('game',this)">🎮 Игра</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">✍️ Write About the Topic</div>
+    <div class="hook-h">5 минут кажутся вечностью.<br>Пока не знаешь <span class="hl">структуру PEEL.</span></div>
+    <div class="hook-body">Большинство студентов пишут что придёт в голову. Потом заканчивается время, мысли обрываются, AI видит незавершённую мысль → минус баллы. <strong>PEEL даёт чёткий каркас</strong> — никогда не зайдёшь в тупик.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--orange-pale)">📋</span>Что оценивает AI</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:16px;flex-shrink:0">📝</span><div><strong>Связность</strong> — мысли логично переходят от одной к другой. Используешь связующие слова.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--teal-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:16px;flex-shrink:0">📚</span><div><strong>Лексическое разнообразие</strong> — не повторяешь одни слова, используешь академическую лексику.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--gold-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:16px;flex-shrink:0">✅</span><div><strong>Грамматическая точность</strong> — правильные времена, артикли, согласование.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--purple-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="font-size:16px;flex-shrink:0">🎯</span><div><strong>Соответствие теме</strong> — ты отвечаешь на вопрос, а не пишешь что угодно.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">⚠️</span>Топ ошибок при написании</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:11px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;border-left:3px solid var(--red)">Начал писать без плана → мысли разбросаны → незаконченные предложения</div>
+      <div style="padding:11px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;border-left:3px solid var(--red)">Один и тот же аргумент повторяется разными словами — нет развития мысли</div>
+      <div style="padding:11px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;border-left:3px solid var(--red)">Нет примеров — только голые утверждения без доказательств</div>
+      <div style="padding:11px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;border-left:3px solid var(--red)">Простые слова («good», «bad», «very important») вместо академических</div>
+      <div style="padding:11px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;border-left:3px solid var(--red)">Нет заключения — текст просто обрывается</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">✨ Главное правило</div>
+    30 секунд на план — 4 минуты на текст — 30 секунд на проверку. Никогда не пропускай план. Даже 2–3 ключевых слова экономят 2 минуты.
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Структура PEEL →</button>
+  </div>
+</div>
+
+<!-- PEEL -->
+<div class="sec" id="t-peel">
+  <div class="hook">
+    <div class="hook-label">🏗️ Структура PEEL</div>
+    <div class="hook-h">Point · Evidence<br>Explanation · <span class="hl">Link</span></div>
+    <div class="hook-body">PEEL — универсальная структура академического абзаца. Работает для <strong>любой темы</strong> в DET. Знаешь PEEL → знаешь что писать в любой момент.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--orange-pale)">📐</span>Разбор PEEL по шагам</div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="display:flex;gap:0;position:relative">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-right:16px;flex-shrink:0">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(88,204,2,.2);border:2px solid rgba(88,204,2,.4);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;color:var(--green2);position:relative;z-index:1">P</div>
+          <div style="width:2px;height:20px;background:rgba(15,14,11,.08)"></div>
+        </div>
+        <div style="flex:1;padding-bottom:20px">
+          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:5px">Point — Главная мысль</div>
+          <div style="font-size:13px;color:var(--tx-dim);line-height:1.65;margin-bottom:8px">Одно чёткое утверждение. Твоя позиция по теме.</div>
+          <div style="background:var(--green-pale);border-radius:var(--radius-sm);padding:11px 13px;font-size:13px;color:#2a5c00;font-style:italic">«Technology has significantly transformed the way people communicate in modern society.»</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0;position:relative">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-right:16px;flex-shrink:0">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(28,176,246,.2);border:2px solid rgba(28,176,246,.4);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;color:#0a82b8;position:relative;z-index:1">E</div>
+          <div style="width:2px;height:20px;background:rgba(15,14,11,.08)"></div>
+        </div>
+        <div style="flex:1;padding-bottom:20px">
+          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:5px">Evidence — Доказательство</div>
+          <div style="font-size:13px;color:var(--tx-dim);line-height:1.65;margin-bottom:8px">Факт, пример или статистика которые подтверждают твою мысль.</div>
+          <div style="background:var(--teal-pale);border-radius:var(--radius-sm);padding:11px 13px;font-size:13px;color:#0a4060;font-style:italic">«For instance, social media platforms now connect billions of people across different continents instantly.»</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0;position:relative">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-right:16px;flex-shrink:0">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,150,0,.2);border:2px solid rgba(255,150,0,.4);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;color:var(--orange);position:relative;z-index:1">E</div>
+          <div style="width:2px;height:20px;background:rgba(15,14,11,.08)"></div>
+        </div>
+        <div style="flex:1;padding-bottom:20px">
+          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:5px">Explanation — Объяснение</div>
+          <div style="font-size:13px;color:var(--tx-dim);line-height:1.65;margin-bottom:8px">Почему этот пример доказывает твою точку зрения.</div>
+          <div style="background:var(--orange-pale);border-radius:var(--radius-sm);padding:11px 13px;font-size:13px;color:#5a2000;font-style:italic">«This demonstrates that geographical barriers no longer limit human interaction as they once did.»</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-right:16px;flex-shrink:0">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(159,111,240,.2);border:2px solid rgba(159,111,240,.4);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:14px;font-weight:900;color:var(--purple);position:relative;z-index:1">L</div>
+        </div>
+        <div style="flex:1;padding-bottom:20px">
+          <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:5px">Link — Связка</div>
+          <div style="font-size:13px;color:var(--tx-dim);line-height:1.65;margin-bottom:8px">Свяжи абзац с темой или следующим аргументом.</div>
+          <div style="background:var(--purple-pale);border-radius:var(--radius-sm);padding:11px 13px;font-size:13px;color:#5a20c0;font-style:italic">«Therefore, it is clear that technology plays a crucial role in shaping modern communication.»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🔗</span>50 связующих слов — топ-20</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ДОБАВИТЬ</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--green2)">Furthermore, Moreover, In addition</div></div>
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ПРОТИВОПОСТАВИТЬ</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--teal)">However, Nevertheless, On the other hand</div></div>
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ПРИВЕСТИ ПРИМЕР</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--orange)">For instance, For example, Such as</div></div>
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ВЫВОД</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--purple)">Therefore, Thus, Consequently, As a result</div></div>
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ПОДЧЕРКНУТЬ</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--red)">Indeed, Notably, Significantly</div></div>
+      <div style="padding:8px 12px;background:var(--bg2);border-radius:var(--radius-sm)"><div style="font-size:10px;color:var(--tx-faint);font-weight:700;margin-bottom:3px">ПРИЧИНА</div><div style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--gold)">Due to, Owing to, Because of</div></div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('timing',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Тайминг →</button>
+  </div>
+</div>
+
+<!-- TIMING -->
+<div class="sec" id="t-timing">
+  <div class="hook">
+    <div class="hook-label">⏱️ Тайм-менеджмент</div>
+    <div class="hook-h">5 минут — это точно.<br><span class="hl">Распредели их правильно.</span></div>
+    <div class="hook-body">Студенты которые не планируют — пишут хаотично и не успевают закончить. Чёткий тайминг = чёткий текст.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--orange-pale)">⏱️</span>Идеальное распределение 5 минут</div>
+    <div style="background:var(--bg2);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:14px">
+      <div style="display:flex;height:48px">
+        <div style="background:rgba(88,204,2,.4);flex:0 0 10%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">30 сек</div>
+        <div style="background:rgba(28,176,246,.5);flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">4 минуты</div>
+        <div style="background:rgba(255,200,0,.4);flex:0 0 10%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">30 сек</div>
+      </div>
+      <div style="display:flex;padding:10px 0">
+        <div style="flex:0 0 10%;text-align:center;font-size:11px;color:var(--tx-dim)">План</div>
+        <div style="flex:1;text-align:center;font-size:11px;color:var(--tx-dim)">Написание PEEL</div>
+        <div style="flex:0 0 10%;text-align:center;font-size:11px;color:var(--tx-dim)">Проверка</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:14px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--green2);flex-shrink:0;width:50px">0–30 с</div>
+        <div><div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:3px">Планирование</div><div style="font-size:12px;color:#2a5c00">Прочитай тему. Запиши 3 ключевых слова своей позиции. Определи пример.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:14px 16px;background:var(--teal-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#0a82b8;flex-shrink:0;width:50px">30–90 с</div>
+        <div><div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:3px">P — Point</div><div style="font-size:12px;color:#0a4060">Напиши главную мысль — 1–2 предложения. Чётко и конкретно.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:14px 16px;background:var(--orange-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--orange);flex-shrink:0;width:50px">90–180 с</div>
+        <div><div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:3px">E+E — Evidence + Explanation</div><div style="font-size:12px;color:#5a2000">Пример + объяснение почему он важен. 2–3 предложения.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:14px 16px;background:var(--purple-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--purple);flex-shrink:0;width:50px">180–240 с</div>
+        <div><div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:3px">L — Link + вывод</div><div style="font-size:12px;color:#5a20c0">Свяжи с темой. Итоговое предложение. 1–2 предложения.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:14px 16px;background:var(--gold-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#8a6800;flex-shrink:0;width:50px">240–300 с</div>
+        <div><div style="font-weight:700;font-size:13px;color:var(--dark);margin-bottom:3px">Проверка</div><div style="font-size:12px;color:#5a4000">Быстро пройди по тексту: артикли, согласование, опечатки. Не переписывай!</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">💡</span>20 универсальных тем DET</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>💻</span>Технологии и общество</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🌱</span>Экология и климат</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🎓</span>Образование онлайн vs очно</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🏙️</span>Жизнь в городе vs деревне</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>💼</span>Удалённая работа</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🤖</span>Искусственный интеллект</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🏃</span>Спорт и здоровье</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>📱</span>Соцсети и молодёжь</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>🌍</span>Глобализация</div>
+      <div style="padding:9px 12px;background:var(--bg2);border-radius:var(--radius-sm);font-size:12px;display:flex;gap:8px;align-items:center"><span>👴</span>Стареющее население</div>
+    </div>
+    <div style="font-size:12px;color:var(--tx-faint);margin-top:10px">+ ещё 10 тем в полном уроке</div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('peel',document.querySelectorAll('.tab')[1])" class="nb-prev">← PEEL</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Тест →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">PEEL</span></div><div class="q-text">Что означает «P» в структуре PEEL?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','B','p')"><span class="ol">A</span>Paragraph</button><button class="opt" id="q1-B" onclick="dlA(1,'B','B','p')"><span class="ol">B</span>Point — главная мысль</button><button class="opt" id="q1-C" onclick="dlA(1,'C','B','p')"><span class="ol">C</span>Problem</button><button class="opt" id="q1-D" onclick="dlA(1,'D','B','p')"><span class="ol">D</span>Proof</button></div><div class="expl" id="q1-e">✅ <strong>Point</strong> — главная мысль, твоя позиция. Одно чёткое утверждение в начале абзаца.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Тайминг</span></div><div class="q-text">Сколько времени нужно тратить на планирование?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','C','t')"><span class="ol">A</span>Вообще не планировать</button><button class="opt" id="q2-B" onclick="dlA(2,'B','C','t')"><span class="ol">B</span>2–3 минуты</button><button class="opt" id="q2-C" onclick="dlA(2,'C','C','t')"><span class="ol">C</span>30 секунд — 3 ключевых слова</button><button class="opt" id="q2-D" onclick="dlA(2,'D','C','t')"><span class="ol">D</span>Всё время планировать</button></div><div class="expl" id="q2-e">✅ <strong>30 секунд</strong> — достаточно записать 3 ключевых слова позиции и пример. Дольше — теряешь время на написание.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">PEEL</span></div><div class="q-text">Что идёт после Evidence (доказательства) в PEEL?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','C','p')"><span class="ol">A</span>Ещё один Point</button><button class="opt" id="q3-B" onclick="dlA(3,'B','C','p')"><span class="ol">B</span>Conclusion</button><button class="opt" id="q3-C" onclick="dlA(3,'C','C','p')"><span class="ol">C</span>Explanation — объяснение</button><button class="opt" id="q3-D" onclick="dlA(3,'D','C','p')"><span class="ol">D</span>Link сразу</button></div><div class="expl" id="q3-e">✅ <strong>Explanation</strong> — объясни почему твой пример доказывает главную мысль. Без этого PEEL неполный.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Связующие слова</span></div><div class="q-text">Какое слово используют чтобы привести пример?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','C','w')"><span class="ol">A</span>However</button><button class="opt" id="q4-B" onclick="dlA(4,'B','C','w')"><span class="ol">B</span>Therefore</button><button class="opt" id="q4-C" onclick="dlA(4,'C','C','w')"><span class="ol">C</span>For instance</button><button class="opt" id="q4-D" onclick="dlA(4,'D','C','w')"><span class="ol">D</span>Nevertheless</button></div><div class="expl" id="q4-e">✅ <strong>For instance</strong> — для примера. However и Nevertheless — для противопоставления. Therefore — для вывода.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Тайминг</span></div><div class="q-text">Что делать в последние 30 секунд?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','C','t')"><span class="ol">A</span>Переписать весь текст</button><button class="opt" id="q5-B" onclick="dlA(5,'B','C','t')"><span class="ol">B</span>Добавить новые идеи</button><button class="opt" id="q5-C" onclick="dlA(5,'C','C','t')"><span class="ol">C</span>Быстро проверить артикли, согласование, опечатки</button><button class="opt" id="q5-D" onclick="dlA(5,'D','C','t')"><span class="ol">D</span>Ничего не делать</button></div><div class="expl" id="q5-e">✅ <strong>Проверить</strong> — не переписывай, просто быстро пройди по тексту. Артикли и согласование — самые частые ошибки.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">PEEL</span></div><div class="q-text">Что такое «L» в PEEL?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','C','p')"><span class="ol">A</span>Length — длина текста</button><button class="opt" id="q6-B" onclick="dlA(6,'B','C','p')"><span class="ol">B</span>Logic — логика</button><button class="opt" id="q6-C" onclick="dlA(6,'C','C','p')"><span class="ol">C</span>Link — связка с темой или следующим аргументом</button><button class="opt" id="q6-D" onclick="dlA(6,'D','C','p')"><span class="ol">D</span>Limitation — ограничение</button></div><div class="expl" id="q6-e">✅ <strong>Link</strong> — связующее предложение. «Therefore, it is clear that...» — закрывает мысль и готовит к следующему абзацу.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Связующие слова</span></div><div class="q-text">Какое слово означает «тем не менее, несмотря на это»?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','C','w')"><span class="ol">A</span>Furthermore</button><button class="opt" id="q7-B" onclick="dlA(7,'B','C','w')"><span class="ol">B</span>Therefore</button><button class="opt" id="q7-C" onclick="dlA(7,'C','C','w')"><span class="ol">C</span>Nevertheless</button><button class="opt" id="q7-D" onclick="dlA(7,'D','C','w')"><span class="ol">D</span>Moreover</button></div><div class="expl" id="q7-e">✅ <strong>Nevertheless</strong> — «тем не менее». Furthermore и Moreover — добавляют аргументы. Therefore — вывод.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Ошибки</span></div><div class="q-text">Что хуже всего влияет на балл за Write About the Topic?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','t')"><span class="ol">A</span>Небольшой объём текста</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','t')"><span class="ol">B</span>Несколько грамматических ошибок</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','t')"><span class="ol">C</span>Незавершённый текст — мысль обрывается</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','t')"><span class="ol">D</span>Использование простых слов</button></div><div class="expl" id="q8-e">✅ <strong>Незавершённый текст</strong> — худший исход. AI видит что мысль не закончена и снижает балл резко. Лучше меньше но завершить.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">PEEL</span></div><div class="q-text">Какая фраза — хороший Link в конце абзаца?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','C','p')"><span class="ol">A</span>«In conclusion...»</button><button class="opt" id="q9-B" onclick="dlA(9,'B','C','p')"><span class="ol">B</span>«I think...»</button><button class="opt" id="q9-C" onclick="dlA(9,'C','C','p')"><span class="ol">C</span>«Therefore, it is clear that technology plays a crucial role in...»</span></button><button class="opt" id="q9-D" onclick="dlA(9,'D','C','p')"><span class="ol">D</span>«So basically...»</button></div><div class="expl" id="q9-e">✅ Третий вариант — академический Link. «Therefore» + перефраз темы = сильное завершение абзаца.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Тайминг</span></div><div class="q-text">Сколько минут займёт написание Evidence + Explanation?</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','C','t')"><span class="ol">A</span>30 секунд</button><button class="opt" id="q10-B" onclick="dlA(10,'B','C','t')"><span class="ol">B</span>30 секунд</button><button class="opt" id="q10-C" onclick="dlA(10,'C','C','t')"><span class="ol">C</span>90 секунд (1.5 минуты)</button><button class="opt" id="q10-D" onclick="dlA(10,'D','C','t')"><span class="ol">D</span>4 минуты</button></div><div class="expl" id="q10-e">✅ <strong>90 секунд</strong> — самая большая часть (90–180 секунды). Это основной аргумент с примером и объяснением — 2–3 предложения.</div></div>
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div id="ts" style="margin-bottom:16px"></div>
+    <div class="sc-btns">
+      <a href="det_lesson10.html" class="btn-next">Урок 10: Академический стиль →</a>
+      <button class="btn-sec" onclick="showTab('peel',document.querySelectorAll('.tab')[1])">Повторить PEEL</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// ACCESS CHECK
+(function(){
+  if(localStorage.getItem('det_access') !== 'granted'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var g=document.getElementById('gate');
+      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
+    });
+    return;
+  }
+  document.body.style.visibility='visible';
+})();
+
+// WORD GAME
+const ROUNDS=[
+  {words:[{w:'government',r:true},{w:'achievation',r:false},{w:'important',r:true},{w:'developation',r:false},{w:'community',r:true},{w:'significous',r:false},{w:'establish',r:true},{w:'runness',r:false},{w:'research',r:true}]},
+  {words:[{w:'sustainable',r:true},{w:'sustainative',r:false},{w:'innovation',r:true},{w:'innovatement',r:false},{w:'awareness',r:true},{w:'awarement',r:false},{w:'effective',r:true},{w:'effectiful',r:false},{w:'substantial',r:true}]},
+  {words:[{w:'gradually',r:true},{w:'gradualish',r:false},{w:'reliable',r:true},{w:'reliabment',r:false},{w:'significant',r:true},{w:'significate',r:false},{w:'achievement',r:true},{w:'achievation',r:false},{w:'blemish',r:true}]}
+];
+let gameState={1:{clicks:{},done:false},2:{clicks:{},done:false},3:{clicks:{},done:false}};
+
+function buildRound(n){
+  const grid=document.getElementById(`r${n}-grid`);
+  const round=ROUNDS[n-1];grid.innerHTML='';
+  round.words.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className='word-btn';
+    btn.innerHTML=`${item.w}<span class="badge">${item.r?'✓':'✗'}</span>`;
+    btn.onclick=()=>handleWordClick(n,i,item,btn);
+    grid.appendChild(btn);
+  });
+  updateRoundScore(n);
+}
+function handleWordClick(rn,i,item,btn){
+  if(gameState[rn].done||gameState[rn].clicks[i])return;
+  gameState[rn].clicks[i]=true;btn.classList.add('revealed');
+  if(item.r){btn.classList.add('real');playCoin();}
+  else{btn.classList.add('fake');btn.style.animation='shake .35s ease';setTimeout(()=>btn.style.animation='',400);playWrong();}
+  updateRoundScore(rn);checkRoundDone(rn);
+}
+function updateRoundScore(rn){
+  const round=ROUNDS[rn-1];
+  const realCount=round.words.filter(w=>w.r).length;
+  const found=Object.keys(gameState[rn].clicks).filter(i=>round.words[i].r).length;
+  document.getElementById(`r${rn}-score`).textContent=`${found}/${realCount}`;
+}
+function checkRoundDone(rn){
+  const round=ROUNDS[rn-1];
+  const allReal=round.words.map((w,i)=>({...w,i})).filter(w=>w.r);
+  const allFound=allReal.every(w=>gameState[rn].clicks[w.i]);
+  const anyFake=round.words.map((w,i)=>({...w,i})).filter(w=>!w.r).some(w=>gameState[rn].clicks[w.i]);
+  if(allFound){
+    gameState[rn].done=true;
+    const grid=document.getElementById(`r${rn}-grid`);
+    const btns=grid.querySelectorAll('.word-btn');
+    btns.forEach((btn,i)=>{if(!round.words[i].r&&!gameState[rn].clicks[i])btn.classList.add('fake','revealed');});
+    const el=document.getElementById(`r${rn}-result`);
+    el.innerHTML=`<div style="padding:12px 14px;background:${!anyFake?'var(--green-pale)':'var(--gold-pale)'};border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:${!anyFake?'#2a5c00':'#5a4000'}">${!anyFake?'🏆 Идеально!':'✅ Все нашёл, но были лишние клики'}</div>`;
+    el.classList.add('show');
+    if(!anyFake)boom();
+  }
+}
+
+// AUDIO
+let _ctx=null;
+function getCtx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function playCoin(){try{const ctx=getCtx(),t=ctx.currentTime;[[1046.5,0,.09],[1318.5,.07,.07]].forEach(([f,dt,v])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+dt);g.gain.linearRampToValueAtTime(v,t+dt+.01);g.gain.exponentialRampToValueAtTime(.001,t+dt+.22);o.connect(g);g.connect(ctx.destination);o.start(t+dt);o.stop(t+dt+.25);});}catch(e){}}
+function playWrong(){try{const ctx=getCtx(),t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(100,t+.22);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3);}catch(e){}}
+function playStreak(){try{const ctx=getCtx(),t=ctx.currentTime+.04;[392,493.88,587.33].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const nt=t+i*.09;g.gain.setValueAtTime(0,nt);g.gain.linearRampToValueAtTime(.04,nt+.03);g.gain.exponentialRampToValueAtTime(.001,nt+1.8);o.start(nt);o.stop(nt+2);});}catch(e){}}
+function boom(){const c=['#9f6ff0','#58cc02','#ffc800','#1cb0f6','#ff4b4b'];for(let i=0;i<60;i++)setTimeout(()=>{const e=document.createElement('div'),s=5+Math.random()*10;e.style.cssText=`position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.5}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(e);setTimeout(()=>e.remove(),3200);},i*18);}
+
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function aXP(n){const prev=gXP(),next=prev+n;localStorage.setItem('det_xp',JSON.stringify({xp:next}));_S.sXP+=n;const hdr=document.getElementById('xp-hdr');if(hdr)hdr.textContent=next;const el=document.getElementById('hud-xp');if(el)el.textContent=next;const f=document.createElement('div');f.className='xpf';f.textContent='+'+n+' XP';f.style.cssText='top:160px;right:20px';document.body.appendChild(f);setTimeout(()=>f.remove(),1800);}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+function uStr(){const td=new Date().toDateString(),yd=new Date(Date.now()-86400000).toDateString();let d=JSON.parse(localStorage.getItem('det_streak')||'{"c":0,"l":""}');if(d.l===td)return d.c;d.c=(d.l===yd)?d.c+1:1;d.l=td;localStorage.setItem('det_streak',JSON.stringify(d));return d.c;}
+let _sbt;
+function showStreakBanner(cons){const b=document.getElementById('strk-banner');document.getElementById('strk-val').textContent='×'+cons;b.className='streak-banner in';playStreak();clearTimeout(_sbt);_sbt=setTimeout(()=>{b.className='streak-banner out';setTimeout(()=>b.className='streak-banner',400);},2000);}
+
+let _S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson9',over:false,_ret:false};
+function rHUD(){const h=document.getElementById('hud');if(!h)return;const hts=Array.from({length:3},(_,i)=>`<span id="h${i}"${i>=_S.lives?' class="lost"':''}>❤️</span>`).join('');h.innerHTML=`<div class="lives">${hts}</div><div class="timer-wrap"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(15,14,11,.08)" stroke-width="3"/><circle id="t-arc" cx="22" cy="22" r="18" fill="none" stroke="#9f6ff0" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear,stroke .3s"/></svg><div class="timer-num" id="t-n">15</div></div><div class="xp-hud">💎 <span id="hud-xp">${gXP()}</span></div>`;}
+function stTmr(q){stpTmr();_S.tLeft=15;uTUI(15);_S.timer=setInterval(()=>{_S.tLeft--;uTUI(_S.tLeft);if(_S.tLeft<=0){stpTmr();tOut(q);}},1000);}
+function stpTmr(){clearInterval(_S.timer);_S.timer=null;}
+function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElementById('t-n');if(!arc||!n)return;arc.style.strokeDashoffset=113*(1-s/15);arc.style.stroke=s<=5?'#ff4b4b':s<=8?'#ffc800':'#9f6ff0';n.textContent=s;n.style.color=s<=5?'#ff4b4b':'';}
+function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
+function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
+function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson9',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
+function dlA(q,ch,ck,tag){
+  if(_S.ans[q]||_S.over)return;
+  const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
+  document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);
+  const chosen=document.getElementById('q'+q+'-'+ch),corBtn=document.getElementById('q'+q+'-'+ck),isOk=ch===ck;
+  if(!_S.tStats[tag])_S.tStats[tag]={ok:0,total:0};_S.tStats[tag].total++;
+  if(isOk){chosen.classList.add('ok');_S.score++;_S.cons++;_S.tStats[tag].ok++;aXP(10+(fast?5:0));if(fast)_S.fast++;playCoin();if(_S.cons===3||_S.cons===5||_S.cons===7||_S.cons===10)showStreakBanner(_S.cons);if(_S.score===_S.total)boom();}
+  else{chosen.classList.add('no');chosen.style.animation='shake .35s ease';setTimeout(()=>chosen.style.animation='',400);corBtn.classList.add('reveal');_S.cons=0;lLife();}
+  const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');setTimeout(()=>ep.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  document.getElementById('pb').style.width=(Object.keys(_S.ans).length/_S.total*100)+'%';
+  if(!_S.over){const nq=q+1;if(nq<=_S.total&&!_S.ans[nq])setTimeout(()=>stTmr(nq),1000);}
+  chkDone();
+}
+function chkDone(){if(Object.keys(_S.ans).length===_S.total&&!_S.over)setTimeout(finSes,700);}
+function finSes(){if(_S.wrong.length>0&&!_S._ret)showRetry();else showScore();}
+function showRetry(){const n=_S.wrong.length;const bar=document.createElement('div');bar.className='retry';const w=n===1?'ошибка':n<=4?'ошибки':'ошибок';bar.innerHTML=`🔁 ${n} ${w} — повтори! <button class="rb" onclick="doRetry()">Повторить</button><button class="sk" onclick="skipR()">Пропустить</button>`;document.getElementById('sc').before(bar);}
+function doRetry(){_S._ret=true;document.querySelector('.retry')?.remove();const tr=[..._S.wrong];_S.wrong=[];tr.forEach(q=>{delete _S.ans[q];document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});const ep=document.getElementById('q'+q+'-e');if(ep)ep.classList.remove('on');});_S.lives=3;for(let i=0;i<3;i++){const h=document.getElementById('h'+i);if(h)h.classList.remove('lost');}setTimeout(()=>stTmr(tr[0]),500);}
+function skipR(){_S._ret=true;document.querySelector('.retry')?.remove();showScore();}
+function showScore(){
+  const sc=document.getElementById('sc');if(!sc)return;sc.classList.add('on');
+  const pct=Math.round(_S.score/_S.total*100);
+  const msgs=['Повтори паттерны 📖','Хорошее начало! 🌱','Неплохо 🎯','Хорошо! 👍','Отлично! ✨','Идеально! 🏆'];
+  const ems=['😔','🙂','😊','😄','🌟','🏆'];
+  const idx=Math.min(Math.floor(_S.score/_S.total*5),5);
+  document.getElementById('sc-em').textContent=ems[idx];
+  document.getElementById('sc-n').textContent=_S.score+'/'+_S.total;
+  document.getElementById('sc-m').textContent=msgs[idx];
+  setTimeout(()=>document.getElementById('sc-b').style.width=pct+'%',100);
+  document.getElementById('sc-str').textContent=uStr();
+  document.getElementById('sc-xp').textContent='+'+_S.sXP;
+  document.getElementById('sc-fast').textContent=_S.fast;
+  rTS();
+  localStorage.setItem(_S.lkey,JSON.stringify({score:_S.score,max:_S.total,pct,xp:_S.sXP,date:new Date().toISOString()}));
+  sc.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct===100)boom();
+}
+function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={w:'#9f6ff0',s:'#58cc02',p:'#1cb0f6'}[t]||'#58cc02';const lbl={w:'Слова',s:'Стратегия',p:'Паттерны'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
+function showTab(id,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  const s=document.getElementById('t-'+id);if(s)s.classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='game'){buildRound(1);buildRound(2);buildRound(3);}
+}
+
+
+// SPEECH
+let _v=null;
+function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
+function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+function readAloud(){spk('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');}
+function readAloudSlow(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');
+  u.lang='en-GB';u.rate=0.55;if(_v)u.voice=_v;window.speechSynthesis.speak(u);
+}
+
+window._cm={1:'C',2:'D',3:'C',4:'B',5:'D',6:'C',7:'B',8:'C',9:'C',10:'D'};
+window.addEventListener('load',()=>{
+  document.getElementById('str-n').textContent=gStr();
+  document.getElementById('xp-hdr').textContent=gXP();
+  rHUD();
+  buildRound(1);buildRound(2);buildRound(3);
+  setTimeout(()=>stTmr(1),1200);
+});
+</script>
+</body>
+</html>
