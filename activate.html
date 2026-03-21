@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Активация доступа</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.2);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--dark);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+
+/* BG */
+body::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(88,204,2,.08),transparent 60%),radial-gradient(ellipse 60% 60% at 0% 100%,rgba(159,111,240,.06),transparent 60%);pointer-events:none}
+body::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;opacity:.5}
+
+.wrap{max-width:480px;width:100%;position:relative;z-index:1;text-align:center}
+
+/* LOGO */
+.logo{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;color:#fff;text-decoration:none;margin-bottom:40px;display:inline-block}
+.logo span{color:var(--green)}
+
+/* STATES */
+.state{display:none}
+.state.on{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+
+/* ICON */
+.big-icon{font-size:64px;margin-bottom:20px;display:block}
+
+/* HEADINGS */
+.act-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.act-h span{color:var(--green)}
+.act-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:32px;max-width:360px;margin-left:auto;margin-right:auto}
+
+/* CODE INPUT */
+.code-wrap{margin-bottom:20px}
+.code-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px;display:block}
+.code-input{
+  width:100%;background:rgba(255,255,255,.06);
+  border:2px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);
+  padding:18px 20px;
+  font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;
+  color:#fff;letter-spacing:.15em;text-align:center;text-transform:uppercase;
+  outline:none;transition:all .2s;
+}
+.code-input::placeholder{color:rgba(255,255,255,.2);letter-spacing:.1em;font-size:16px}
+.code-input:focus{border-color:var(--green);background:rgba(88,204,2,.06);box-shadow:0 0 0 4px rgba(88,204,2,.1)}
+.code-input.error{border-color:var(--red);background:rgba(255,75,75,.06);animation:shake .4s ease}
+.code-input.success{border-color:var(--green);background:rgba(88,204,2,.1)}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-8px)}60%{transform:translateX(7px)}}
+
+/* ERROR MSG */
+.err-msg{background:var(--red-pale);border:1px solid rgba(255,75,75,.25);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:#8a0000;margin-bottom:16px;display:none}
+.err-msg.on{display:block;animation:fadeUp .3s ease}
+
+/* ATTEMPT COUNTER */
+.attempts{font-size:12px;color:rgba(255,255,255,.25);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+
+/* BUTTON */
+.act-btn{
+  width:100%;background:var(--green);color:#fff;
+  font-size:16px;font-weight:700;padding:17px;border-radius:100px;
+  border:none;cursor:pointer;transition:all .2s;font-family:'Manrope',sans-serif;
+  box-shadow:0 4px 24px rgba(88,204,2,.3);margin-bottom:16px;
+}
+.act-btn:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(88,204,2,.4)}
+.act-btn:active{transform:none}
+.act-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* SECONDARY */
+.sec-link{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;display:inline-block}
+.sec-link:hover{color:rgba(255,255,255,.6)}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:rgba(255,255,255,.15);font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+/* SUCCESS STATE */
+.success-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.3);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--green);margin-bottom:20px}
+
+.unlock-list{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:20px;margin-bottom:24px;text-align:left}
+.ul-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.6);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.ul-item:last-child{border-bottom:none}
+.ul-item::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+
+.go-btn{
+  display:block;background:var(--green);color:#fff;
+  font-size:16px;font-weight:700;padding:17px;border-radius:100px;
+  text-decoration:none;transition:all .2s;font-family:'Manrope',sans-serif;
+  box-shadow:0 4px 24px rgba(88,204,2,.3);margin-bottom:12px;
+  text-align:center;
+}
+.go-btn:hover{background:var(--green2);transform:translateY(-2px)}
+
+/* ALREADY ACTIVE */
+.already-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(88,204,2,.12);border:1px solid rgba(88,204,2,.25);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--green);margin-bottom:24px}
+
+/* CONFETTI */
+@keyframes cf{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+
+  <!-- STATE: ALREADY ACTIVE -->
+  <div class="state" id="s-active">
+    <span class="big-icon">🎉</span>
+    <div class="already-badge">✓ Доступ уже активирован</div>
+    <h1 class="act-h">Добро пожаловать<br>в <span>полный курс</span></h1>
+    <p class="act-sub">У тебя уже есть доступ ко всем урокам и материалам 0to160.</p>
+    <a href="lessons.html" class="go-btn">Перейти к урокам →</a>
+    <a href="#" class="sec-link" onclick="deactivate();return false">Сбросить доступ</a>
+  </div>
+
+  <!-- STATE: ENTER CODE -->
+  <div class="state on" id="s-enter">
+    <span class="big-icon">🔐</span>
+    <h1 class="act-h">Введи код<br><span>активации</span></h1>
+    <p class="act-sub">После оплаты через Kaspi — напиши нам в WhatsApp и получи персональный код доступа.</p>
+
+    <div class="code-wrap">
+      <label class="code-label" for="code-inp">Код активации</label>
+      <input
+        class="code-input"
+        id="code-inp"
+        type="text"
+        maxlength="8"
+        placeholder="XXXXXXXX"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        oninput="onCodeInput(this)"
+        onkeydown="if(event.key==='Enter')activate()"
+      >
+    </div>
+
+    <div class="err-msg" id="err-msg">❌ Неверный код. Проверь и попробуй снова.</div>
+    <div class="attempts" id="attempts-left"></div>
+
+    <button class="act-btn" id="act-btn" onclick="activate()">Активировать доступ →</button>
+
+    <div class="divider">или</div>
+
+    <p style="font-size:13px;color:rgba(255,255,255,.3);margin-bottom:12px">Ещё не оплатил?</p>
+    <a href="https://wa.me/+77772327571?text=Хочу+купить+0to160+доступ+к+урокам" class="sec-link" style="color:var(--green)">💬 Написать в WhatsApp →</a>
+    <br><br>
+    <a href="lessons.html" class="sec-link">← Вернуться к урокам</a>
+  </div>
+
+  <!-- STATE: SUCCESS -->
+  <div class="state" id="s-success">
+    <span class="big-icon" id="success-icon">🎊</span>
+    <div class="success-badge">✓ Доступ активирован!</div>
+    <h1 class="act-h">Все уроки<br><span>открыты</span></h1>
+    <p class="act-sub">Теперь у тебя есть доступ ко всем 17 урокам, практике и симуляции теста.</p>
+    <div class="unlock-list">
+      <div class="ul-item">Уроки 4–20 полностью</div>
+      <div class="ul-item">500+ практических вопросов</div>
+      <div class="ul-item">Все 9 типов вопросов DET</div>
+      <div class="ul-item">Симуляция реального теста</div>
+      <div class="ul-item">Примеры ответов на 160 баллов</div>
+      <div class="ul-item">Доступ навсегда + все обновления</div>
+    </div>
+    <a href="lessons.html" class="go-btn">Начать учиться →</a>
+    <a href="lessons.html" class="sec-link">← К списку уроков</a>
+  </div>
+
+  <!-- STATE: BLOCKED -->
+  <div class="state" id="s-blocked">
+    <span class="big-icon">⛔</span>
+    <h1 class="act-h" style="color:var(--red)">Доступ<br>заблокирован</h1>
+    <p class="act-sub">Слишком много неверных попыток. Напиши нам в WhatsApp — поможем разобраться.</p>
+    <a href="https://wa.me/+77772327571?text=Проблема+с+активацией+0to160" class="act-btn" style="display:block;text-decoration:none;text-align:center;background:var(--red);box-shadow:0 4px 24px rgba(255,75,75,.3)">Написать в WhatsApp →</a>
+    <br>
+    <a href="lessons.html" class="sec-link">← К урокам</a>
+  </div>
+</div>
+
+<script>
+// ─── КОДЫ АКТИВАЦИИ ───────────────────────────────────────────────────────
+// Добавляй новые коды сюда. Каждый код одноразовый.
+// Формат: 'КОД': 'имя_или_заметка'
+const VALID_CODES = {
+  'DET0to160': 'universal',
+  'ATOC2024':  'batch_1',
+  'IELTS0160': 'batch_2',
+  'DETREADY1': 'promo_1',
+  'DETREADY2': 'promo_2',
+  'ALMATY001': 'almaty_1',
+  'ALMATY002': 'almaty_2',
+  'ALMATY003': 'almaty_3',
+  'ASTANA001': 'astana_1',
+  'ASTANA002': 'astana_2',
+  'PROMO2025': 'promo_2025',
+  'KASPI4900': 'kaspi_standard',
+};
+
+const MAX_ATTEMPTS = 5;
+const BLOCK_KEY    = 'det_act_block';
+const ATTEMPT_KEY  = 'det_act_attempts';
+const ACCESS_KEY   = 'det_access';
+const USED_KEY     = 'det_used_codes';
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // Already active?
+  if (localStorage.getItem(ACCESS_KEY) === 'granted') {
+    show('s-active');
+    return;
+  }
+  // Blocked?
+  const blockUntil = parseInt(localStorage.getItem(BLOCK_KEY) || '0');
+  if (Date.now() < blockUntil) {
+    show('s-blocked');
+    return;
+  }
+  show('s-enter');
+  updateAttempts();
+  document.getElementById('code-inp').focus();
+});
+
+function show(id) {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function onCodeInput(el) {
+  el.value = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  el.classList.remove('error', 'success');
+  document.getElementById('err-msg').classList.remove('on');
+  const btn = document.getElementById('act-btn');
+  btn.disabled = el.value.length < 4;
+}
+
+function updateAttempts() {
+  const used = parseInt(localStorage.getItem(ATTEMPT_KEY) || '0');
+  const left = MAX_ATTEMPTS - used;
+  const el = document.getElementById('attempts-left');
+  if (used > 0 && left > 0) {
+    el.textContent = `Осталось попыток: ${left}`;
+  } else {
+    el.textContent = '';
+  }
+}
+
+function activate() {
+  const inp = document.getElementById('code-inp');
+  const code = inp.value.trim().toUpperCase();
+
+  if (!code || code.length < 4) return;
+
+  // Check attempts
+  const attempts = parseInt(localStorage.getItem(ATTEMPT_KEY) || '0');
+  if (attempts >= MAX_ATTEMPTS) {
+    // Block for 1 hour
+    localStorage.setItem(BLOCK_KEY, Date.now() + 3600000);
+    show('s-blocked');
+    return;
+  }
+
+  // Validate
+  if (VALID_CODES[code]) {
+    // SUCCESS
+    inp.classList.add('success');
+    localStorage.setItem(ACCESS_KEY, 'granted');
+    localStorage.setItem(ATTEMPT_KEY, '0');
+    localStorage.removeItem(BLOCK_KEY);
+
+    // Track used code
+    const used = JSON.parse(localStorage.getItem(USED_KEY) || '[]');
+    used.push({code, date: new Date().toISOString()});
+    localStorage.setItem(USED_KEY, JSON.stringify(used));
+
+    // Confetti!
+    boom();
+    setTimeout(() => show('s-success'), 600);
+
+  } else {
+    // FAIL
+    const newAttempts = attempts + 1;
+    localStorage.setItem(ATTEMPT_KEY, newAttempts);
+    inp.classList.add('error');
+    inp.value = '';
+
+    const errEl = document.getElementById('err-msg');
+    errEl.classList.add('on');
+
+    if (newAttempts >= MAX_ATTEMPTS) {
+      localStorage.setItem(BLOCK_KEY, Date.now() + 3600000);
+      setTimeout(() => show('s-blocked'), 800);
+    } else {
+      updateAttempts();
+      setTimeout(() => {
+        inp.classList.remove('error');
+        inp.focus();
+      }, 600);
+    }
+  }
+}
+
+function deactivate() {
+  if (!confirm('Сбросить доступ? Тебе снова понадобится код.')) return;
+  localStorage.removeItem(ACCESS_KEY);
+  localStorage.removeItem(ATTEMPT_KEY);
+  localStorage.removeItem(BLOCK_KEY);
+  show('s-enter');
+  updateAttempts();
+  setTimeout(() => document.getElementById('code-inp').focus(), 300);
+}
+
+function boom() {
+  const c = ['#58cc02','#ffc800','#9f6ff0','#1cb0f6','#ff9600','#fff'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const e = document.createElement('div');
+      const s = 5 + Math.random() * 10;
+      e.style.cssText = `position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.8}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 3500);
+    }, i * 20);
+  }
+}
+
+// Enter key on input
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('code-inp');
+  if (inp) {
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') activate();
+    });
+  }
+});
+</script>
+</body>
+</html>

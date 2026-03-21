@@ -9,196 +9,529 @@
 :root{
   --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
   --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
   --gold:#ffc800;--gold-pale:#fff8d6;
   --red:#ff4b4b;--red-pale:#ffe0e0;
   --purple:#9f6ff0;--purple-pale:#f0e8ff;
-  --accent:#58cc02;--accent-pale:#e8f9d4;
   --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
-  --border:rgba(15,14,11,.1);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
   --radius:20px;--radius-sm:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"Manrope",sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:80px}
+body{visibility:hidden;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:100px}
+
 nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
 .nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:"Unbounded",sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
 .logo span{color:var(--green)}
 .nav-right{display:flex;align-items:center;gap:10px}
-.pill{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700}
-.pill-s{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);color:#8a6800}
-.pill-x{background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);color:#5a20c0}
+.pill-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.pill-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
 .back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
 .back-link:hover{border-color:var(--green);color:var(--green)}
 
-.hero{background:var(--dark);padding:40px 20px 0;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 20% 30%,rgba(88,204,2,.08),transparent 60%);pointer-events:none}
-.hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#58cc02 30%,var(--gold) 70%,transparent)}
+.hero{background:var(--dark);padding:40px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 0% 50%,rgba(88,204,2,.08),transparent 60%),radial-gradient(ellipse 50% 50% at 100% 0%,rgba(28,176,246,.06),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green) 30%,var(--gold) 70%,transparent)}
 .hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
 .hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
 .chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
-.chip-acc{background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.25);color:#86e900}
-.chip-lock{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.25);color:var(--gold)}
-.hero-h{font-family:"Unbounded",sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
-.hero-h .hl{color:#58cc02}
+.chip-green{background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.25);color:#86e900}
+.chip-gold{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.22);color:var(--gold)}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.hero-h .hl{color:var(--green)}
 .hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
 .hero-meta{display:flex;gap:20px;flex-wrap:wrap}
-.mi{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
-.mi strong{color:rgba(255,255,255,.75)}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35);font-weight:500}
+.meta-item strong{color:rgba(255,255,255,.75)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.08);margin-top:24px}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0%;transition:width .8s ease}
+
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100}
+.tabs{display:flex;overflow-x:auto;max-width:780px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 18px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.tab.on{color:var(--green2);border-bottom-color:var(--green)}
+.tab:hover:not(.on){color:var(--tx-dim)}
 
 .cnt{max-width:780px;margin:0 auto;padding:28px 20px}
-
-.preview-hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
-.preview-hook::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(88,204,2,.12),transparent 70%);pointer-events:none}
-.ph-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#58cc02;margin-bottom:14px}
-.ph-h{font-family:"Unbounded",sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:12px}
-.ph-h .hl{color:#58cc02}
-.ph-body{font-size:14px;color:rgba(255,255,255,.45);line-height:1.8}
-.ph-body strong{color:rgba(255,255,255,.8)}
+.sec{display:none}.sec.on{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
 
 .card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
-.card-title{font-family:"Unbounded",sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.ci{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-pale)}
+.hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden}
+.hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(88,204,2,.1),transparent 70%);pointer-events:none}
+.hook-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px}
+.hook-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}
+.hook-h .hl{color:var(--green)}
+.hook-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8}
+.hook-body strong{color:rgba(255,255,255,.85);font-weight:600}
 
-.items{display:flex;flex-direction:column;gap:10px}
-.item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .2s}
-.item:hover{background:#fff;border-color:#58cc02}
-.item-icon{font-size:20px;flex-shrink:0}
-.item-text{font-size:13px;color:var(--tx-dim);line-height:1.6}
-.item-text strong{color:var(--dark)}
+.sec-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 
-.blur-wrap{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
-.blur-inner{filter:blur(7px);pointer-events:none;user-select:none;opacity:.5}
-.blur-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10}
-.blur-badge{background:rgba(15,14,11,.88);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 28px;text-align:center;backdrop-filter:blur(8px)}
-.bb-icon{font-size:28px;margin-bottom:8px}
-.bb-h{font-family:"Unbounded",sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
-.bb-s{font-size:12px;color:rgba(255,255,255,.4)}
+.tip{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#2a5c00}
+.tip-label{font-size:9px;font-weight:700;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.warn{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#5a4000}
+.warn-label{font-size:9px;font-weight:700;color:#8a6800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.info{background:var(--teal-pale);border:1px solid rgba(28,176,246,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#0a4060}
+.info-label{font-size:9px;font-weight:700;color:#0a82b8;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
 
-.fake-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px}
-.fake-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.fake-item{background:var(--bg2);border-radius:var(--radius-sm);padding:14px}
-.fi-tag{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:700;color:#58cc02;margin-bottom:5px}
-.fi-ex{font-size:12px;color:var(--tx-faint)}
+.fact{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
+.fact:last-child{border-bottom:none}
+.fact-key{font-weight:700;color:var(--dark);min-width:130px;flex-shrink:0}
+.fact-val{color:var(--tx-dim);line-height:1.6}
 
-.paywall{background:var(--dark);border-radius:var(--radius);padding:40px 28px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(88,204,2,.2)}
-.paywall::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(88,204,2,.1),transparent 60%);pointer-events:none}
-.paywall::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#58cc02,var(--gold),transparent)}
-.pw-lock{font-size:44px;margin-bottom:18px}
-.pw-h{font-family:"Unbounded",sans-serif;font-size:clamp(20px,4vw,30px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;position:relative;z-index:1}
-.pw-h span{color:var(--gold)}
-.pw-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:400px;margin:0 auto 24px;position:relative;z-index:1}
-.pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:460px;margin:0 auto 24px;text-align:left;position:relative;z-index:1}
-.pw-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
-.pw-feat::before{content:"✓";color:#58cc02;font-weight:700;flex-shrink:0}
-.pw-price{margin-bottom:20px;position:relative;z-index:1}
-.pw-num{font-family:"Unbounded",sans-serif;font-size:44px;font-weight:900;color:#fff;line-height:1}
-.pw-num sup{font-size:20px;color:rgba(255,255,255,.4);font-weight:600}
-.pw-per{font-size:12px;color:rgba(255,255,255,.25);margin-top:5px}
-.pw-btn{display:block;background:#58cc02;color:#fff;font-size:16px;font-weight:700;padding:17px 40px;border-radius:100px;text-decoration:none;transition:all .2s;font-family:"Manrope",sans-serif;box-shadow:0 4px 24px rgba(88,204,2,.35);max-width:340px;margin:0 auto 12px;position:relative;z-index:1}
-.pw-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(88,204,2,.45);filter:brightness(1.1)}
-.pw-kaspi{font-size:12px;color:rgba(255,255,255,.25);position:relative;z-index:1}
-.pw-guar{font-size:11px;color:rgba(255,255,255,.18);margin-top:14px;position:relative;z-index:1}
-.back-btn{display:block;text-align:center;background:#fff;color:var(--tx-dim);border:1.5px solid var(--border);border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:"Manrope",sans-serif;text-decoration:none;transition:all .2s;margin-top:12px}
-.back-btn:hover{border-color:var(--green);color:var(--green)}
-@media(max-width:500px){.fake-row{grid-template-columns:1fr}.pw-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
+.compare{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;margin:16px 0;font-size:13px}
+.compare th{background:var(--dark);color:#fff;padding:12px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.compare td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--tx-dim)}
+.compare tr:last-child td{border-bottom:none}
+.compare tr:nth-child(even) td{background:var(--bg2)}
+.compare .val{font-weight:700;color:var(--dark)}
+.compare .good{color:var(--green2)}
+.compare .bad{color:var(--red);opacity:.6;text-decoration:line-through}
+
+.score-scale{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.score-lvl{border-radius:var(--radius-sm);padding:16px 14px;text-align:center}
+.score-range{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;margin-bottom:4px}
+.score-name{font-size:11px;font-weight:700;margin-bottom:4px}
+.score-uni{font-size:11px;opacity:.7;line-height:1.5}
+
+.qtype-list{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.qtype-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .2s}
+.qtype-item:hover{background:#fff;border-color:var(--green)}
+.qtype-emoji{font-size:20px;flex-shrink:0}
+.qtype-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px}
+.qtype-desc{font-size:12px;color:var(--tx-dim)}
+.qtype-badge{margin-left:auto;flex-shrink:0;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.free-badge{background:var(--green-pale);color:var(--green2)}
+.paid-badge{background:var(--gold-pale);color:#8a6800}
+
+.hud{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px}
+.lives{display:flex;gap:4px;background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:100px;padding:6px 14px}
+.lives span{font-size:15px;transition:all .3s}
+.lives span.lost{opacity:.1;filter:grayscale(1);transform:scale(.6)}
+.timer-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--dark)}
+.xp-hud{display:flex;align-items:center;gap:5px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#5a20c0}
+
+.qc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint)}
+.q-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--green-pale);color:var(--green2)}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:13px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}60%{transform:translateX(6px)}}
+
+.sc{background:var(--dark);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius);padding:36px 24px;text-align:center;display:none;margin-top:16px;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),var(--gold),transparent)}
+.sc.on{display:block;animation:fadeUp .4s ease}
+.sc-em{font-size:52px;display:block;margin-bottom:12px}
+.sc-score{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.sc-label{color:rgba(255,255,255,.3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.sc-bar-wrap{background:rgba(255,255,255,.08);border-radius:100px;height:6px;max-width:280px;margin:0 auto 16px;overflow:hidden}
+.sc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--gold));transition:width 1.4s ease;width:0%}
+.sc-msg{color:rgba(255,255,255,.6);font-size:15px;font-weight:600;margin-bottom:20px;line-height:1.6}
+.sc-badges{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.sc-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 15px;text-align:center}
+.sb-ic{font-size:18px;display:block;margin-bottom:4px}
+.sb-l{color:rgba(255,255,255,.3);font-size:9px;font-weight:700;display:block;letter-spacing:.1em;text-transform:uppercase}
+.sb-v{color:#fff;font-weight:700;font-size:13px}
+.sc-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto}
+.btn-next{display:block;text-align:center;background:var(--green);color:#fff;border:none;border-radius:100px;padding:16px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-next:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s}
+
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px;margin:14px 0}
+.vi{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px;transition:all .18s;cursor:pointer}
+.vi:hover{border-color:var(--green);background:var(--green-pale)}
+.vi-word{font-weight:700;font-size:13px;color:var(--dark)}
+.vi-ipa{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);margin:4px 0 2px}
+.vi-ru{font-size:11px;color:var(--tx-faint)}
+
+.tab-nav{display:flex;gap:10px;margin-top:16px}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev:hover{border-color:var(--green);color:var(--green)}
+.nb-next{flex:1;background:var(--green);color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next:hover{background:var(--green2);transform:translateY(-2px)}
+
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.go{position:fixed;inset:0;background:rgba(15,14,11,.95);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)}
+.go.on{display:flex;animation:fadeUp .3s ease}
+.go-icon{font-size:64px;margin-bottom:16px}
+.go-h{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.go-s{color:rgba(255,255,255,.45);font-size:14px;margin-bottom:28px;line-height:1.75;max-width:280px}
+.go-btn{background:var(--red);color:#fff;border:none;border-radius:100px;padding:15px 36px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;margin-bottom:10px;width:100%;max-width:270px}
+.go-btn2{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:13px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;width:100%;max-width:270px}
+
+.retry{background:var(--red-pale);border:1px solid rgba(255,75,75,.2);color:#8a0000;border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.rb{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif}
+.sk{background:rgba(15,14,11,.08);color:var(--tx-dim);border:none;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif}
+
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:13px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+
+@keyframes bIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.streak-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:400;background:var(--dark);border:1px solid rgba(88,204,2,.3);border-radius:14px;padding:12px 26px;text-align:center;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.streak-banner.in{display:block;animation:bIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.sb-title{font-size:10px;font-weight:700;color:var(--green);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.sb-val{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff}
+
+.ts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.ts-i{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px}
+.ts-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ts-bw{background:rgba(255,255,255,.08);border-radius:100px;height:4px;overflow:hidden;margin-bottom:5px}
+.ts-bf{height:100%;border-radius:100px;transition:width .9s ease}
+.ts-n{font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+
+@media(max-width:500px){.opts{grid-template-columns:1fr}.score-scale{grid-template-columns:1fr 1fr}.cnt{padding:16px 14px}}
 </style>
 </head>
 <body>
+<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(88,204,2,.07),transparent 60%);pointer-events:none"></div>
+  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+  <div style="font-family:Unbounded,sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;letter-spacing:-.02em;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
+  <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть курса. Введи код активации или купи доступ.</p>
+  <a href="activate.html" style="display:block;background:#58cc02;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;box-shadow:0 4px 20px rgba(88,204,2,.3);position:relative;z-index:1">Ввести код активации →</a>
+  <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:13px;font-weight:600;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
+</div>
+
 <nav><div class="nav-in">
   <a href="index.html" class="logo">0<span>to</span>160</a>
   <div class="nav-right">
-    <div class="pill pill-s">🔥 <span id="str-n">0</span></div>
-    <div class="pill pill-x">💎 <span id="xp-hdr">0</span></div>
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
     <a href="lessons.html" class="back-link">← Уроки</a>
   </div>
 </div></nav>
 
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Ничего страшного — каждая ошибка делает тебя умнее. Попробуй ещё раз!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Попробовать снова</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
 <div class="hero"><div class="hero-in">
   <div class="hero-chips">
-    <span class="chip chip-acc">Урок 4 из 20</span>
-    <span class="chip chip-lock">🔒 Платный урок</span>
+    <span class="chip chip-green">Урок 4 из 20</span>
+    <span class="chip chip-gold">📖 Чтение · 15 мин</span>
   </div>
-  <h1 class="hero-h">Read and <span class="hl">Complete</span></h1>
+  <h1 class="hero-h">Read and<br><span class="hl">Complete</span></h1>
   <p class="hero-sub">Заполни пропущенные буквы в словах. Суффиксы, контекст, паттерны — всё что нужно для максимального балла.</p>
   <div class="hero-meta">
-    <div class="mi">📚 <strong>Полный урок</strong></div>
-    <div class="mi">✏️ <strong>Практика</strong></div>
-    <div class="mi">💎 <strong>+150 XP</strong></div>
-    <div class="mi">🔒 <strong>4 900 ₸</strong></div>
+    <div class="meta-item">📚 <strong>4 раздела</strong></div>
+    <div class="meta-item">❓ <strong>Практика</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+    <div class="meta-item">🆓 <strong>Платный урок</strong></div>
   </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('format',this)">🗂 Формат</div>
+  <div class="tab" onclick="showTab('scores',this)">📊 Баллы</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+  <div class="tab" onclick="showTab('vocab',this)">📝 Словарь</div>
 </div></div>
 
 <div class="cnt">
 
-<div class="preview-hook">
-  <div class="ph-label">👁️ Превью урока</div>
-  <div class="ph-h">Узнаешь как угадывать слова<br>с точностью <span class="hl">85%+</span></div>
-  <div class="ph-body">Большинство студентов просто угадывают буквы. После этого урока ты будешь знать <strong>систему</strong> — суффиксы, контекст, паттерны которые встречаются в каждом тексте DET.</div>
-</div>
-
-<div class="card">
-  <div class="card-title"><span class="ci">📋</span>Что внутри урока</div>
-  <div class="items">
-    <div class="item"><div class="item-icon">🎯</div><div class="item-text"><strong>3-шаговая стратегия</strong> — как читать текст, на что смотреть первым</div></div>
-    <div class="item"><div class="item-icon">🔑</div><div class="item-text"><strong>12 суффиксов DET</strong> — выучи и угадывай часть речи автоматически</div></div>
-    <div class="item"><div class="item-icon">🔍</div><div class="item-text"><strong>5 ключевых префиксов</strong> — подсказки значения незнакомых слов</div></div>
-    <div class="item"><div class="item-icon">✏️</div><div class="item-text"><strong>3 интерактивных текста</strong> — наука, бизнес, экология — как в реальном тесте</div></div>
-    <div class="item"><div class="item-icon">⚡</div><div class="item-text"><strong>10 вопросов теста</strong> — с таймером, жизнями и объяснениями</div></div>
+<!-- THEORY -->
+<div class="sec on" id="t-theory">
+  <div class="hook">
+    <div class="hook-label">💡 Начнём с главного</div>
+    <div class="hook-h">IELTS стоит $250 и занимает <span class="hl">3 часа</span>.<br>DET стоит $65 и занимает <span class="hl">1 час</span>.</div>
+    <div class="hook-body">И принимается в <strong>5000+ университетах</strong> мира — включая MIT, Stanford, NYU. Если ты планируешь учиться за рубежом, DET — самый быстрый и дешёвый способ подтвердить знание английского.</div>
   </div>
-</div>
-
-<div class="blur-wrap">
-  <div class="blur-inner">
-    <div class="fake-card">
-      <div class="card-title"><span class="ci">🔑</span>Ключевые материалы</div>
-      <div class="fake-row">
-        <div class="fake-item"><div class="fi-tag">-tion / -sion</div><div class="fi-ex">education, decision</div></div>
-        <div class="fake-item"><div class="fi-tag">-ment</div><div class="fi-ex">development, government</div></div>
-        <div class="fake-item"><div class="fi-tag">-ness</div><div class="fi-ex">happiness, darkness</div></div>
-        <div class="fake-item"><div class="fi-tag">-ity</div><div class="fi-ex">community, capacity</div></div>
-      </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🌍</span>Что такое Duolingo English Test</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">DET — онлайн-экзамен по английскому который ты сдаёшь <strong style="color:var(--dark)">дома, в любое время</strong>. Никаких тест-центров. Открыл ноутбук — через час результат.</p>
+    <div class="fact"><span class="fact-key">Где сдавать</span><span class="fact-val">Дома — нужен ноутбук с камерой и микрофоном + интернет</span></div>
+    <div class="fact"><span class="fact-key">Длительность</span><span class="fact-val">~60 минут. Адаптивный — сложность подстраивается под тебя</span></div>
+    <div class="fact"><span class="fact-key">Результат</span><span class="fact-val">Через 48 часов — сертификат и профиль навыков</span></div>
+    <div class="fact"><span class="fact-key">Пересдача</span><span class="fact-val">Раз в 21 день, без ограничений по количеству попыток</span></div>
+    <div class="fact"><span class="fact-key">Отправка в вузы</span><span class="fact-val">Бесплатно, в любое количество университетов</span></div>
+  </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🤖</span>Как работает проверка</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">DET проверяется <strong style="color:var(--dark)">AI + командой модераторов Duolingo</strong>. AI смотрит не только на правильность, но и на беглость, точность, произношение и словарный запас.</p>
+    <div class="warn">
+      <div class="warn-label">⚠️ Важно</div>
+      Во время теста тебя записывают на камеру. Если модераторы заметят нарушения — результат аннулируют. Готовься честно.
     </div>
   </div>
-  <div class="blur-over">
-    <div class="blur-badge">
-      <div class="bb-icon">🔒</div>
-      <div class="bb-h">Материал закрыт</div>
-      <div class="bb-s">Купи доступ чтобы продолжить</div>
+  <div class="tip">
+    <div class="tip-label">✨ Главный вывод</div>
+    DET — не просто "дешёвый IELTS". Это другой формат с другими стратегиями. Те кто готовится специально к DET набирают на 20–30 баллов больше.
+  </div>
+  <div class="tab-nav">
+    <button onclick="showTab('format',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Формат теста →</button>
+  </div>
+</div>
+
+<!-- FORMAT -->
+<div class="sec" id="t-format">
+  <div class="hook">
+    <div class="hook-label">🗂 Структура теста</div>
+    <div class="hook-h">9 типов вопросов.<br>Они <span class="hl">перемешаны</span> и идут подряд.</div>
+    <div class="hook-body">В DET нет отдельных секций. Все типы идут вперемешку. Это <strong>адаптивный тест</strong> — если отвечаешь правильно, вопросы становятся сложнее.</div>
+  </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--purple-pale)">📋</span>Все 9 типов вопросов</div>
+    <div class="qtype-list">
+      <div class="qtype-item"><div class="qtype-emoji">📖</div><div><div class="qtype-name">Read and Complete</div><div class="qtype-desc">Заполни пропущенные буквы в словах</div></div><span class="qtype-badge free-badge">Бесплатно</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">🔤</div><div><div class="qtype-name">Interactive Reading</div><div class="qtype-desc">Выбери реальные слова среди выдуманных</div></div><span class="qtype-badge free-badge">Бесплатно</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">✍️</div><div><div class="qtype-name">Write About the Photo</div><div class="qtype-desc">Опиши фотографию одним предложением</div></div><span class="qtype-badge free-badge">Бесплатно</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">🎤</div><div><div class="qtype-name">Speak About the Photo</div><div class="qtype-desc">Расскажи о фото вслух — 90 секунд</div></div><span class="qtype-badge free-badge">Бесплатно</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">👂</div><div><div class="qtype-name">Listen and Type</div><div class="qtype-desc">Напечатай то что услышал</div></div><span class="qtype-badge paid-badge">Практика</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">📝</div><div><div class="qtype-name">Fill in the Blanks</div><div class="qtype-desc">Заполни пропуски в предложениях</div></div><span class="qtype-badge paid-badge">Практика</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">📢</div><div><div class="qtype-name">Read Aloud</div><div class="qtype-desc">Прочитай текст вслух</div></div><span class="qtype-badge paid-badge">Практика</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">✍️</div><div><div class="qtype-name">Write About the Topic</div><div class="qtype-desc">Эссе на свободную тему — 5 минут</div></div><span class="qtype-badge paid-badge">Практика</span></div>
+      <div class="qtype-item"><div class="qtype-emoji">🎙️</div><div><div class="qtype-name">Speak About the Topic</div><div class="qtype-desc">Монолог на тему — 3 минуты</div></div><span class="qtype-badge paid-badge">Практика</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">⚖️</span>DET vs IELTS vs TOEFL</div>
+    <table class="compare">
+      <thead><tr><th>Параметр</th><th>DET</th><th>IELTS</th><th>TOEFL</th></tr></thead>
+      <tbody>
+        <tr><td>Цена</td><td class="val good">$65</td><td class="val bad">$250</td><td class="val bad">$230</td></tr>
+        <tr><td>Длительность</td><td class="val good">~1 час</td><td class="val bad">3 часа</td><td class="val bad">3 часа</td></tr>
+        <tr><td>Результат</td><td class="val good">48 часов</td><td class="val bad">5–13 дней</td><td class="val bad">10 дней</td></tr>
+        <tr><td>Где сдавать</td><td class="val good">Дома</td><td class="val">Тест-центр</td><td class="val">Тест-центр</td></tr>
+        <tr><td>Отправка в вузы</td><td class="val good">Бесплатно</td><td class="val bad">$20 за вуз</td><td class="val bad">$20 за вуз</td></tr>
+      </tbody>
+    </table>
+    <div class="info"><div class="info-label">ℹ️ Когда DET не подходит</div>Некоторые британские университеты до сих пор требуют IELTS. Всегда проверяй сайт конкретного вуза.</div>
+  </div>
+  <div class="tab-nav">
+    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
+    <button onclick="showTab('scores',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Баллы →</button>
+  </div>
+</div>
+
+<!-- SCORES -->
+<div class="sec" id="t-scores">
+  <div class="hook">
+    <div class="hook-label">📊 Система оценивания</div>
+    <div class="hook-h">Шкала от <span class="hl">10 до 160</span>.<br>Большинство вузов требуют <span class="hl">105–120+</span></div>
+    <div class="hook-body">Результат — одно число от 10 до 160. Плюс 4 субшкалы. Вузы смотрят в первую очередь на общий балл.</div>
+  </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">📈</span>Что значат баллы</div>
+    <div class="score-scale">
+      <div class="score-lvl" style="background:var(--red-pale)"><div class="score-range" style="color:var(--red)">10–59</div><div class="score-name" style="color:#8a0000">Начинающий</div><div class="score-uni" style="color:#8a0000">Большинство вузов не принимают</div></div>
+      <div class="score-lvl" style="background:var(--gold-pale)"><div class="score-range" style="color:#8a6800">60–94</div><div class="score-name" style="color:#8a6800">Базовый</div><div class="score-uni" style="color:#8a6800">Языковые школы, подготовительные курсы</div></div>
+      <div class="score-lvl" style="background:var(--green-pale)"><div class="score-range" style="color:var(--green2)">95–119</div><div class="score-name" style="color:var(--green2)">Хороший</div><div class="score-uni" style="color:var(--green2)">Большинство университетов мира</div></div>
+      <div class="score-lvl" style="background:var(--teal-pale)"><div class="score-range" style="color:#0a82b8">120–160</div><div class="score-name" style="color:#0a82b8">Отличный</div><div class="score-uni" style="color:#0a82b8">Топ-вузы: MIT, Stanford, UCL</div></div>
+    </div>
+    <div class="fact" style="margin-top:16px"><span class="fact-key">MIT, Harvard</span><span class="fact-val">125–130+ (проверяй сайт вуза)</span></div>
+    <div class="fact"><span class="fact-key">NYU, Boston U.</span><span class="fact-val">110–115+</span></div>
+    <div class="fact"><span class="fact-key">Средние вузы США/UK</span><span class="fact-val">95–110+</span></div>
+  </div>
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--purple-pale)">🎯</span>4 субшкалы результата</div>
+    <div class="fact"><span class="fact-key">Literacy</span><span class="fact-val">Чтение и письмо — насколько хорошо читаешь и пишешь</span></div>
+    <div class="fact"><span class="fact-key">Comprehension</span><span class="fact-val">Понимание — как понимаешь слушаемое и читаемое</span></div>
+    <div class="fact"><span class="fact-key">Conversation</span><span class="fact-val">Разговорный — беглость, интонация, взаимодействие</span></div>
+    <div class="fact"><span class="fact-key">Production</span><span class="fact-val">Производство — насколько богато выражаешь мысли</span></div>
+  </div>
+  <div class="tab-nav">
+    <button onclick="showTab('format',document.querySelectorAll('.tab')[1])" class="nb-prev">← Формат</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Проверь себя →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Факт</span></div><div class="q-text">Сколько стоит Duolingo English Test?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','C','f')"><span class="ol">A</span>$250</button><button class="opt" id="q1-B" onclick="dlA(1,'B','C','f')"><span class="ol">B</span>$150</button><button class="opt" id="q1-C" onclick="dlA(1,'C','C','f')"><span class="ol">C</span>$65</button><button class="opt" id="q1-D" onclick="dlA(1,'D','C','f')"><span class="ol">D</span>$100</button></div><div class="expl" id="q1-e">✅ <strong>$65</strong> — в 3–4 раза дешевле IELTS ($250) и TOEFL ($230). Это одно из главных преимуществ DET.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Факт</span></div><div class="q-text">Сколько времени занимает DET?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','B','f')"><span class="ol">A</span>3 часа</button><button class="opt" id="q2-B" onclick="dlA(2,'B','B','f')"><span class="ol">B</span>~1 час</button><button class="opt" id="q2-C" onclick="dlA(2,'C','B','f')"><span class="ol">C</span>2 часа</button><button class="opt" id="q2-D" onclick="dlA(2,'D','B','f')"><span class="ol">D</span>30 минут</button></div><div class="expl" id="q2-e">✅ <strong>Около 1 часа</strong> — намного быстрее IELTS и TOEFL которые занимают 3+ часа.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Формат</span></div><div class="q-text">Где сдаётся Duolingo English Test?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','D','f')"><span class="ol">A</span>В университете</button><button class="opt" id="q3-B" onclick="dlA(3,'B','D','f')"><span class="ol">B</span>В тест-центре</button><button class="opt" id="q3-C" onclick="dlA(3,'C','D','f')"><span class="ol">C</span>В посольстве</button><button class="opt" id="q3-D" onclick="dlA(3,'D','D','f')"><span class="ol">D</span>Дома, онлайн</button></div><div class="expl" id="q3-e">✅ <strong>Дома, онлайн</strong> — нужен только ноутбук с камерой и микрофоном.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Результат</span></div><div class="q-text">Через сколько приходит результат DET?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','B','f')"><span class="ol">A</span>Сразу</button><button class="opt" id="q4-B" onclick="dlA(4,'B','B','f')"><span class="ol">B</span>48 часов</button><button class="opt" id="q4-C" onclick="dlA(4,'C','B','f')"><span class="ol">C</span>2 недели</button><button class="opt" id="q4-D" onclick="dlA(4,'D','B','f')"><span class="ol">D</span>1 месяц</button></div><div class="expl" id="q4-e">✅ <strong>48 часов</strong> — два дня. IELTS ждёшь до 13 дней, TOEFL до 10 дней.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Баллы</span></div><div class="q-text">Какой диапазон баллов в DET?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','C','s')"><span class="ol">A</span>0–100</button><button class="opt" id="q5-B" onclick="dlA(5,'B','C','s')"><span class="ol">B</span>0–120</button><button class="opt" id="q5-C" onclick="dlA(5,'C','C','s')"><span class="ol">C</span>10–160</button><button class="opt" id="q5-D" onclick="dlA(5,'D','C','s')"><span class="ol">D</span>1–9</button></div><div class="expl" id="q5-e">✅ <strong>10–160</strong> — шкала DET. Цель нашего курса — помочь тебе набрать 130–160.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Баллы</span></div><div class="q-text">Какой минимальный балл требуют большинство университетов?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','C','s')"><span class="ol">A</span>60–70</button><button class="opt" id="q6-B" onclick="dlA(6,'B','C','s')"><span class="ol">B</span>80–90</button><button class="opt" id="q6-C" onclick="dlA(6,'C','C','s')"><span class="ol">C</span>95–120</button><button class="opt" id="q6-D" onclick="dlA(6,'D','C','s')"><span class="ol">D</span>150+</button></div><div class="expl" id="q6-e">✅ <strong>95–120</strong> — стандартный диапазон. Топ-вузы требуют 125–130+.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Формат</span></div><div class="q-text">Сколько типов вопросов в DET?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','C','f')"><span class="ol">A</span>4</button><button class="opt" id="q7-B" onclick="dlA(7,'B','C','f')"><span class="ol">B</span>6</button><button class="opt" id="q7-C" onclick="dlA(7,'C','C','f')"><span class="ol">C</span>9</button><button class="opt" id="q7-D" onclick="dlA(7,'D','C','f')"><span class="ol">D</span>12</button></div><div class="expl" id="q7-e">✅ <strong>9 типов</strong> — Read and Complete, Interactive Reading, Write/Speak About the Photo/Topic, Listen and Type, Fill in the Blanks, Read Aloud.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Формат</span></div><div class="q-text">Как часто можно пересдавать DET?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','f')"><span class="ol">A</span>Раз в год</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','f')"><span class="ol">B</span>Раз в 3 месяца</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','f')"><span class="ol">C</span>Раз в 21 день</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','f')"><span class="ol">D</span>Без ограничений</button></div><div class="expl" id="q8-e">✅ <strong>Раз в 21 день</strong> — намного чаще чем IELTS. Не понравился результат — пересдай через 3 недели.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Кто проверяет ответы в DET?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','C','s')"><span class="ol">A</span>Только люди</button><button class="opt" id="q9-B" onclick="dlA(9,'B','C','s')"><span class="ol">B</span>Только AI</button><button class="opt" id="q9-C" onclick="dlA(9,'C','C','s')"><span class="ol">C</span>AI + модераторы Duolingo</button><button class="opt" id="q9-D" onclick="dlA(9,'D','C','s')"><span class="ol">D</span>Университеты</button></div><div class="expl" id="q9-e">✅ <strong>AI + модераторы Duolingo</strong> — сначала ИИ, потом команда проверяет подозрительные случаи.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Сколько университетов принимают DET?</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','C','s')"><span class="ol">A</span>500+</button><button class="opt" id="q10-B" onclick="dlA(10,'B','C','s')"><span class="ol">B</span>1000+</button><button class="opt" id="q10-C" onclick="dlA(10,'C','C','s')"><span class="ol">C</span>5000+</button><button class="opt" id="q10-D" onclick="dlA(10,'D','C','s')"><span class="ol">D</span>200+</button></div><div class="expl" id="q10-e">✅ <strong>5000+ университетов</strong> — MIT, Stanford, NYU, Warwick и тысячи других. Список постоянно растёт.</div></div>
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div id="ts" style="margin-bottom:16px"></div>
+    <div class="sc-btns">
+      <a href="det_lesson5.html" class="btn-next">Урок 5: Interactive Reading →</a>
+      <button class="btn-sec" onclick="showTab('vocab',document.querySelectorAll('.tab')[4])">Словарь урока</button>
     </div>
   </div>
 </div>
 
-<div class="paywall">
-  <div class="pw-lock">🔓</div>
-  <h2 class="pw-h">Открой <span>все 17 уроков</span><br>одним платежом</h2>
-  <p class="pw-sub">Уроки 4–20 + 500+ вопросов практики + симуляция реального теста. Единоразово — навсегда.</p>
-  <div class="pw-grid">
-    <div class="pw-feat">Уроки 4–20 полностью</div>
-    <div class="pw-feat">500+ практических вопросов</div>
-    <div class="pw-feat">Все 9 типов вопросов DET</div>
-    <div class="pw-feat">Симуляция реального теста</div>
-    <div class="pw-feat">Примеры ответов на 160</div>
-    <div class="pw-feat">Доступ навсегда + обновления</div>
+<!-- VOCAB -->
+<div class="sec" id="t-vocab">
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">📝</span>Ключевые слова урока</div>
+    <div class="vocab-grid">
+      <div class="vi" onclick="spk('proficiency')"><div class="vi-word">proficiency 🔊</div><div class="vi-ipa">[prəˈfɪʃənsi]</div><div class="vi-ru">уровень владения</div></div>
+      <div class="vi" onclick="spk('adaptive')"><div class="vi-word">adaptive 🔊</div><div class="vi-ipa">[əˈdæptɪv]</div><div class="vi-ru">адаптивный</div></div>
+      <div class="vi" onclick="spk('fluency')"><div class="vi-word">fluency 🔊</div><div class="vi-ipa">[ˈfluːənsi]</div><div class="vi-ru">беглость речи</div></div>
+      <div class="vi" onclick="spk('accuracy')"><div class="vi-word">accuracy 🔊</div><div class="vi-ipa">[ˈækjərəsi]</div><div class="vi-ru">точность</div></div>
+      <div class="vi" onclick="spk('comprehension')"><div class="vi-word">comprehension 🔊</div><div class="vi-ipa">[ˌkɒmprɪˈhenʃn]</div><div class="vi-ru">понимание</div></div>
+      <div class="vi" onclick="spk('literacy')"><div class="vi-word">literacy 🔊</div><div class="vi-ipa">[ˈlɪtərəsi]</div><div class="vi-ru">грамотность</div></div>
+      <div class="vi" onclick="spk('score')"><div class="vi-word">score 🔊</div><div class="vi-ipa">[skɔːr]</div><div class="vi-ru">балл, результат</div></div>
+      <div class="vi" onclick="spk('admission')"><div class="vi-word">admission 🔊</div><div class="vi-ipa">[ədˈmɪʃn]</div><div class="vi-ru">поступление</div></div>
+    </div>
   </div>
-  <div class="pw-price">
-    <div class="pw-num">4 900 <sup>₸</sup></div>
-    <div class="pw-per">единоразово · доступ навсегда</div>
+  <div class="card" style="border-color:var(--green)">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🏆</span>Урок 1 завершён!</div>
+    <p style="font-size:14px;color:var(--tx-dim);line-height:1.8">Теперь ты знаешь что такое DET, как он устроен, и чего от тебя ждут. Следующий урок — конкретный план: как набрать 130+ за 2 недели.</p>
+    <div class="tip" style="margin-top:14px">
+      <div class="tip-label">✨ До следующего урока</div>
+      Зайди на duolingo.com/english-test и посмотри официальный демо-тест. 15 минут — и ты уже видишь реальный формат.
+    </div>
   </div>
-  <a href="https://wa.me/+77772327571?text=Хочу+купить+0to160+доступ+к+урокам" class="pw-btn">Купить доступ →</a>
-  <div class="pw-kaspi">💳 Оплата через Kaspi · WhatsApp подтверждение</div>
-  <div class="pw-guar">✓ Возврат денег в течение 24 часов если не понравится</div>
+  <a href="det_lesson5.html" class="nb-next" style="display:block;text-align:center;margin-bottom:10px">Урок 5: Interactive Reading →</a>
+  <div class="tab-nav">
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-prev">← Тест</button>
+    <a href="lessons.html" class="nb-prev">← К урокам</a>
+  </div>
 </div>
 
-<a href="lessons.html" class="back-btn">← Вернуться к урокам</a>
 </div>
 
 <script>
-function gXP(){return(JSON.parse(localStorage.getItem("det_xp")||'{"xp":0}')).xp||0;}
-function gStr(){return(JSON.parse(localStorage.getItem("det_streak")||'{"c":0}')).c||0;}
-window.addEventListener("load",()=>{
-  document.getElementById("str-n").textContent=gStr();
-  document.getElementById("xp-hdr").textContent=gXP();
+
+// ACCESS CHECK
+(function(){
+  if(localStorage.getItem('det_access') !== 'granted'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var g=document.getElementById('gate');
+      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
+    });
+    return;
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    document.body.style.visibility='visible';
+  });
+})();
+
+let _v=null;
+function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
+function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+
+let _ctx=null;
+function getCtx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function playCoin(){try{const ctx=getCtx(),t=ctx.currentTime;[[1046.5,0,.09],[1318.5,.07,.07]].forEach(([f,dt,v])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+dt);g.gain.linearRampToValueAtTime(v,t+dt+.01);g.gain.exponentialRampToValueAtTime(.001,t+dt+.22);o.connect(g);g.connect(ctx.destination);o.start(t+dt);o.stop(t+dt+.25);});}catch(e){}}
+function playWrong(){try{const ctx=getCtx(),t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(100,t+.22);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3);}catch(e){}}
+function playStreak(){try{const ctx=getCtx(),t=ctx.currentTime+.04;[392,493.88,587.33].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const nt=t+i*.09;g.gain.setValueAtTime(0,nt);g.gain.linearRampToValueAtTime(.04,nt+.03);g.gain.exponentialRampToValueAtTime(.001,nt+1.8);o.start(nt);o.stop(nt+2);});}catch(e){}}
+function boom(){const c=['#58cc02','#1cb0f6','#ffc800','#9f6ff0','#ff4b4b'];for(let i=0;i<60;i++)setTimeout(()=>{const e=document.createElement('div'),s=5+Math.random()*10;e.style.cssText=`position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.5}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(e);setTimeout(()=>e.remove(),3200);},i*18);}
+
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function aXP(n){const prev=gXP(),next=prev+n;localStorage.setItem('det_xp',JSON.stringify({xp:next}));_S.sXP+=n;const hdr=document.getElementById('xp-hdr');if(hdr)hdr.textContent=next;const el=document.getElementById('hud-xp');if(el)el.textContent=next;const f=document.createElement('div');f.className='xpf';f.textContent='+'+n+' XP';f.style.cssText='top:160px;right:20px';document.body.appendChild(f);setTimeout(()=>f.remove(),1800);}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+function uStr(){const td=new Date().toDateString(),yd=new Date(Date.now()-86400000).toDateString();let d=JSON.parse(localStorage.getItem('det_streak')||'{"c":0,"l":""}');if(d.l===td)return d.c;d.c=(d.l===yd)?d.c+1:1;d.l=td;localStorage.setItem('det_streak',JSON.stringify(d));return d.c;}
+
+let _sbt;
+function showStreakBanner(cons){const b=document.getElementById('strk-banner');document.getElementById('strk-val').textContent='×'+cons;b.className='streak-banner in';playStreak();clearTimeout(_sbt);_sbt=setTimeout(()=>{b.className='streak-banner out';setTimeout(()=>b.className='streak-banner',400);},2000);}
+
+let _S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson4',over:false,_ret:false};
+function rHUD(){const h=document.getElementById('hud');if(!h)return;const hts=Array.from({length:3},(_,i)=>`<span id="h${i}"${i>=_S.lives?' class="lost"':''}>❤️</span>`).join('');h.innerHTML=`<div class="lives">${hts}</div><div class="timer-wrap"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(15,14,11,.08)" stroke-width="3"/><circle id="t-arc" cx="22" cy="22" r="18" fill="none" stroke="#58cc02" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear,stroke .3s"/></svg><div class="timer-num" id="t-n">15</div></div><div class="xp-hud">💎 <span id="hud-xp">${gXP()}</span></div>`;}
+function stTmr(q){stpTmr();_S.tLeft=15;uTUI(15);_S.timer=setInterval(()=>{_S.tLeft--;uTUI(_S.tLeft);if(_S.tLeft<=0){stpTmr();tOut(q);}},1000);}
+function stpTmr(){clearInterval(_S.timer);_S.timer=null;}
+function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElementById('t-n');if(!arc||!n)return;arc.style.strokeDashoffset=113*(1-s/15);arc.style.stroke=s<=5?'#ff4b4b':s<=8?'#ffc800':'#58cc02';n.textContent=s;n.style.color=s<=5?'#ff4b4b':'';}
+function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
+function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
+function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson4',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
+function dlA(q,ch,ck,tag){
+  if(_S.ans[q]||_S.over)return;
+  const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
+  document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);
+  const chosen=document.getElementById('q'+q+'-'+ch),corBtn=document.getElementById('q'+q+'-'+ck),isOk=ch===ck;
+  if(!_S.tStats[tag])_S.tStats[tag]={ok:0,total:0};_S.tStats[tag].total++;
+  if(isOk){chosen.classList.add('ok');_S.score++;_S.cons++;_S.tStats[tag].ok++;aXP(10+(fast?5:0));if(fast)_S.fast++;playCoin();if(_S.cons===3||_S.cons===5||_S.cons===7||_S.cons===10)showStreakBanner(_S.cons);if(_S.score===_S.total)boom();}
+  else{chosen.classList.add('no');chosen.style.animation='shake .35s ease';setTimeout(()=>chosen.style.animation='',400);corBtn.classList.add('reveal');_S.cons=0;lLife();}
+  const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');setTimeout(()=>ep.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  document.getElementById('pb').style.width=(Object.keys(_S.ans).length/_S.total*100)+'%';
+  if(!_S.over){const nq=q+1;if(nq<=_S.total&&!_S.ans[nq])setTimeout(()=>stTmr(nq),1000);}
+  chkDone();
+}
+function chkDone(){if(Object.keys(_S.ans).length===_S.total&&!_S.over)setTimeout(finSes,700);}
+function finSes(){if(_S.wrong.length>0&&!_S._ret)showRetry();else showScore();}
+function showRetry(){const n=_S.wrong.length;const bar=document.createElement('div');bar.className='retry';const w=n===1?'ошибка':n<=4?'ошибки':'ошибок';bar.innerHTML=`🔁 ${n} ${w} — повтори! <button class="rb" onclick="doRetry()">Повторить</button><button class="sk" onclick="skipR()">Пропустить</button>`;document.getElementById('sc').before(bar);}
+function doRetry(){_S._ret=true;document.querySelector('.retry')?.remove();const tr=[..._S.wrong];_S.wrong=[];tr.forEach(q=>{delete _S.ans[q];document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});const ep=document.getElementById('q'+q+'-e');if(ep)ep.classList.remove('on');});_S.lives=3;for(let i=0;i<3;i++){const h=document.getElementById('h'+i);if(h)h.classList.remove('lost');}setTimeout(()=>stTmr(tr[0]),500);}
+function skipR(){_S._ret=true;document.querySelector('.retry')?.remove();showScore();}
+function showScore(){
+  const sc=document.getElementById('sc');if(!sc)return;sc.classList.add('on');
+  const pct=Math.round(_S.score/_S.total*100);
+  const msgs=['Повтори теорию и попробуй снова 📖','Хорошее начало! 🌱','Неплохо 🎯','Хорошо! 👍','Отлично! ✨','Идеально! 100% 🏆'];
+  const ems=['😔','🙂','😊','😄','🌟','🏆'];
+  const idx=Math.min(Math.floor(_S.score/_S.total*5),5);
+  document.getElementById('sc-em').textContent=ems[idx];
+  document.getElementById('sc-n').textContent=_S.score+'/'+_S.total;
+  document.getElementById('sc-m').textContent=msgs[idx];
+  setTimeout(()=>document.getElementById('sc-b').style.width=pct+'%',100);
+  document.getElementById('sc-str').textContent=uStr();
+  document.getElementById('sc-xp').textContent='+'+_S.sXP;
+  document.getElementById('sc-fast').textContent=_S.fast;
+  rTS();
+  localStorage.setItem(_S.lkey,JSON.stringify({score:_S.score,max:_S.total,pct,xp:_S.sXP,date:new Date().toISOString()}));
+  sc.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct===100)boom();
+}
+function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={f:'#58cc02',s:'#9f6ff0'}[t]||'#58cc02';const lbl={f:'Факты',s:'Стратегия'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
+
+function showTab(id,el){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));const s=document.getElementById('t-'+id);if(s)s.classList.add('on');if(el)el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+window._cm={1:'C',2:'B',3:'D',4:'B',5:'C',6:'C',7:'C',8:'C',9:'C',10:'C'};
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis)_pv();
+  document.getElementById('str-n').textContent=gStr();
+  document.getElementById('xp-hdr').textContent=gXP();
+  rHUD();setTimeout(()=>stTmr(1),1200);
 });
 </script>
 </body>
