@@ -59,6 +59,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,245,240,
 .filter-btn{padding:8px 18px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border);background:#fff;color:var(--tx-dim);cursor:pointer;transition:all .2s;font-family:'Manrope',sans-serif}
 .filter-btn.on{background:var(--dark);color:#fff;border-color:var(--dark)}
 .filter-btn:hover:not(.on){border-color:var(--green);color:var(--green)}
+.nav-activate{font-size:13px;font-weight:700;color:var(--green2);text-decoration:none;padding:8px 16px;border:1.5px solid rgba(88,204,2,.3);border-radius:100px;background:var(--green-pale);transition:all .2s}
+.nav-activate:hover{background:var(--green);color:#fff;border-color:var(--green)}
 
 /* MODULE LABELS */
 .module-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx-faint);margin:36px 0 14px;display:flex;align-items:center;gap:12px}
@@ -132,6 +134,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,245,240,
     <div class="nav-right">
       <div class="nav-streak">🔥 <span id="str-n">0</span></div>
       <div class="nav-xp">💎 <span id="xp-n">0</span></div>
+      <a href="activate.html" class="nav-activate">🔑 Активировать</a>
       <a href="index.html" class="back-link">← Главная</a>
     </div>
   </div>
@@ -355,6 +358,11 @@ function filterLessons(filter, btn){
 }
 
 window.addEventListener('load', () => {
+  // Hide activate button if already has access
+  if(hasAccess){
+    const btn = document.querySelector('.nav-activate');
+    if(btn){ btn.textContent = '✅ Доступ открыт'; btn.style.background='var(--green)'; btn.style.color='#fff'; btn.style.borderColor='var(--green)'; btn.style.pointerEvents='none'; }
+  }
   document.getElementById('str-n').textContent = gStr();
   document.getElementById('xp-n').textContent = gXP();
   render('all');
