@@ -1,320 +1,364 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Уроки — 0to160</title>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f7f5f0;
-      --bg2: #efecea;
-      --dark: #0f0e0b;
-      --green: #58cc02;
-      --green2: #46a302;
-      --green-pale: #e8f9d4;
-      --teal: #1cb0f6;
-      --gold: #ffc800;
-      --gold-pale: #fff8d6;
-      --tx: #0f0e0b;
-      --tx-dim: rgba(15,14,11,.55);
-      --border: rgba(15,14,11,.1);
-      --radius: 20px;
-      --radius-sm: 12px;
-    }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body {
-      font-family: 'Manrope', sans-serif;
-      background: var(--bg);
-      color: var(--tx);
-      padding: 80px 20px 40px;
-      min-height: 100vh;
-    }
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 64px;
-      background: rgba(247,245,240,.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
-      padding: 0 24px;
-    }
-    .nav-in {
-      max-width: 1100px;
-      margin: 0 auto;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .logo {
-      font-family: 'Unbounded', sans-serif;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--dark);
-      text-decoration: none;
-    }
-    .logo span { color: var(--green); }
-    .back-link {
-      font-weight: 600;
-      color: var(--tx-dim);
-      text-decoration: none;
-      padding: 8px 16px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      transition: all .2s;
-    }
-    .back-link:hover {
-      border-color: var(--green);
-      color: var(--green);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Уроки — 0to160</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:60px}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .hero-h {
-      font-family: 'Unbounded', sans-serif;
-      font-size: clamp(32px, 6vw, 52px);
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-    .hero-sub {
-      font-size: 18px;
-      color: var(--tx-dim);
-      max-width: 600px;
-      margin: 0 auto;
-    }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-in{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.nav-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
+.nav-cta{background:var(--green);color:#fff;font-size:13px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:var(--green2)}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:8px 16px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--green);color:var(--green)}
 
-    .lessons-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
-    }
+/* HERO */
+.hero{padding:100px 24px 40px;text-align:center;background:var(--bg);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(88,204,2,.06),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;opacity:.4}
+.hero-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border2);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--tx-dim);margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--dark);margin-bottom:12px;letter-spacing:-.02em;line-height:1.1}
+.hero-h span{color:var(--green)}
+.hero-sub{font-size:16px;color:var(--tx-dim);line-height:1.75;max-width:520px;margin:0 auto 28px}
 
-    .lesson-card {
-      background: white;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: all .25s ease;
-      position: relative;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-    .lesson-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,.08);
-      border-color: var(--green);
-    }
-    .lesson-card.card-locked {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    .lesson-card.card-locked::after {
-      content: "🔒 Скоро";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-15deg);
-      font-size: 32px;
-      font-weight: 900;
-      color: rgba(136,104,0,0.15);
-      pointer-events: none;
-    }
+/* PROGRESS SUMMARY */
+.prog-summary{display:inline-flex;align-items:center;gap:24px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 28px;margin:0 auto}
+.ps-item{text-align:center}
+.ps-num{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:900;color:var(--dark);line-height:1}
+.ps-num.green{color:var(--green2)}
+.ps-num.gold{color:#8a6800}
+.ps-label{font-size:10px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.ps-div{width:1px;height:36px;background:var(--border)}
 
-    .lesson-header {
-      padding: 20px 24px;
-      background: linear-gradient(135deg, #f0f9ff, #e8f9d4);
-    }
-    .lesson-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--green2);
-      margin-bottom: 4px;
-    }
-    .lesson-title {
-      font-family: 'Unbounded', sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .lesson-desc {
-      font-size: 14px;
-      color: var(--tx-dim);
-      line-height: 1.5;
-    }
+/* FILTERS */
+.filters-wrap{max-width:1100px;margin:28px auto 0;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{padding:8px 18px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border);background:#fff;color:var(--tx-dim);cursor:pointer;transition:all .2s;font-family:'Manrope',sans-serif}
+.filter-btn.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.filter-btn:hover:not(.on){border-color:var(--green);color:var(--green)}
 
-    .lesson-meta {
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--tx-dim);
-    }
-    .badge {
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-    .badge-free {
-      background: var(--green-pale);
-      color: var(--green2);
-    }
-    .badge-paid {
-      background: var(--gold-pale);
-      color: #8a6800;
-    }
+/* MODULE LABELS */
+.module-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx-faint);margin:36px 0 14px;display:flex;align-items:center;gap:12px}
+.module-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.module-label:first-of-type{margin-top:24px}
 
-    .progress-wrap {
-      height: 6px;
-      background: var(--bg2);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 12px;
-    }
-    .progress-bar {
-      height: 100%;
-      background: var(--green);
-      width: 0%;
-      transition: width .6s ease;
-    }
+/* LESSONS GRID */
+.lessons-wrap{max-width:1100px;margin:0 auto;padding:0 24px 40px}
+.lessons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
 
-    @media (max-width: 600px) {
-      .lessons-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+/* LESSON CARD */
+.lesson-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .22s;position:relative;cursor:pointer}
+.lesson-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08);border-color:var(--card-accent,var(--green))}
+.lesson-card.done{background:linear-gradient(160deg,#f6fff0,#fff);border-color:var(--green)}
+.lesson-card.locked{opacity:.55;cursor:default;pointer-events:none}
+.lesson-card.locked:hover{transform:none;box-shadow:none}
+
+/* ACCENT TOP LINE */
+.lesson-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--green));opacity:0;transition:opacity .2s}
+.lesson-card:hover::before{opacity:1}
+.lesson-card.done::before{opacity:1}
+
+.card-header{padding:20px 20px 14px}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.lesson-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--tx-faint);background:var(--bg2);padding:3px 9px;border-radius:7px;flex-shrink:0}
+.lesson-card.done .lesson-num{background:var(--green-pale);color:var(--green2)}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase}
+.lesson-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:var(--dark);line-height:1.35;margin-bottom:6px;letter-spacing:-.01em}
+.lesson-desc{font-size:12px;color:var(--tx-dim);line-height:1.65}
+
+.card-footer{margin-top:auto;padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.footer-left{display:flex;align-items:center;gap:8px}
+.time-badge{font-size:11px;color:var(--tx-faint);display:flex;align-items:center;gap:4px}
+.card-progress-wrap{flex:1;background:var(--bg2);border-radius:100px;height:4px;overflow:hidden}
+.card-progress{height:100%;border-radius:100px;background:var(--green);transition:width .7s ease}
+.pct-label{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace}
+
+/* FREE badge */
+.badge-free{background:var(--green-pale);color:var(--green2)}
+.badge-paid{background:var(--gold-pale);color:#8a6800}
+.badge-locked{background:var(--bg2);color:var(--tx-faint)}
+
+/* LOCKED overlay */
+.lock-icon{position:absolute;top:14px;right:14px;font-size:14px;opacity:.4}
+
+/* BUY BANNER */
+.buy-banner{background:var(--dark);border-radius:var(--radius);padding:28px 24px;margin:28px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden;border:1px solid rgba(255,200,0,.15)}
+.buy-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(88,204,2,.07),transparent 60%);pointer-events:none}
+.buy-banner::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--green),transparent)}
+.bb-left{position:relative;z-index:1}
+.bb-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:900;color:#fff;margin-bottom:6px;letter-spacing:-.01em}
+.bb-h span{color:var(--gold)}
+.bb-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65}
+.bb-right{position:relative;z-index:1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bb-price{text-align:center}
+.bb-amount{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1}
+.bb-period{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px}
+.bb-btn{display:inline-block;background:var(--green);color:#fff;font-size:14px;font-weight:700;padding:13px 28px;border-radius:100px;text-decoration:none;transition:all .2s;font-family:'Manrope',sans-serif;white-space:nowrap;box-shadow:0 4px 20px rgba(88,204,2,.3)}
+.bb-btn:hover{background:var(--green2);transform:translateY(-2px)}
+
+@media(max-width:768px){.lessons-grid{grid-template-columns:1fr}.prog-summary{flex-wrap:wrap;gap:16px;justify-content:center}.buy-banner{flex-direction:column}.filters-wrap{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}.filter-btn{white-space:nowrap}}
+@media(max-width:480px){nav .nav-streak,.nav-xp{display:none}}
+</style>
 </head>
 <body>
 
 <nav>
   <div class="nav-in">
     <a href="index.html" class="logo">0<span>to</span>160</a>
-    <a href="index.html" class="back-link">← На главную</a>
+    <div class="nav-right">
+      <div class="nav-streak">🔥 <span id="str-n">0</span></div>
+      <div class="nav-xp">💎 <span id="xp-n">0</span></div>
+      <a href="index.html" class="back-link">← Главная</a>
+    </div>
   </div>
 </nav>
 
 <div class="hero">
-  <h1 class="hero-h">Все уроки</h1>
-  <p class="hero-sub">20 шагов от нуля до 160. Проходи последовательно — каждый урок открывает следующий.</p>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="dot"></div>20 уроков · от нуля до 160</div>
+    <h1 class="hero-h">Программа <span>0to160</span></h1>
+    <p class="hero-sub">Каждый урок — один тип вопроса DET. Теория, стратегия, практика. На русском языке.</p>
+    <div class="prog-summary">
+      <div class="ps-item"><div class="ps-num green" id="done-count">0</div><div class="ps-label">Пройдено</div></div>
+      <div class="ps-div"></div>
+      <div class="ps-item"><div class="ps-num">20</div><div class="ps-label">Всего уроков</div></div>
+      <div class="ps-div"></div>
+      <div class="ps-item"><div class="ps-num gold" id="xp-total">0</div><div class="ps-label">XP набрано</div></div>
+    </div>
+  </div>
 </div>
 
-<div class="lessons-grid" id="lessonsList"></div>
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <button class="filter-btn on" onclick="filterLessons('all',this)">Все уроки</button>
+  <button class="filter-btn" onclick="filterLessons('free',this)">🆓 Бесплатные</button>
+  <button class="filter-btn" onclick="filterLessons('reading',this)">📖 Чтение</button>
+  <button class="filter-btn" onclick="filterLessons('writing',this)">✍️ Письмо</button>
+  <button class="filter-btn" onclick="filterLessons('speaking',this)">🎤 Говорение</button>
+  <button class="filter-btn" onclick="filterLessons('listening',this)">👂 Аудирование</button>
+  <button class="filter-btn" onclick="filterLessons('strategy',this)">⚡ Стратегия</button>
+</div>
+
+<div class="lessons-wrap" id="lessons-wrap"></div>
 
 <script>
-// Список уроков 1–7
-const lessons = [
-  { 
-    id: 1, 
-    title: "Что такое Duolingo English Test", 
-    file: "det_lesson1.html", 
-    free: true, 
-    desc: "Формат, баллы, сравнение с IELTS/TOEFL" 
-  },
-  { 
-    id: 2, 
-    title: "Как набрать 130+ за 2 недели", 
-    file: "det_lesson2.html", 
-    free: true, 
-    desc: "План на 14 дней, приоритеты, ежедневная рутина" 
-  },
-  { 
-    id: 3, 
-    title: "Технические требования и подготовка комнаты", 
-    file: "det_lesson3.html", 
-    free: true, 
-    desc: "Чек-лист, чтобы не получить бан" 
-  },
-  { 
-    id: 4, 
-    title: "Read and Complete — заполни пропущенные буквы", 
-    file: "det_lesson4.html", 
-    free: true, 
-    desc: "Самый лёгкий тип, много баллов за Literacy" 
-  },
-  { 
-    id: 5, 
-    title: "Interactive Reading — реальные слова среди фейковых", 
-    file: "det_lesson5.html", 
-    free: true, 
-    desc: "Быстрый тип, тренируем словарный запас" 
-  },
-  { 
-    id: 6, 
-    title: "Fill in the Blanks — заполни пропуски в предложениях", 
-    file: "det_lesson6.html", 
-    free: true, 
-    desc: "Коллокации, фразовые глаголы, грамматика" 
-  },
-  { 
-    id: 7, 
-    title: "Read Aloud — прочитай текст вслух", 
-    file: "det_lesson7.html", 
-    free: true, 
-    desc: "Произношение, интонация, беглость речи" 
-  }
+const LESSONS = [
+  // MODULE: ОСНОВЫ
+  {id:1,module:'basics',title:'Что такое Duolingo English Test',desc:'Формат, структура, баллы. Сравнение с IELTS и TOEFL. Почему DET выгоднее.',file:'det_lesson1.html',free:true,tags:['strategy'],color:'#58cc02',time:'10 мин'},
+  {id:2,module:'basics',title:'Как набрать 130+ за 2 недели',desc:'Пошаговый план на 14 дней. Приоритет типов вопросов. Ежедневная рутина.',file:'det_lesson2.html',free:true,tags:['strategy'],color:'#58cc02',time:'12 мин'},
+  {id:3,module:'basics',title:'Технические требования DET',desc:'Камера, микрофон, интернет. Правила комнаты. Интерактивный чеклист.',file:'det_lesson3.html',free:true,tags:['strategy'],color:'#58cc02',time:'8 мин'},
+
+  // MODULE: ЧТЕНИЕ
+  {id:4,module:'reading',title:'Read and Complete',desc:'Заполни пропущенные буквы. 12 суффиксов которые решают всё. Стратегия за 30 секунд.',file:'det_lesson4.html',free:false,tags:['reading'],color:'#1cb0f6',time:'15 мин'},
+  {id:5,module:'reading',title:'Interactive Reading',desc:'Реальные слова vs выдуманные. Паттерны фейков. Интерактивная игра — 3 раунда.',file:'det_lesson5.html',free:false,tags:['reading'],color:'#1cb0f6',time:'14 мин'},
+  {id:6,module:'reading',title:'Fill in the Blanks',desc:'Артикли, предлоги, герундий. Топ-20 ловушек для русскоязычных. 8 упражнений.',file:'det_lesson6.html',free:false,tags:['reading'],color:'#1cb0f6',time:'18 мин'},
+  {id:7,module:'reading',title:'Read Aloud',desc:'Произношение, паузы, интонация. 10 звуков которые выдают акцент. Разметка текстов.',file:'det_lesson7.html',free:false,tags:['reading'],color:'#1cb0f6',time:'16 мин'},
+
+  // MODULE: ПИСЬМО
+  {id:8,module:'writing',title:'Write About the Photo',desc:'Формула идеального предложения. 50+ шаблонов для любого фото. Топ-7 ошибок.',file:'det_lesson8.html',free:false,tags:['writing'],color:'#ff9600',time:'20 мин'},
+  {id:9,module:'writing',title:'Write About the Topic',desc:'Структура PEEL. Тайм-менеджмент на 5 минут. 20 универсальных тем DET.',file:'det_lesson9.html',free:false,tags:['writing'],color:'#ff9600',time:'22 мин'},
+  {id:10,module:'writing',title:'Академический стиль',desc:'100+ замен простых слов. Коллокации для высокого балла. Трансформация текстов.',file:'det_lesson10.html',free:false,tags:['writing'],color:'#ff9600',time:'18 мин'},
+
+  // MODULE: ГОВОРЕНИЕ
+  {id:11,module:'speaking',title:'Speak About the Photo',desc:'90 секунд уверенной речи. Формула описания. Как заполнить время без пауз.',file:'det_lesson11.html',free:false,tags:['speaking'],color:'#9f6ff0',time:'20 мин'},
+  {id:12,module:'speaking',title:'Speak About the Topic',desc:'Монолог на 3 минуты. Структура PEEL для говорения. Топ-20 универсальных тем.',file:'det_lesson12.html',free:false,tags:['speaking'],color:'#9f6ff0',time:'25 мин'},
+  {id:13,module:'speaking',title:'Произношение для 130+',desc:'10 звуков которые снижают балл. Как исправить акцент за неделю. Shadowing.',file:'det_lesson13.html',free:false,tags:['speaking'],color:'#9f6ff0',time:'22 мин'},
+
+  // MODULE: АУДИРОВАНИЕ
+  {id:14,module:'listening',title:'Listen and Type',desc:'Слушай и печатай одновременно. Техника быстрого набора. Сокращения которые помогают.',file:'det_lesson14.html',free:false,tags:['listening'],color:'#ff4b4b',time:'18 мин'},
+  {id:15,module:'listening',title:'Аудирование и акценты',desc:'Американский, британский, австралийский. Как натренировать ухо за 2 недели.',file:'det_lesson15.html',free:false,tags:['listening'],color:'#ff4b4b',time:'20 мин'},
+
+  // MODULE: ПРОДВИНУТЫЙ
+  {id:16,module:'advanced',title:'Словарный запас для 130+',desc:'500 слов которые встречаются в DET. Академические коллокации. Флэшкарты.',file:'det_lesson16.html',free:false,tags:['strategy'],color:'#ffc800',time:'25 мин'},
+  {id:17,module:'advanced',title:'Грамматика без учебников',desc:'Только то что нужно для DET. Артикли, времена, модальные — быстро и ясно.',file:'det_lesson17.html',free:false,tags:['strategy'],color:'#ffc800',time:'28 мин'},
+  {id:18,module:'advanced',title:'Симуляция реального теста',desc:'Полный пробный тест в реальных условиях. Анализ ошибок. Работа над слабыми местами.',file:'det_lesson18.html',free:false,tags:['strategy'],color:'#ffc800',time:'60 мин'},
+  {id:19,module:'advanced',title:'День перед тестом',desc:'Чеклист на 24 часа. Что делать и что не делать. Как настроить голову на результат.',file:'det_lesson19.html',free:false,tags:['strategy'],color:'#ffc800',time:'10 мин'},
+  {id:20,module:'advanced',title:'После теста: что дальше',desc:'Как читать результаты DET. Куда отправлять. Что делать если не получилось.',file:'det_lesson20.html',free:false,tags:['strategy'],color:'#ffc800',time:'12 мин'},
 ];
 
-function renderLessons() {
-  const container = document.getElementById('lessonsList');
-  if (!container) return;
+const MODULE_LABELS = {
+  basics:   'Основы DET',
+  reading:  'Чтение и словарный запас',
+  writing:  'Письмо',
+  speaking: 'Говорение',
+  listening:'Аудирование',
+  advanced: 'Продвинутый уровень',
+};
 
-  container.innerHTML = '';
+const TAG_LABEL = {
+  reading:'📖 Чтение',writing:'✍️ Письмо',speaking:'🎤 Говорение',
+  listening:'👂 Аудирование',strategy:'⚡ Стратегия',
+};
+const TAG_COLOR = {
+  reading:{bg:'#e0f4ff',color:'#0a82b8'},
+  writing:{bg:'#fff0e0',color:'#b85c00'},
+  speaking:{bg:'#f0e8ff',color:'#6a35c0'},
+  listening:{bg:'#ffe0e0',color:'#b83030'},
+  strategy:{bg:'#e8f9d4',color:'#3a8200'},
+};
 
-  lessons.forEach(lesson => {
-    const card = document.createElement('a');
-    card.href = lesson.file;
-    card.className = 'lesson-card';
+let currentFilter = 'all';
+const hasAccess = localStorage.getItem('det_access') === 'granted';
 
-    // Прогресс из localStorage
-    const stored = localStorage.getItem(`det_lesson${lesson.id}_score`);
-    const progress = stored ? JSON.parse(stored).pct || 0 : 0;
+function getProg(id){
+  try{return JSON.parse(localStorage.getItem(`det_lesson${id}`));}catch{return null;}
+}
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
 
-    // Блокировка: предыдущий урок <50%
-    const isLocked = lesson.id > 1 && 
-      (!localStorage.getItem(`det_lesson${lesson.id-1}_score`) || 
-       JSON.parse(localStorage.getItem(`det_lesson${lesson.id-1}_score`)).pct < 50);
+function buildCard(lesson){
+  const prog = getProg(lesson.id);
+  const pct = prog ? (prog.pct||0) : 0;
+  const done = pct >= 60;
+  const unlocked = lesson.free || hasAccess;
 
-    if (isLocked) {
-      card.classList.add('card-locked');
-      card.href = '#';
-    }
+  const tagHtml = lesson.tags.map(t=>{
+    const c = TAG_COLOR[t]||TAG_COLOR.strategy;
+    return `<span class="tag" style="background:${c.bg};color:${c.color}">${TAG_LABEL[t]||t}</span>`;
+  }).join('');
 
-    card.innerHTML = `
-      <div class="lesson-header">
-        <div class="lesson-num">Урок ${lesson.id}</div>
-        <div class="lesson-title">${lesson.title}</div>
-        <div class="lesson-desc">${lesson.desc}</div>
+  const badgeHtml = lesson.free
+    ? `<span class="tag badge-free">🆓 Бесплатно</span>`
+    : `<span class="tag badge-paid">💰 Практика</span>`;
+
+  const card = document.createElement('a');
+  card.href = unlocked ? lesson.file : lesson.file; // paywall pages exist for all
+  card.className = `lesson-card${done?' done':''}`;
+  card.style.setProperty('--card-accent', lesson.color);
+  card.dataset.tags = lesson.tags.join(' ');
+  card.dataset.free = lesson.free;
+  card.dataset.module = lesson.module;
+
+  card.innerHTML = `
+    ${!unlocked ? '<div class="lock-icon">🔒</div>' : ''}
+    <div class="card-header">
+      <div class="card-top">
+        <span class="lesson-num">Урок ${lesson.id}</span>
+        <div class="card-tags">${tagHtml}${badgeHtml}</div>
       </div>
-      <div class="lesson-meta">
-        <span class="badge ${lesson.free ? 'badge-free' : 'badge-paid'}">
-          ${lesson.free ? 'Бесплатно' : 'Практика'}
-        </span>
-        <div style="flex:1; margin:0 12px;">
-          <div class="progress-wrap">
-            <div class="progress-bar" style="width: ${progress}%"></div>
-          </div>
-        </div>
-        <span style="font-weight:600; color: ${progress === 100 ? 'var(--green2)' : progress > 0 ? 'var(--gold)' : 'var(--tx-dim)'}">
-          ${progress}%
-        </span>
+      <div class="lesson-title">${lesson.title}</div>
+      <div class="lesson-desc">${lesson.desc}</div>
+    </div>
+    <div class="card-footer">
+      <div class="footer-left">
+        <span class="time-badge">⏱ ${lesson.time}</span>
       </div>
-    `;
-
-    container.appendChild(card);
-  });
+      <div class="card-progress-wrap">
+        <div class="card-progress" style="width:${pct}%"></div>
+      </div>
+      <span class="pct-label" style="color:${done?'var(--green2)':pct>0?'#8a6800':'var(--tx-faint)'}">${pct}%</span>
+    </div>
+  `;
+  return card;
 }
 
-window.addEventListener('load', renderLessons);
+function buildBuyBanner(){
+  const div = document.createElement('div');
+  div.className = 'buy-banner';
+  div.innerHTML = `
+    <div class="bb-left">
+      <div class="bb-h">Открой <span>уроки 4–20</span> + 500+ вопросов</div>
+      <div class="bb-sub">Единоразово · навсегда · оплата через Kaspi</div>
+    </div>
+    <div class="bb-right">
+      <div class="bb-price">
+        <div class="bb-amount">4 900 ₸</div>
+        <div class="bb-period">единоразово</div>
+      </div>
+      <a href="https://wa.me/+77772327571?text=Хочу+купить+0to160+доступ+к+урокам" class="bb-btn">Купить доступ →</a>
+    </div>
+  `;
+  return div;
+}
+
+function render(filter = 'all'){
+  const wrap = document.getElementById('lessons-wrap');
+  wrap.innerHTML = '';
+
+  const modules = ['basics','reading','writing','speaking','listening','advanced'];
+  let bannerInserted = false;
+  let visibleCount = 0;
+
+  modules.forEach(mod => {
+    const modLessons = LESSONS.filter(l => {
+      if(l.module !== mod) return false;
+      if(filter === 'all') return true;
+      if(filter === 'free') return l.free;
+      return l.tags.includes(filter);
+    });
+    if(!modLessons.length) return;
+
+    const label = document.createElement('div');
+    label.className = 'module-label';
+    label.textContent = MODULE_LABELS[mod];
+    wrap.appendChild(label);
+
+    // Buy banner after basics module if not paid
+    if(mod === 'reading' && !hasAccess && !bannerInserted && filter === 'all'){
+      wrap.appendChild(buildBuyBanner());
+      bannerInserted = true;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'lessons-grid';
+    modLessons.forEach(l => {
+      grid.appendChild(buildCard(l));
+      visibleCount++;
+    });
+    wrap.appendChild(grid);
+  });
+
+  if(visibleCount === 0){
+    wrap.innerHTML = '<div style="text-align:center;padding:48px;color:var(--tx-faint);font-size:15px">Нет уроков в этой категории</div>';
+  }
+
+  // Update stats
+  const done = LESSONS.filter(l => {
+    const p = getProg(l.id);
+    return p && (p.pct||0) >= 60;
+  }).length;
+  const el = document.getElementById('done-count');
+  if(el) el.textContent = done;
+  const xpEl = document.getElementById('xp-total');
+  if(xpEl) xpEl.textContent = gXP();
+}
+
+function filterLessons(filter, btn){
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  render(filter);
+}
+
+window.addEventListener('load', () => {
+  document.getElementById('str-n').textContent = gStr();
+  document.getElementById('xp-n').textContent = gXP();
+  render('all');
+});
 </script>
 </body>
 </html>
