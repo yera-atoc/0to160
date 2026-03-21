@@ -199,8 +199,6 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 </style>
 </head>
 <body>
-<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(88,204,2,.07),transparent 60%);pointer-events:none"></div>
   <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
   <div style="font-family:Unbounded,sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;letter-spacing:-.02em;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
   <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть курса. Введи код активации или купи доступ.</p>
@@ -424,6 +422,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
   <a href="det_lesson5.html" class="nb-next" style="display:block;text-align:center;margin-bottom:10px">Урок 5: Interactive Reading →</a>
   <div class="tab-nav">
+    <a href="det_lesson3.html" class="nb-prev">← Урок 3</a>
     <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-prev">← Тест</button>
     <a href="lessons.html" class="nb-prev">← К урокам</a>
   </div>
@@ -432,20 +431,6 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 </div>
 
 <script>
-
-// ACCESS CHECK
-(function(){
-  if(localStorage.getItem('det_access') !== 'granted'){
-    document.addEventListener('DOMContentLoaded',function(){
-      var g=document.getElementById('gate');
-      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
-    });
-    return;
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    document.body.style.visibility='visible';
-  });
-})();
 
 let _v=null;
 function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
@@ -516,7 +501,7 @@ function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<d
 
 function showTab(id,el){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));const s=document.getElementById('t-'+id);if(s)s.classList.add('on');if(el)el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
 
-window._cm={1:'A',10:'B',2:'A',3:'C',4:'C',5:'C',6:'C',7:'C',8:'B',9:'C'};
+window._cm={1:'A',2:'A',3:'C',4:'C',5:'C',6:'C',7:'C',8:'B',9:'C',10:'B'};
 window.addEventListener('load',()=>{
   if(window.speechSynthesis)_pv();
   document.getElementById('str-n').textContent=gStr();

@@ -181,10 +181,6 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 </style>
 </head>
 <body>
-
-<!-- GATE -->
-<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,150,0,.07),transparent 60%);pointer-events:none"></div>
   <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
   <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
   <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
@@ -481,6 +477,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   </div>
 
   <div class="tab-nav">
+    <a href="det_lesson16.html" class="nb-prev">← Урок 16</a>
     <div onclick="showTab('tenses',document.querySelectorAll('.tab')[1])" class="nb-prev" role="button">← Времена</div>
     <div onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next" role="button">Тест →</div>
   </div>
@@ -536,18 +533,6 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 
 
 <script>
-// ACCESS CHECK
-(function(){
-  if(localStorage.getItem('det_access') !== 'granted'){
-    document.addEventListener('DOMContentLoaded',function(){
-      var g=document.getElementById('gate');
-      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
-    });
-    return;
-  }
-  document.body.style.visibility='visible';
-})();
-
 // WORD GAME
 const ROUNDS=[
   {words:[{w:'government',r:true},{w:'achievation',r:false},{w:'important',r:true},{w:'developation',r:false},{w:'community',r:true},{w:'significous',r:false},{w:'establish',r:true},{w:'runness',r:false},{w:'research',r:true}]},
@@ -670,10 +655,6 @@ function showTab(id,el){
 
 
 // SPEECH
-let _v=null;
-function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
-if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
-function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
 function readAloud(){spk('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');}
 function readAloudSlow(){
   if(!window.speechSynthesis)return;
@@ -683,10 +664,6 @@ function readAloudSlow(){
 }
 
 
-let _v=null;
-function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
-if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
-function spk(w){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(w));u.lang='en-GB';u.rate=0.78;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
 
 
 let _v=null;
