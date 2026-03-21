@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Урок 19: День перед тестом</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:100px;visibility:hidden}
+
+nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.pill-streak{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);font-size:12px;font-weight:700;color:#8a6800}
+.pill-xp{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);font-size:12px;font-weight:700;color:#5a20c0}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--green);color:var(--green)}
+
+.hero{background:var(--dark);padding:40px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(159,111,240,.08),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green) 30%,var(--gold) 70%,transparent)}
+.hero-in{max-width:780px;margin:0 auto;padding-bottom:32px;position:relative;z-index:1}
+.hero-chips{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.chip-purple{background:rgba(159,111,240,.15);border:1px solid rgba(159,111,240,.25);color:#c89fff}
+.chip-gold{background:rgba(255,200,0,.12);border:1px solid rgba(255,200,0,.22);color:var(--gold)}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em}
+.hero-h .hl{color:var(--purple)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:24px;max-width:560px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35)}
+.meta-item strong{color:rgba(255,255,255,.75)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.08);margin-top:24px}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0%;transition:width .8s ease}
+
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100}
+.tabs{display:flex;overflow-x:auto;max-width:780px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 18px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.tab.on{color:var(--green2);border-bottom-color:var(--green)}
+.tab:hover:not(.on){color:var(--tx-dim)}
+
+.cnt{max-width:780px;margin:0 auto;padding:28px 20px}
+.sec{display:none}.sec.on{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.hook{background:var(--dark);border-radius:var(--radius);padding:32px;margin-bottom:14px;position:relative;overflow:hidden}
+.hook::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(159,111,240,.12),transparent 70%);pointer-events:none}
+.hook-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.hook-h{font-family:'Unbounded',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}
+.hook-h .hl{color:var(--purple)}
+.hook-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8}
+.hook-body strong{color:rgba(255,255,255,.85)}
+
+.sec-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+
+.tip{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#2a5c00}
+.tip-label{font-size:9px;font-weight:700;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.warn{background:var(--gold-pale);border:1px solid rgba(255,200,0,.25);border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:13px;line-height:1.75;color:#5a4000}
+.warn-label{font-size:9px;font-weight:700;color:#8a6800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+
+/* WORD GAME */
+.word-game{margin:14px 0}
+.wg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wg-title{font-size:12px;font-weight:700;color:var(--tx-dim);letter-spacing:.06em;text-transform:uppercase}
+.wg-score{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--purple)}
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.word-btn{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px 12px;font-size:15px;font-weight:700;font-family:'Manrope',sans-serif;color:var(--dark);cursor:pointer;text-align:center;transition:all .18s;position:relative}
+.word-btn:hover:not(.revealed){border-color:var(--purple);background:var(--purple-pale);transform:translateY(-2px)}
+.word-btn.real{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.word-btn.fake{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important;text-decoration:line-through}
+.word-btn .badge{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;font-size:10px;display:none;align-items:center;justify-content:center;font-weight:700}
+.word-btn.real .badge{display:flex;background:var(--green);color:#fff}
+.word-btn.fake .badge{display:flex;background:var(--red);color:#fff}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}60%{transform:translateX(5px)}}
+.round-result{margin-top:10px;padding:12px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;display:none}
+.round-result.show{display:block}
+
+/* PATTERN GRID */
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.pattern-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:18px}
+.pat-head{font-size:11px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.pat-real{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pat-fake{display:flex;flex-wrap:wrap;gap:6px}
+.wr{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.wr.r{background:var(--green-pale);color:var(--green2)}
+.wr.f{background:var(--red-pale);color:var(--red);text-decoration:line-through;opacity:.8}
+
+/* QUIZ */
+.hud{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px}
+.lives{display:flex;gap:4px;background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:100px;padding:6px 14px}
+.lives span{font-size:15px;transition:all .3s}
+.lives span.lost{opacity:.1;filter:grayscale(1);transform:scale(.6)}
+.timer-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.timer-wrap svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--dark)}
+.xp-hud{display:flex;align-items:center;gap:5px;background:var(--purple-pale);border:1px solid rgba(88,204,2,.2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#5a20c0}
+.qc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint)}
+.q-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--purple-pale);color:var(--purple)}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:13px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+
+.sc{background:var(--dark);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius);padding:36px 24px;text-align:center;display:none;margin-top:16px;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--gold),transparent)}
+.sc.on{display:block;animation:fadeUp .4s ease}
+.sc-em{font-size:52px;display:block;margin-bottom:12px}
+.sc-score{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.sc-label{color:rgba(255,255,255,.3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.sc-bar-wrap{background:rgba(255,255,255,.08);border-radius:100px;height:6px;max-width:280px;margin:0 auto 16px;overflow:hidden}
+.sc-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--gold));transition:width 1.4s ease;width:0%}
+.sc-msg{color:rgba(255,255,255,.6);font-size:15px;font-weight:600;margin-bottom:20px;line-height:1.6}
+.sc-badges{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.sc-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 15px;text-align:center}
+.sb-ic{font-size:18px;display:block;margin-bottom:4px}
+.sb-l{color:rgba(255,255,255,.3);font-size:9px;font-weight:700;display:block;letter-spacing:.1em;text-transform:uppercase}
+.sb-v{color:#fff;font-weight:700;font-size:13px}
+.sc-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto}
+.btn-next{display:block;text-align:center;background:var(--green);color:#fff;border:none;border-radius:100px;padding:16px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-next:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-sec{display:block;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:100px;padding:14px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer}
+
+.tab-nav{display:flex;gap:10px;margin-top:16px}
+.nb-prev{flex:0 0 auto;background:#fff;border:1.5px solid var(--border);color:var(--tx-dim);border-radius:100px;padding:14px 20px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+.nb-prev:hover{border-color:var(--green);color:var(--green)}
+.nb-next{flex:1;background:var(--green)};color:#fff;border:none;border-radius:100px;padding:14px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.nb-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.go{position:fixed;inset:0;background:rgba(15,14,11,.95);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)}
+.go.on{display:flex;animation:fadeUp .3s ease}
+.go-icon{font-size:64px;margin-bottom:16px}
+.go-h{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.go-s{color:rgba(255,255,255,.45);font-size:14px;margin-bottom:28px;line-height:1.75;max-width:280px}
+.go-btn{background:var(--red);color:#fff;border:none;border-radius:100px;padding:15px 36px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;margin-bottom:10px;width:100%;max-width:270px}
+.go-btn2{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:13px 24px;font-size:13px;font-weight:600;font-family:'Manrope',sans-serif;cursor:pointer;width:100%;max-width:270px}
+.retry{background:var(--red-pale);border:1px solid rgba(88,204,2,.2);color:#8a0000;border-radius:var(--radius-sm);padding:13px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.rb{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif}
+.sk{background:rgba(15,14,11,.08);color:var(--tx-dim);border:none;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif}
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:13px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+@keyframes bIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.streak-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:400;background:var(--dark);border:1px solid rgba(88,204,2,.3);border-radius:14px;padding:12px 26px;text-align:center;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.streak-banner.in{display:block;animation:bIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.sb-title{font-size:10px;font-weight:700;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.sb-val{font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff}
+.ts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.ts-i{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px}
+.ts-l{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ts-bw{background:rgba(255,255,255,.08);border-radius:100px;height:4px;overflow:hidden;margin-bottom:5px}
+.ts-bf{height:100%;border-radius:100px;transition:width .9s ease}
+.ts-n{font-size:11px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+@media(max-width:500px){.opts{grid-template-columns:1fr}.word-grid{grid-template-columns:1fr 1fr}.pattern-grid{grid-template-columns:1fr}.cnt{padding:16px 14px}}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate" style="display:none;position:fixed;inset:0;background:#0f0e0b;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;font-family:Manrope,sans-serif">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(88,204,2,.07),transparent 60%);pointer-events:none"></div>
+  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+  <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
+  <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
+  <a href="activate.html" style="display:block;background:#58cc02;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;position:relative;z-index:1">Ввести код активации →</a>
+  <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:13px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
+</div>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill-streak">🔥 <span id="str-n">0</span></div>
+    <div class="pill-xp">💎 <span id="xp-hdr">0</span></div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="streak-banner" id="strk-banner">
+  <div class="sb-title">🔥 Серия ответов</div>
+  <div class="sb-val" id="strk-val">×3</div>
+</div>
+
+<div class="go" id="go">
+  <div class="go-icon">💔</div>
+  <div class="go-h">Жизни кончились</div>
+  <div class="go-s">Попробуй ещё раз!</div>
+  <button class="go-btn" onclick="restartLesson()">🔄 Ещё раз</button>
+  <button class="go-btn2" onclick="location.href='lessons.html'">← К урокам</button>
+</div>
+
+<div class="hero"><div class="hero-in">
+  <div class="hero-chips">
+    <span class="chip chip-orange">Урок 19 из 20</span>
+    <span class="chip chip-gold">📅 Чеклист · 10 мин</span>
+  </div>
+  <h1 class="hero-h">Interactive<br><span class="hl">Reading</span></h1>
+  <p class="hero-sub">Настоящее слово или выдуманное? Узнай паттерны которые Duolingo использует для фейков и повысь точность с 60% до 85%+.</p>
+  <div class="hero-meta">
+    <div class="meta-item">🧠 <strong>4 раздела</strong></div>
+    <div class="meta-item">🎮 <strong>Игра с 3 раундами</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+</div></div>
+
+<div class="tabs-wrap"><div class="tabs">
+  <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
+  <div class="tab" onclick="showTab('patterns',this)">🚩 Паттерны</div>
+  <div class="tab" onclick="showTab('game',this)">🎮 Игра</div>
+  <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
+</div></div>
+
+<div class="cnt">
+
+<!-- CHECKLIST -->
+<div class="sec on" id="t-checklist">
+  <div class="hook">
+    <div class="hook-label">✅ За 24 часа до теста</div>
+    <div class="hook-h">Последний день —<br><span class="hl">это не день учёбы.</span></div>
+    <div class="hook-body">За 24 часа до теста твой мозг уже не успеет усвоить новый материал. Зато может отдохнуть, настроиться и вспомнить всё что ты уже знаешь. <strong>Правильный последний день</strong> — это стратегия, а не паника.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">📅</span>Чеклист за 24 часа — интерактивный</div>
+    <p style="font-size:13px;color:var(--tx-dim);margin-bottom:14px">Отмечай пункты по мере выполнения:</p>
+    <div id="checklist" style="display:flex;flex-direction:column;gap:8px"></div>
+    <div style="margin-top:16px;padding:12px 14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px;color:#2a5c00;display:none" id="cl-done">
+      🎉 Отлично! Ты готов. Ложись спать — всё остальное сделано.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🔧</span>Техническая проверка</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">💻</span><div><strong>Проверь браузер</strong> — DET работает в Chrome. Обнови до последней версии заранее.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">🎤</span><div><strong>Проверь микрофон</strong> — зайди в настройки браузера и убедись что микрофон работает и имеет разрешение.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">📷</span><div><strong>Проверь камеру</strong> — хорошее освещение спереди (не сзади). Лицо должно быть чётко видно.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">🌐</span><div><strong>Проверь интернет</strong> — запусти speedtest.net. Минимум 5 Мбит/с. Подключись по кабелю если есть возможность.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">🔋</span><div><strong>Зарядни устройство</strong> — 100% заряд + зарядка подключена во время теста. Ноутбук не должен выключиться.</div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-size:16px;flex-shrink:0">🪞</span><div><strong>Проверь комнату</strong> — чистый фон, нет людей, нет посторонних объектов на стенах за спиной.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('dont',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Чего не делать →</button>
+  </div>
+</div>
+
+<!-- DON'T -->
+<div class="sec" id="t-dont">
+  <div class="hook">
+    <div class="hook-label">🚫 Чего не делать</div>
+    <div class="hook-h">5 ошибок которые<br><span class="hl">совершают все накануне.</span></div>
+    <div class="hook-body">Эти ошибки снижают результат даже у хорошо подготовленных студентов. Избежать их — так же важно как хорошо учиться.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">🚫</span>Топ-5 ошибок накануне</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="border:1.5px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--red-pale);padding:11px 14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">😰</span>
+          <span style="font-weight:700;font-size:13px;color:#8a0000">Учить новый материал до поздней ночи</span>
+        </div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.7">
+          За 24 часа мозг не успеет усвоить ничего нового. Зато недосып гарантированно снизит концентрацию на 20–30%. <strong>Правило: после 20:00 — никакой новой информации.</strong>
+        </div>
+      </div>
+      <div style="border:1.5px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--red-pale);padding:11px 14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">☕</span>
+          <span style="font-weight:700;font-size:13px;color:#8a0000">Пить много кофе с утра</span>
+        </div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.7">
+          Кофеин в большом количестве вызывает тревожность и тремор голоса — именно то что нужно избежать в заданиях на говорение. <strong>Максимум одна чашка за 2 часа до теста.</strong>
+        </div>
+      </div>
+      <div style="border:1.5px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--red-pale);padding:11px 14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🌙</span>
+          <span style="font-weight:700;font-size:13px;color:#8a0000">Лечь позже обычного времени</span>
+        </div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.7">
+          «Посплю 5 часов — этого хватит» — нет. Мозгу нужен нормальный сон. <strong>Ложись в то же время что обычно, не позже 23:00.</strong>
+        </div>
+      </div>
+      <div style="border:1.5px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--red-pale);padding:11px 14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">😱</span>
+          <span style="font-weight:700;font-size:13px;color:#8a0000">Читать форумы и чужие результаты</span>
+        </div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.7">
+          «У него 145, а у меня будет меньше» — сравнение с другими перед тестом вызывает панику. <strong>Закрой Reddit, YouTube, TikTok с историями о DET.</strong>
+        </div>
+      </div>
+      <div style="border:1.5px solid rgba(255,75,75,.2);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--red-pale);padding:11px 14px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🍔</span>
+          <span style="font-weight:700;font-size:13px;color:#8a0000">Плотно есть прямо перед тестом</span>
+        </div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.7">
+          После тяжёлой еды кровь идёт к желудку — мозг работает медленнее. <strong>Лёгкий завтрак за 1.5–2 часа до теста.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">✅</span>Что делать вместо этого</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:10px;padding:11px 14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="flex-shrink:0">🎵</span><div><strong>Вечером</strong> — лёгкая прогулка, музыка, фильм на английском (без субтитров — для разгрева слуха)</div>
+      </div>
+      <div style="display:flex;gap:10px;padding:11px 14px;background:var(--green-pale);border-radius:var(--border-radius, 12px);border-radius:var(--radius-sm);font-size:13px">
+        <span style="flex-shrink:0">📖</span><div><strong>Перед сном</strong> — перечитай свои заметки (не учи новое, просто вспомни). 15 минут максимум.</div>
+      </div>
+      <div style="display:flex;gap:10px;padding:11px 14px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:13px">
+        <span style="flex-shrink:0">🌅</span><div><strong>Утром</strong> — лёгкий завтрак, стакан воды, 5 минут чтения вслух для разогрева голоса</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('checklist',document.querySelectorAll('.tab')[0])" class="nb-prev">← Чеклист</button>
+    <button onclick="showTab('mindset',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Настрой →</button>
+  </div>
+</div>
+
+<!-- MINDSET -->
+<div class="sec" id="t-mindset">
+  <div class="hook">
+    <div class="hook-label">🧠 Психология теста</div>
+    <div class="hook-h">Тревога — нормально.<br><span class="hl">Паника — управляема.</span></div>
+    <div class="hook-body">Небольшое волнение перед тестом <strong>повышает</strong> результат — мозг работает острее. Паника — снижает. Разница в том как ты интерпретируешь своё состояние.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🧘</span>Техники управления тревогой</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--teal-pale);padding:10px 14px;font-weight:700;font-size:13px;color:#0a4060">Дыхание 4-7-8</div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.75">
+          Вдох на <strong>4 счёта</strong> → задержка на <strong>7 счётов</strong> → выдох на <strong>8 счётов</strong>. Повтори 3 раза. Снижает кортизол за 2 минуты. Делай прямо перед началом теста.
+        </div>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--green-pale);padding:10px 14px;font-weight:700;font-size:13px;color:#2a5c00">Переосмысление волнения</div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.75">
+          Когда чувствуешь тревогу — скажи себе: <strong>«Я взволнован — это значит мозг готовится к важной задаче»</strong>. Исследования показывают: такая интерпретация повышает результат тестов на 10–15%.
+        </div>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">
+        <div style="background:var(--purple-pale);padding:10px 14px;font-weight:700;font-size:13px;color:#5a20c0">Правило 2 минут</div>
+        <div style="padding:12px 14px;background:#fff;font-size:13px;color:var(--tx-dim);line-height:1.75">
+          Перед тестом встань прямо, расправь плечи, смотри вперёд. Поза уверенности в течение 2 минут снижает кортизол и повышает тестостерон — буквально меняет химию мозга.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">💡</span>Мантры для теста</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:13px 16px;background:var(--gold-pale);border-radius:var(--radius-sm);font-size:14px;font-style:italic;color:#5a4000;border-left:3px solid var(--gold)">
+        «Я подготовился. Я знаю структуру. Я знаю стратегии. Мне нужно просто применить их.»
+      </div>
+      <div style="padding:13px 16px;background:var(--teal-pale);border-radius:var(--radius-sm);font-size:14px;font-style:italic;color:#0a4060;border-left:3px solid var(--teal)">
+        «Если не знаю слово — продолжаю. Если замолчал — продолжаю. Каждое следующее задание — новый шанс.»
+      </div>
+      <div style="padding:13px 16px;background:var(--green-pale);border-radius:var(--radius-sm);font-size:14px;font-style:italic;color:#2a5c00;border-left:3px solid var(--green)">
+        «Волнение — это энергия. Я направляю её в фокус.»
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">🌅</span>Расписание утра в день теста</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;gap:12px;padding:10px 13px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green2);flex-shrink:0;width:60px">−2 ч</span>
+        <span>Проснись, выпей стакан воды, лёгкий завтрак</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 13px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green2);flex-shrink:0;width:60px">−90 мин</span>
+        <span>Прочитай вслух 1 абзац на английском — разогрей голос</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 13px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green2);flex-shrink:0;width:60px">−60 мин</span>
+        <span>Техническая проверка: браузер, микрофон, камера, интернет</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 13px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green2);flex-shrink:0;width:60px">−30 мин</span>
+        <span>Закрой все приложения кроме браузера. Убери телефон.</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 13px;background:var(--bg2);border-radius:var(--radius-sm);font-size:13px;align-items:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green2);flex-shrink:0;width:60px">−5 мин</span>
+        <span>Дыхание 4-7-8 × 3. Поза уверенности 2 минуты. Начинай.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button onclick="showTab('dont',document.querySelectorAll('.tab')[1])" class="nb-prev">← Чего не делать</button>
+    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Тест →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
+  <div class="hud" id="hud"></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Нужно ли учить новый материал в день перед тестом?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','B','s')"><span class="ol">A</span>Да — повторить все уроки</button><button class="opt" id="q1-B" onclick="dlA(1,'B','B','s')"><span class="ol">B</span>Нет — мозг не успеет усвоить новое, лучше отдохнуть</button><button class="opt" id="q1-C" onclick="dlA(1,'C','B','s')"><span class="ol">C</span>Да — учить до 3 ночи</button><button class="opt" id="q1-D" onclick="dlA(1,'D','B','s')"><span class="ol">D</span>Да — только сложные темы</button></div><div class="expl" id="q1-e">✅ <strong>Нет</strong> — за 24 часа мозг не усвоит новое. Зато недосып снизит результат на 20–30%. После 20:00 — никакой новой информации.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Какой браузер нужен для DET?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','B','t')"><span class="ol">A</span>Safari</button><button class="opt" id="q2-B" onclick="dlA(2,'B','B','t')"><span class="ol">B</span>Chrome</button><button class="opt" id="q2-C" onclick="dlA(2,'C','B','t')"><span class="ol">C</span>Firefox</button><button class="opt" id="q2-D" onclick="dlA(2,'D','B','t')"><span class="ol">D</span>Edge</button></div><div class="expl" id="q2-e">✅ <strong>Chrome</strong> — DET официально работает только в Google Chrome. Обнови до последней версии заранее, не в день теста.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Психология</span></div><div class="q-text">Как правильно интерпретировать волнение перед тестом?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','C','m')"><span class="ol">A</span>«Я не готов, всё провалю»</button><button class="opt" id="q3-B" onclick="dlA(3,'B','C','m')"><span class="ol">B</span>«Нужно успокоиться и не волноваться»</button><button class="opt" id="q3-C" onclick="dlA(3,'C','C','m')"><span class="ol">C</span>«Я взволнован — мозг готовится к важной задаче»</button><button class="opt" id="q3-D" onclick="dlA(3,'D','C','m')"><span class="ol">D</span>Игнорировать волнение</button></div><div class="expl" id="q3-e">✅ <strong>Переосмысление</strong> — исследования показывают: интерпретация волнения как «готовности» повышает результат на 10–15%. Волнение = энергия.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Когда нужен лёгкий завтрак перед тестом?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','C','s')"><span class="ol">A</span>Прямо перед тестом</button><button class="opt" id="q4-B" onclick="dlA(4,'B','C','s')"><span class="ol">B</span>За 30 минут</button><button class="opt" id="q4-C" onclick="dlA(4,'C','C','s')"><span class="ol">C</span>За 1.5–2 часа</button><button class="opt" id="q4-D" onclick="dlA(4,'D','C','s')"><span class="ol">D</span>Не есть вообще</button></div><div class="expl" id="q4-e">✅ <strong>За 1.5–2 часа</strong> — после тяжёлой еды кровь идёт к желудку и мозг работает медленнее. Лёгкий завтрак за 1.5–2 часа — оптимально.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Зачем проверять освещение перед тестом?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','C','t')"><span class="ol">A</span>Для красивой картинки</button><button class="opt" id="q5-B" onclick="dlA(5,'B','C','t')"><span class="ol">B</span>Не нужно проверять</button><button class="opt" id="q5-C" onclick="dlA(5,'C','C','t')"><span class="ol">C</span>AI должен чётко видеть лицо — это часть верификации личности</button><button class="opt" id="q5-D" onclick="dlA(5,'D','C','t')"><span class="ol">D</span>Требование университета</button></div><div class="expl" id="q5-e">✅ <strong>Верификация личности</strong> — DET проверяет что за экраном именно ты. Свет должен быть спереди, лицо чётко видно. Тёмное лицо = риск дисквалификации.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Психология</span></div><div class="q-text">Что такое техника дыхания 4-7-8?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','C','m')"><span class="ol">A</span>Дышать 4 раза в минуту</button><button class="opt" id="q6-B" onclick="dlA(6,'B','C','m')"><span class="ol">B</span>Упражнение для голоса</button><button class="opt" id="q6-C" onclick="dlA(6,'C','C','m')"><span class="ol">C</span>Вдох на 4, задержка на 7, выдох на 8 — снижает тревогу за 2 минуты</button><button class="opt" id="q6-D" onclick="dlA(6,'D','C','m')"><span class="ol">D</span>Техника быстрого сна</button></div><div class="expl" id="q6-e">✅ <strong>4-7-8</strong> — активирует парасимпатическую нервную систему. Снижает кортизол за 2 минуты. Делай 3 цикла прямо перед началом теста.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Что делать за 90 минут до теста?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','C','s')"><span class="ol">A</span>Читать новые правила DET</button><button class="opt" id="q7-B" onclick="dlA(7,'B','C','s')"><span class="ol">B</span>Смотреть видео с чужими результатами</button><button class="opt" id="q7-C" onclick="dlA(7,'C','C','s')"><span class="ol">C</span>Прочитать вслух один абзац — разогреть голос</button><button class="opt" id="q7-D" onclick="dlA(7,'D','C','s')"><span class="ol">D</span>Решать грамматические задачи</button></div><div class="expl" id="q7-e">✅ <strong>Разогреть голос</strong> — прочитай 1 абзац вслух по-английски. Голосовые связки нужно «разбудить» перед заданиями на говорение.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Минимальная скорость интернета для DET?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','t')"><span class="ol">A</span>1 Мбит/с</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','t')"><span class="ol">B</span>2 Мбит/с</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','t')"><span class="ol">C</span>5 Мбит/с</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','t')"><span class="ol">D</span>100 Мбит/с</button></div><div class="expl" id="q8-e">✅ <strong>5 Мбит/с</strong> — минимум. Проверь на speedtest.net. По кабелю надёжнее Wi-Fi. Попроси домашних не смотреть видео во время теста.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Психология</span></div><div class="q-text">Что делать если во время теста замолчал или допустил ошибку?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','C','m')"><span class="ol">A</span>Паниковать и думать об ошибке</button><button class="opt" id="q9-B" onclick="dlA(9,'B','C','m')"><span class="ol">B</span>Попросить перезапустить тест</button><button class="opt" id="q9-C" onclick="dlA(9,'C','C','m')"><span class="ol">C</span>Продолжать — каждое следующее задание новый шанс</button><button class="opt" id="q9-D" onclick="dlA(9,'D','C','m')"><span class="ol">D</span>Сдаться и выйти</button></div><div class="expl" id="q9-e">✅ <strong>Продолжать</strong> — каждое задание оценивается отдельно. Одна ошибка не рушит весь тест. Сброс фокуса после ошибки — это и есть главный навык.</div></div>
+
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Небольшое волнение перед тестом...</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','B','m')"><span class="ol">A</span>Снижает результат</button><button class="opt" id="q10-B" onclick="dlA(10,'B','B','m')"><span class="ol">B</span>Повышает результат — мозг работает острее</button><button class="opt" id="q10-C" onclick="dlA(10,'C','B','m')"><span class="ol">C</span>Не влияет на результат</button><button class="opt" id="q10-D" onclick="dlA(10,'D','B','m')"><span class="ol">D</span>Признак плохой подготовки</button></div><div class="expl" id="q10-e">✅ <strong>Повышает результат</strong> — умеренное волнение = оптимальный уровень активации нервной системы. Мозг в «боевой готовности» работает лучше чем расслабленный.</div></div>
+
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
+    <div class="sc-score" id="sc-n">0/10</div>
+    <div class="sc-label">правильных ответов</div>
+    <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+    <div class="sc-msg" id="sc-m"></div>
+    <div class="sc-badges">
+      <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
+    </div>
+    <div id="ts" style="margin-bottom:16px"></div>
+    <div class="sc-btns">
+      <a href="det_lesson20.html" class="btn-next">Урок 20: После теста →</a>
+      <button class="btn-sec" onclick="showTab('checklist',document.querySelectorAll('.tab')[0])">К чеклисту</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// ACCESS CHECK
+(function(){
+  if(localStorage.getItem('det_access') !== 'granted'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var g=document.getElementById('gate');
+      if(g){g.style.display='flex';document.body.style.overflow='hidden';}
+    });
+    return;
+  }
+  document.body.style.visibility='visible';
+})();
+
+// WORD GAME
+const ROUNDS=[
+  {words:[{w:'government',r:true},{w:'achievation',r:false},{w:'important',r:true},{w:'developation',r:false},{w:'community',r:true},{w:'significous',r:false},{w:'establish',r:true},{w:'runness',r:false},{w:'research',r:true}]},
+  {words:[{w:'sustainable',r:true},{w:'sustainative',r:false},{w:'innovation',r:true},{w:'innovatement',r:false},{w:'awareness',r:true},{w:'awarement',r:false},{w:'effective',r:true},{w:'effectiful',r:false},{w:'substantial',r:true}]},
+  {words:[{w:'gradually',r:true},{w:'gradualish',r:false},{w:'reliable',r:true},{w:'reliabment',r:false},{w:'significant',r:true},{w:'significate',r:false},{w:'achievement',r:true},{w:'achievation',r:false},{w:'blemish',r:true}]}
+];
+let gameState={1:{clicks:{},done:false},2:{clicks:{},done:false},3:{clicks:{},done:false}};
+
+function buildRound(n){
+  const grid=document.getElementById(`r${n}-grid`);
+  const round=ROUNDS[n-1];grid.innerHTML='';
+  round.words.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className='word-btn';
+    btn.innerHTML=`${item.w}<span class="badge">${item.r?'✓':'✗'}</span>`;
+    btn.onclick=()=>handleWordClick(n,i,item,btn);
+    grid.appendChild(btn);
+  });
+  updateRoundScore(n);
+}
+function handleWordClick(rn,i,item,btn){
+  if(gameState[rn].done||gameState[rn].clicks[i])return;
+  gameState[rn].clicks[i]=true;btn.classList.add('revealed');
+  if(item.r){btn.classList.add('real');playCoin();}
+  else{btn.classList.add('fake');btn.style.animation='shake .35s ease';setTimeout(()=>btn.style.animation='',400);playWrong();}
+  updateRoundScore(rn);checkRoundDone(rn);
+}
+function updateRoundScore(rn){
+  const round=ROUNDS[rn-1];
+  const realCount=round.words.filter(w=>w.r).length;
+  const found=Object.keys(gameState[rn].clicks).filter(i=>round.words[i].r).length;
+  document.getElementById(`r${rn}-score`).textContent=`${found}/${realCount}`;
+}
+function checkRoundDone(rn){
+  const round=ROUNDS[rn-1];
+  const allReal=round.words.map((w,i)=>({...w,i})).filter(w=>w.r);
+  const allFound=allReal.every(w=>gameState[rn].clicks[w.i]);
+  const anyFake=round.words.map((w,i)=>({...w,i})).filter(w=>!w.r).some(w=>gameState[rn].clicks[w.i]);
+  if(allFound){
+    gameState[rn].done=true;
+    const grid=document.getElementById(`r${rn}-grid`);
+    const btns=grid.querySelectorAll('.word-btn');
+    btns.forEach((btn,i)=>{if(!round.words[i].r&&!gameState[rn].clicks[i])btn.classList.add('fake','revealed');});
+    const el=document.getElementById(`r${rn}-result`);
+    el.innerHTML=`<div style="padding:12px 14px;background:${!anyFake?'var(--green-pale)':'var(--gold-pale)'};border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:${!anyFake?'#2a5c00':'#5a4000'}">${!anyFake?'🏆 Идеально!':'✅ Все нашёл, но были лишние клики'}</div>`;
+    el.classList.add('show');
+    if(!anyFake)boom();
+  }
+}
+
+// AUDIO
+let _ctx=null;
+function getCtx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function playCoin(){try{const ctx=getCtx(),t=ctx.currentTime;[[1046.5,0,.09],[1318.5,.07,.07]].forEach(([f,dt,v])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+dt);g.gain.linearRampToValueAtTime(v,t+dt+.01);g.gain.exponentialRampToValueAtTime(.001,t+dt+.22);o.connect(g);g.connect(ctx.destination);o.start(t+dt);o.stop(t+dt+.25);});}catch(e){}}
+function playWrong(){try{const ctx=getCtx(),t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(100,t+.22);g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3);}catch(e){}}
+function playStreak(){try{const ctx=getCtx(),t=ctx.currentTime+.04;[392,493.88,587.33].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const nt=t+i*.09;g.gain.setValueAtTime(0,nt);g.gain.linearRampToValueAtTime(.04,nt+.03);g.gain.exponentialRampToValueAtTime(.001,nt+1.8);o.start(nt);o.stop(nt+2);});}catch(e){}}
+function boom(){const c=['#9f6ff0','#58cc02','#ffc800','#1cb0f6','#ff4b4b'];for(let i=0;i<60;i++)setTimeout(()=>{const e=document.createElement('div'),s=5+Math.random()*10;e.style.cssText=`position:fixed;top:-12px;left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:cf ${1.2+Math.random()*1.5}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(e);setTimeout(()=>e.remove(),3200);},i*18);}
+
+function gXP(){return(JSON.parse(localStorage.getItem('det_xp')||'{"xp":0}')).xp||0;}
+function aXP(n){const prev=gXP(),next=prev+n;localStorage.setItem('det_xp',JSON.stringify({xp:next}));_S.sXP+=n;const hdr=document.getElementById('xp-hdr');if(hdr)hdr.textContent=next;const el=document.getElementById('hud-xp');if(el)el.textContent=next;const f=document.createElement('div');f.className='xpf';f.textContent='+'+n+' XP';f.style.cssText='top:160px;right:20px';document.body.appendChild(f);setTimeout(()=>f.remove(),1800);}
+function gStr(){return(JSON.parse(localStorage.getItem('det_streak')||'{"c":0}')).c||0;}
+function uStr(){const td=new Date().toDateString(),yd=new Date(Date.now()-86400000).toDateString();let d=JSON.parse(localStorage.getItem('det_streak')||'{"c":0,"l":""}');if(d.l===td)return d.c;d.c=(d.l===yd)?d.c+1:1;d.l=td;localStorage.setItem('det_streak',JSON.stringify(d));return d.c;}
+let _sbt;
+function showStreakBanner(cons){const b=document.getElementById('strk-banner');document.getElementById('strk-val').textContent='×'+cons;b.className='streak-banner in';playStreak();clearTimeout(_sbt);_sbt=setTimeout(()=>{b.className='streak-banner out';setTimeout(()=>b.className='streak-banner',400);},2000);}
+
+let _S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson19',over:false,_ret:false};
+function rHUD(){const h=document.getElementById('hud');if(!h)return;const hts=Array.from({length:3},(_,i)=>`<span id="h${i}"${i>=_S.lives?' class="lost"':''}>❤️</span>`).join('');h.innerHTML=`<div class="lives">${hts}</div><div class="timer-wrap"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(15,14,11,.08)" stroke-width="3"/><circle id="t-arc" cx="22" cy="22" r="18" fill="none" stroke="#9f6ff0" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear,stroke .3s"/></svg><div class="timer-num" id="t-n">15</div></div><div class="xp-hud">💎 <span id="hud-xp">${gXP()}</span></div>`;}
+function stTmr(q){stpTmr();_S.tLeft=15;uTUI(15);_S.timer=setInterval(()=>{_S.tLeft--;uTUI(_S.tLeft);if(_S.tLeft<=0){stpTmr();tOut(q);}},1000);}
+function stpTmr(){clearInterval(_S.timer);_S.timer=null;}
+function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElementById('t-n');if(!arc||!n)return;arc.style.strokeDashoffset=113*(1-s/15);arc.style.stroke=s<=5?'#ff4b4b':s<=8?'#ffc800':'#9f6ff0';n.textContent=s;n.style.color=s<=5?'#ff4b4b':'';}
+function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
+function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
+function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson19',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
+function dlA(q,ch,ck,tag){
+  if(_S.ans[q]||_S.over)return;
+  const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
+  document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);
+  const chosen=document.getElementById('q'+q+'-'+ch),corBtn=document.getElementById('q'+q+'-'+ck),isOk=ch===ck;
+  if(!_S.tStats[tag])_S.tStats[tag]={ok:0,total:0};_S.tStats[tag].total++;
+  if(isOk){chosen.classList.add('ok');_S.score++;_S.cons++;_S.tStats[tag].ok++;aXP(10+(fast?5:0));if(fast)_S.fast++;playCoin();if(_S.cons===3||_S.cons===5||_S.cons===7||_S.cons===10)showStreakBanner(_S.cons);if(_S.score===_S.total)boom();}
+  else{chosen.classList.add('no');chosen.style.animation='shake .35s ease';setTimeout(()=>chosen.style.animation='',400);corBtn.classList.add('reveal');_S.cons=0;lLife();}
+  const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');setTimeout(()=>ep.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  document.getElementById('pb').style.width=(Object.keys(_S.ans).length/_S.total*100)+'%';
+  if(!_S.over){const nq=q+1;if(nq<=_S.total&&!_S.ans[nq])setTimeout(()=>stTmr(nq),1000);}
+  chkDone();
+}
+function chkDone(){if(Object.keys(_S.ans).length===_S.total&&!_S.over)setTimeout(finSes,700);}
+function finSes(){if(_S.wrong.length>0&&!_S._ret)showRetry();else showScore();}
+function showRetry(){const n=_S.wrong.length;const bar=document.createElement('div');bar.className='retry';const w=n===1?'ошибка':n<=4?'ошибки':'ошибок';bar.innerHTML=`🔁 ${n} ${w} — повтори! <button class="rb" onclick="doRetry()">Повторить</button><button class="sk" onclick="skipR()">Пропустить</button>`;document.getElementById('sc').before(bar);}
+function doRetry(){_S._ret=true;document.querySelector('.retry')?.remove();const tr=[..._S.wrong];_S.wrong=[];tr.forEach(q=>{delete _S.ans[q];document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});const ep=document.getElementById('q'+q+'-e');if(ep)ep.classList.remove('on');});_S.lives=3;for(let i=0;i<3;i++){const h=document.getElementById('h'+i);if(h)h.classList.remove('lost');}setTimeout(()=>stTmr(tr[0]),500);}
+function skipR(){_S._ret=true;document.querySelector('.retry')?.remove();showScore();}
+function showScore(){
+  const sc=document.getElementById('sc');if(!sc)return;sc.classList.add('on');
+  const pct=Math.round(_S.score/_S.total*100);
+  const msgs=['Повтори паттерны 📖','Хорошее начало! 🌱','Неплохо 🎯','Хорошо! 👍','Отлично! ✨','Идеально! 🏆'];
+  const ems=['😔','🙂','😊','😄','🌟','🏆'];
+  const idx=Math.min(Math.floor(_S.score/_S.total*5),5);
+  document.getElementById('sc-em').textContent=ems[idx];
+  document.getElementById('sc-n').textContent=_S.score+'/'+_S.total;
+  document.getElementById('sc-m').textContent=msgs[idx];
+  setTimeout(()=>document.getElementById('sc-b').style.width=pct+'%',100);
+  document.getElementById('sc-str').textContent=uStr();
+  document.getElementById('sc-xp').textContent='+'+_S.sXP;
+  document.getElementById('sc-fast').textContent=_S.fast;
+  rTS();
+  localStorage.setItem(_S.lkey,JSON.stringify({score:_S.score,max:_S.total,pct,xp:_S.sXP,date:new Date().toISOString()}));
+  sc.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct===100)boom();
+}
+function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={w:'#9f6ff0',s:'#58cc02',p:'#1cb0f6'}[t]||'#58cc02';const lbl={w:'Слова',s:'Стратегия',p:'Паттерны'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
+function showTab(id,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  const s=document.getElementById('t-'+id);if(s)s.classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='game'){buildRound(1);buildRound(2);buildRound(3);}
+}
+
+
+// SPEECH
+let _v=null;
+function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
+function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+function readAloud(){spk('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');}
+function readAloudSlow(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');
+  u.lang='en-GB';u.rate=0.55;if(_v)u.voice=_v;window.speechSynthesis.speak(u);
+}
+
+
+let _v=null;
+function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
+function spk(w){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(w));u.lang='en-GB';u.rate=0.78;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+
+
+let _v=null;
+function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
+function spk(w){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(w));u.lang='en-GB';u.rate=0.8;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+
+
+// INTERACTIVE CHECKLIST
+const CL_ITEMS = [
+  {id:'cl1', text:'Зарядил устройство до 100% и подключил зарядку'},
+  {id:'cl2', text:'Обновил Chrome до последней версии'},
+  {id:'cl3', text:'Проверил микрофон — работает и имеет разрешение'},
+  {id:'cl4', text:'Проверил камеру — лицо видно чётко, свет спереди'},
+  {id:'cl5', text:'Проверил интернет — минимум 5 Мбит/с'},
+  {id:'cl6', text:'Убрал лишние предметы из поля зрения камеры'},
+  {id:'cl7', text:'Предупредил домашних чтобы не шумели во время теста'},
+  {id:'cl8', text:'Установил время будильника с запасом'},
+  {id:'cl9', text:'Знаю логин и пароль от аккаунта Duolingo'},
+  {id:'cl10', text:'Лёг спать не позже 23:00'},
+];
+let clState = {};
+function buildChecklist(){
+  const el = document.getElementById('checklist');
+  if(!el) return;
+  el.innerHTML = CL_ITEMS.map(item => `
+    <div id="${item.id}-row" onclick="toggleCL('${item.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:${clState[item.id]?'var(--green-pale)':'var(--bg2)'};border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;border:1.5px solid ${clState[item.id]?'rgba(88,204,2,.2)':'var(--border)'}">
+      <div style="width:22px;height:22px;border-radius:6px;border:2px solid ${clState[item.id]?'var(--green)':'var(--border2)'};background:${clState[item.id]?'var(--green)':'#fff'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s">
+        ${clState[item.id]?'<span style="color:#fff;font-size:12px;font-weight:700">✓</span>':''}
+      </div>
+      <span style="font-size:13px;color:${clState[item.id]?'var(--green2)':'var(--tx-dim)'};font-weight:${clState[item.id]?'600':'400'}">${item.text}</span>
+    </div>
+  `).join('');
+  const done = Object.values(clState).filter(Boolean).length;
+  const doneEl = document.getElementById('cl-done');
+  if(doneEl) doneEl.style.display = done === CL_ITEMS.length ? 'block' : 'none';
+}
+function toggleCL(id){
+  clState[id] = !clState[id];
+  playCoin();
+  buildChecklist();
+}
+document.addEventListener('DOMContentLoaded', buildChecklist);
+
+window._cm={1:'C',2:'D',3:'C',4:'B',5:'D',6:'C',7:'B',8:'C',9:'C',10:'D'};
+window.addEventListener('load',()=>{
+  document.getElementById('str-n').textContent=gStr();
+  document.getElementById('xp-hdr').textContent=gXP();
+  rHUD();
+  buildRound(1);buildRound(2);buildRound(3);
+  setTimeout(()=>stTmr(1),1200);
+});
+</script>
+</body>
+</html>
