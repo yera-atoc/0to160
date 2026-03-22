@@ -169,7 +169,7 @@ body::after{content:'';position:absolute;inset:0;background-image:linear-gradien
     <div class="unlock-list">
       <div class="ul-item">Уроки 4–20 полностью</div>
       <div class="ul-item">500+ практических вопросов</div>
-      <div class="ul-item">Все 9 типов вопросов DET</div>
+      <div class="ul-item">Все 8 типов вопросов DET</div>
       <div class="ul-item">Симуляция реального теста</div>
       <div class="ul-item">Примеры ответов на 160 баллов</div>
       <div class="ul-item">Доступ навсегда + все обновления</div>
@@ -193,20 +193,27 @@ body::after{content:'';position:absolute;inset:0;background-image:linear-gradien
 // ─── КОДЫ АКТИВАЦИИ ───────────────────────────────────────────────────────
 // Добавляй новые коды сюда. Каждый код одноразовый.
 // Формат: 'КОД': 'имя_или_заметка'
-const VALID_CODES = {
-  'DET0to160': 'universal',
-  'ATOC2024':  'batch_1',
-  'IELTS0160': 'batch_2',
-  'DETREADY1': 'promo_1',
-  'DETREADY2': 'promo_2',
-  'ALMATY001': 'almaty_1',
-  'ALMATY002': 'almaty_2',
-  'ALMATY003': 'almaty_3',
-  'ASTANA001': 'astana_1',
-  'ASTANA002': 'astana_2',
-  'PROMO2025': 'promo_2025',
-  'ATOC0TO160': 'kaspi_standard',
-};
+// Коды хешируются с солью — даже зная алгоритм, подобрать код нельзя
+const _S = '50e039477b9ec16eed8f946553c8bfa2';
+const VALID_HASHES = new Set([
+  'd8c4d8bfe4f76338dd02a75fc2a6ef20faec42ed4ba8067544c340ed3710a55d',
+  '7ab35477c2331e41a4a020925d4c188f376ee013e5fe3684abd456344c0f83d8',
+  'f3f22cbdf4ce648bcdeb8327f5ef79c1ebf06fdadf1e6615ee8cfb4164130792',
+  '3ab44dac78cf565c107bfd18ba94b1a39e781a81b62dae258b5e313991f66eb5',
+  '315555daaaea93fcd257b0f0bda9df9e1e6b57d5b1fb01c7fdfe42de0e7987b4',
+  '52d1feb2e7f65078261abb27bd8b584011431996711d18f152fb471f83354920',
+  'b3cfb1d840dea1833db925032133859d3c2ddbed07e66fb5b14db9d2d8c9c76f',
+  '98f049c2568028391c211299025223af52ae3ee71bbdbd5a90f55f73bc9a80e9',
+  '94413269bb879e923aa6fc80d9ebe4567c6b16bef146af7f114e1c715f0d8bef',
+  'fbf017728995fd97efd7beb84e330464189a6edc441a73dd933cc7ff564ccff2',
+  '2ec83db87a28d1087877a5e03e3fa1ab8ba5c2dae40ba7d69356fd52d72e795a',
+  '256822f2ccf4b98ce28455e9d544832535aa146adcd8829ce63e6f03ae0c3e18',
+]);
+
+async function hashCode(code) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(_S + code));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
 
 const MAX_ATTEMPTS = 5;
 const BLOCK_KEY    = 'det_act_block';
@@ -271,8 +278,9 @@ function activate() {
     return;
   }
 
-  // Validate
-  if (VALID_CODES[code]) {
+  // Validate (async hash check)
+  hashCode(code).then(hash => {
+  if (VALID_HASHES.has(hash)) {
     // SUCCESS
     inp.classList.add('success');
     localStorage.setItem(ACCESS_KEY, 'granted');
@@ -309,6 +317,7 @@ function activate() {
       }, 600);
     }
   }
+  }); // end hashCode.then
 }
 
 function deactivate() {
