@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0to160 · Практика — все типы вопросов DET</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#efecea;--dark:#0f0e0b;
+  --green:#58cc02;--green2:#46a302;--green-pale:#e8f9d4;
+  --teal:#1cb0f6;--teal-pale:#e0f4ff;
+  --gold:#ffc800;--gold-pale:#fff8d6;
+  --red:#ff4b4b;--red-pale:#ffe0e0;
+  --purple:#9f6ff0;--purple-pale:#f0e8ff;
+  --orange:#ff9600;--orange-pale:#fff0d6;
+  --tx:#0f0e0b;--tx-dim:rgba(15,14,11,.55);--tx-faint:rgba(15,14,11,.3);
+  --border:rgba(15,14,11,.1);--border2:rgba(15,14,11,.18);
+  --radius:20px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;padding-bottom:80px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}
+.nav-in{max-width:900px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:900;color:var(--dark);text-decoration:none}
+.logo span{color:var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.pill{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700}
+.pill-xp{background:var(--purple-pale);border:1px solid rgba(159,111,240,.25);color:#5a20c0}
+.back-link{font-size:13px;font-weight:600;color:var(--tx-dim);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back-link:hover{border-color:var(--green);color:var(--green)}
+
+/* HERO */
+.hero{background:var(--dark);padding:36px 20px 0;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 0% 50%,rgba(88,204,2,.08),transparent),radial-gradient(ellipse 40% 40% at 100% 0%,rgba(28,176,246,.06),transparent);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green) 30%,var(--gold) 70%,transparent)}
+.hero-in{max-width:900px;margin:0 auto;padding-bottom:28px;position:relative;z-index:1}
+.hero-h{font-family:'Unbounded',sans-serif;font-size:clamp(20px,4vw,32px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:8px;letter-spacing:-.02em}
+.hero-h .hl{color:var(--green)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:20px;max-width:520px}
+.hero-stats{display:flex;gap:20px;flex-wrap:wrap}
+.hstat{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.35);font-weight:500}
+.hstat strong{color:rgba(255,255,255,.75)}
+
+/* TYPE FILTER */
+.filter-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100;overflow-x:auto}
+.filter-wrap::-webkit-scrollbar{display:none}
+.filter{display:flex;max-width:900px;margin:0 auto;padding:0 20px}
+.filt{flex-shrink:0;padding:13px 16px;font-size:11px;font-weight:700;color:var(--tx-faint);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.filt.on{color:var(--green2);border-bottom-color:var(--green)}
+.filt:hover:not(.on){color:var(--tx-dim)}
+.filt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* MAIN LAYOUT */
+.main{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:14px;border-bottom:2px solid var(--border)}
+.sec-hdr-l{display:flex;align-items:center;gap:12px}
+.sec-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sec-name{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:var(--dark)}
+.sec-count{font-size:12px;color:var(--tx-faint);font-weight:600}
+.sec-score{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--tx-dim)}
+
+/* QUESTION TYPES */
+/* --- READ AND COMPLETE --- */
+.rac-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.rac-text{font-size:16px;line-height:2;color:var(--dark);margin-bottom:16px}
+.rac-blank{display:inline-flex;align-items:flex-end;gap:2px;vertical-align:middle;margin:0 5px;position:relative;cursor:text}
+.rac-blank input{position:absolute;opacity:0;width:1px;height:1px;top:0;left:0;border:none;outline:none}
+.rac-letter{width:16px;height:28px;border-bottom:2.5px solid var(--border2);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;padding-bottom:2px;transition:all .1s;color:transparent}
+.rac-letter.hint{color:var(--tx-dim);border-bottom-color:var(--green)}
+.rac-letter.typed{color:var(--dark);border-bottom-color:var(--purple)}
+.rac-letter.ok-l{color:var(--green2)!important;border-bottom-color:var(--green)!important;background:var(--green-pale);border-radius:3px 3px 0 0}
+.rac-letter.no-l{color:var(--red)!important;border-bottom-color:var(--red)!important;background:var(--red-pale);border-radius:3px 3px 0 0}
+.rac-hint{font-size:12px;color:var(--tx-faint);margin-top:8px}
+
+/* --- INTERACTIVE READING (real words) --- */
+.ir-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.ir-word{padding:10px 18px;background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;user-select:none}
+.ir-word:hover{border-color:var(--teal);background:var(--teal-pale)}
+.ir-word.sel{background:var(--teal-pale);border-color:var(--teal);color:#0a82b8}
+.ir-word.ok{background:var(--green-pale);border-color:var(--green);color:var(--green2)}
+.ir-word.no{background:var(--red-pale);border-color:var(--red);color:var(--red)}
+.ir-word.missed{background:var(--gold-pale);border-color:var(--gold);color:#8a6800}
+
+/* --- FILL IN THE BLANKS --- */
+.fitb-text{font-size:15px;line-height:2.2;color:var(--dark)}
+.fitb-input{border:none;border-bottom:2px solid var(--green);background:transparent;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;color:var(--dark);outline:none;width:110px;text-align:center;padding:2px 4px;transition:border-color .2s}
+.fitb-input:focus{border-color:var(--purple)}
+.fitb-input.ok{border-color:var(--green);background:var(--green-pale);border-radius:6px}
+.fitb-input.no{border-color:var(--red);background:var(--red-pale);border-radius:6px}
+
+/* --- LISTEN AND TYPE --- */
+.lat-player{background:var(--dark);border-radius:var(--radius-sm);padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:16px}
+.lat-play{width:48px;height:48px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.lat-play:hover{background:var(--green2);transform:scale(1.05)}
+.lat-wave{flex:1;height:40px;position:relative;overflow:hidden}
+.lat-bars{display:flex;align-items:center;gap:3px;height:100%}
+.lat-bar{width:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:height .1s}
+.lat-bar.active{background:var(--green)}
+.lat-textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:'Manrope',sans-serif;font-size:15px;color:var(--dark);resize:none;outline:none;transition:border-color .2s;background:#fff}
+.lat-textarea:focus{border-color:var(--purple)}
+
+/* --- WRITE ABOUT PHOTO --- */
+.photo-wrap{border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;position:relative;background:var(--bg2);aspect-ratio:16/9}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-label{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+.write-timer{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--tx-dim)}
+.write-timer .t{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--dark)}
+.write-timer .t.warn{color:var(--red)}
+.write-area{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:'Manrope',sans-serif;font-size:15px;color:var(--dark);resize:vertical;outline:none;min-height:100px;transition:border-color .2s;background:#fff;line-height:1.7}
+.write-area:focus{border-color:var(--purple)}
+.wc{font-size:11px;color:var(--tx-faint);margin-top:4px;text-align:right}
+
+/* --- AI FEEDBACK --- */
+.ai-feedback{background:var(--dark);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:20px;margin-top:14px;display:none}
+.ai-feedback.on{display:block;animation:fadeUp .3s ease}
+.ai-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ai-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(88,204,2,.15);border:1px solid rgba(88,204,2,.25);color:var(--green);padding:4px 10px;border-radius:100px}
+.ai-score-wrap{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ai-score{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;color:var(--gold)}
+.ai-score-label{font-size:11px;color:rgba(255,255,255,.3)}
+.ai-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.8}
+.ai-text strong{color:#fff}
+.ai-loading{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.4)}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.2s ease-in-out infinite}
+.ai-dot:nth-child(2){animation-delay:.2s}
+.ai-dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+.ai-criteria{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
+.ai-crit{background:rgba(255,255,255,.05);border-radius:10px;padding:12px}
+.ai-crit-name{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.ai-crit-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.ai-crit-fill{height:100%;border-radius:2px;background:var(--green);transition:width 1s ease}
+.ai-crit-val{font-size:12px;font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+
+/* --- READ ALOUD --- */
+.ra-text{font-size:17px;line-height:2;color:var(--dark);background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:20px;margin-bottom:16px}
+.ra-controls{display:flex;gap:10px;flex-wrap:wrap}
+.ra-btn{display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:100px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;border:none;transition:all .2s}
+.ra-btn-play{background:var(--green);color:#fff}
+.ra-btn-play:hover{background:var(--green2)}
+.ra-btn-slow{background:var(--bg2);border:1.5px solid var(--border);color:var(--tx-dim)}
+.ra-btn-slow:hover{border-color:var(--green);color:var(--green)}
+.ra-btn-rec{background:var(--red-pale);border:1.5px solid rgba(255,75,75,.2);color:var(--red)}
+.ra-btn-rec:hover{background:var(--red);color:#fff}
+.ra-tip{font-size:13px;color:var(--tx-faint);line-height:1.6;margin-top:12px;padding:12px;background:var(--gold-pale);border-radius:var(--radius-sm);border:1px solid rgba(255,200,0,.2)}
+
+/* COMMON */
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
+.q-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-faint);margin-bottom:10px}
+.q-text{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 15px;font-size:14px;font-weight:600;font-family:'Manrope',sans-serif;color:var(--tx-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:9px}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green-pale);color:var(--dark)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.opt.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--green)!important;background:rgba(88,204,2,.07)!important;color:var(--green2)!important}
+.ol{width:22px;height:22px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--tx-faint)}
+.expl{background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-top:12px;font-size:14px;line-height:1.75;color:#2a5c00;display:none}
+.expl.on{display:block;animation:fadeUp .3s ease}
+.tip{background:var(--teal-pale);border:1px solid rgba(28,176,246,.2);border-radius:var(--radius-sm);padding:14px;font-size:13px;line-height:1.7;color:#0a4060;margin-bottom:14px}
+.tip-label{font-size:9px;font-weight:700;color:#0a82b8;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.check-btn{background:var(--green);color:#fff;border:none;border-radius:100px;padding:12px 24px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;margin-top:14px}
+.check-btn:hover{background:var(--green2);transform:translateY(-1px)}
+.check-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.submit-btn{background:var(--purple);color:#fff;border:none;border-radius:100px;padding:13px 28px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all .2s;margin-top:14px;display:flex;align-items:center;gap:8px}
+.submit-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.result-ok{color:var(--green2);font-size:13px;font-weight:700;margin-top:8px;display:none}
+.result-no{color:var(--red);font-size:13px;font-weight:700;margin-top:8px;display:none}
+
+/* XP FLOAT */
+@keyframes xpf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.xpf{position:fixed;font-size:14px;font-weight:700;color:var(--purple);pointer-events:none;z-index:9999;animation:xpf 1.6s ease forwards;font-family:'JetBrains Mono',monospace}
+
+/* PROGRESS */
+.prog-section{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.prog-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--dark);margin-bottom:16px}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.prog-item{background:var(--bg2);border-radius:var(--radius-sm);padding:12px}
+.prog-item-name{font-size:10px;font-weight:700;color:var(--tx-faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.prog-bar-wrap{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.prog-bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
+.prog-item-val{font-size:12px;font-weight:700;color:var(--tx-dim);font-family:'JetBrains Mono',monospace}
+
+/* SECTION DIVIDER */
+.section-block{margin-bottom:36px}
+.section-block:not(.on){display:none}
+.section-block.on{display:block}
+
+@keyframes fadeUp{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+@media(max-width:500px){.opts{grid-template-columns:1fr}.prog-grid{grid-template-columns:1fr 1fr}.ai-criteria{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="cors-notice" style="display:none;background:#ffc800;color:#5a4000;padding:10px 20px;font-size:13px;font-weight:700;text-align:center;position:sticky;top:0;z-index:9999">
+  ⚠️ Фото не отображаются при открытии файла напрямую. Загрузи файл на сервер (Netlify) — там всё будет работать.
+</div>
+<script>
+  if(location.protocol==='file:') document.getElementById('cors-notice').style.display='block';
+</script>
+
+<nav><div class="nav-in">
+  <a href="index.html" class="logo">0<span>to</span>160</a>
+  <div class="nav-right">
+    <div class="pill pill-xp">💎 <span id="xp-total">0</span> XP</div>
+    <a href="lessons.html" class="back-link">← Уроки</a>
+  </div>
+</div></nav>
+
+<div class="hero"><div class="hero-in">
+  <h1 class="hero-h">Банк практики <span class="hl">DET</span></h1>
+  <p class="hero-sub">500+ вопросов по всем 8 типам заданий DET. Письменные задания проверяются AI — получи оценку и разбор ошибок.</p>
+  <div class="hero-stats">
+    <div class="hstat">📝 <strong>8 типов</strong> заданий</div>
+    <div class="hstat">⚡ <strong>500+</strong> вопросов</div>
+    <div class="hstat">🤖 <strong>AI-проверка</strong> эссе</div>
+    <div class="hstat">💎 <strong>XP</strong> за каждый ответ</div>
+  </div>
+</div></div>
+
+<div class="filter-wrap">
+  <div class="filter">
+    <div class="filt on" onclick="filterType('all',this)">🗂 Все типы</div>
+    <div class="filt" onclick="filterType('rac',this)"><span class="filt-dot" style="background:var(--green)"></span>Read & Complete</div>
+    <div class="filt" onclick="filterType('ir',this)"><span class="filt-dot" style="background:var(--teal)"></span>Interactive Reading</div>
+    <div class="filt" onclick="filterType('fitb',this)"><span class="filt-dot" style="background:var(--purple)"></span>Fill in the Blanks</div>
+    <div class="filt" onclick="filterType('lat',this)"><span class="filt-dot" style="background:var(--gold)"></span>Listen & Type</div>
+    <div class="filt" onclick="filterType('watp',this)"><span class="filt-dot" style="background:var(--teal)"></span>Write About Photo</div>
+    <div class="filt" onclick="filterType('watt',this)"><span class="filt-dot" style="background:var(--red)"></span>Write About Topic</div>
+    <div class="filt" onclick="filterType('satp',this)"><span class="filt-dot" style="background:var(--purple)"></span>Speak About Photo</div>
+    <div class="filt" onclick="filterType('satt',this)"><span class="filt-dot" style="background:var(--orange)"></span>Speak About Topic</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- PROGRESS DASHBOARD -->
+<div class="prog-section" id="prog-dash">
+  <div class="prog-title">📊 Твой прогресс</div>
+  <div class="prog-grid">
+    <div class="prog-item">
+      <div class="prog-item-name">Read & Complete</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-rac" style="width:0%;background:var(--green)"></div></div>
+      <div class="prog-item-val" id="pv-rac">0/25</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Interactive Reading</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-ir" style="width:0%;background:var(--teal)"></div></div>
+      <div class="prog-item-val" id="pv-ir">0/20</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Fill in the Blanks</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-fitb" style="width:0%;background:var(--purple)"></div></div>
+      <div class="prog-item-val" id="pv-fitb">0/25</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Listen & Type</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-lat" style="width:0%;background:var(--gold)"></div></div>
+      <div class="prog-item-val" id="pv-lat">0/20</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Write About Photo</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-watp" style="width:0%;background:var(--teal)"></div></div>
+      <div class="prog-item-val" id="pv-watp">0/15</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Write About Topic</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-watt" style="width:0%;background:var(--red)"></div></div>
+      <div class="prog-item-val" id="pv-watt">0/15</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== READ AND COMPLETE ===================== -->
+<div class="section-block on" id="block-rac">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--green-pale)">📖</div>
+    <div>
+      <div class="sec-name">Read and Complete</div>
+      <div class="sec-count">25 упражнений · заполни пропуски буквами</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="rac-score">0</span>/25</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Смотри на контекст предложения. DET показывает первую и последнюю букву слова — ориентируйся на длину и соседние слова. Начинай с тех что знаешь точно.</div>
+
+<!-- RAC questions rendered by JS -->
+<div id="rac-questions"></div>
+</div>
+
+<!-- ===================== INTERACTIVE READING ===================== -->
+<div class="section-block on" id="block-ir">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--teal-pale)">🔤</div>
+    <div>
+      <div class="sec-name">Interactive Reading</div>
+      <div class="sec-count">20 наборов · выбери только реальные слова</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="ir-score">0</span>/20</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Выбирай ВСЕ реальные английские слова — пропущенное реальное слово штрафует больше чем выбранное фейковое. Сомневаешься — выбирай.</div>
+
+<div id="ir-questions"></div>
+</div>
+
+<!-- ===================== FILL IN THE BLANKS ===================== -->
+<div class="section-block on" id="block-fitb">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--purple-pale)">✏️</div>
+    <div>
+      <div class="sec-name">Fill in the Blanks</div>
+      <div class="sec-count">25 предложений · грамматика и лексика</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="fitb-score">0</span>/25</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Обращай внимание на артикли, предлоги и форму глагола. В DET пропуски проверяют именно грамматическую точность, не словарный запас.</div>
+
+<div id="fitb-questions"></div>
+</div>
+
+<!-- ===================== LISTEN AND TYPE ===================== -->
+<div class="section-block on" id="block-lat">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--gold-pale)">👂</div>
+    <div>
+      <div class="sec-name">Listen and Type</div>
+      <div class="sec-count">20 аудио · напечатай что слышишь</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="lat-score">0</span>/20</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Нажми Play и слушай. Потом нажми ещё раз если нужно. Пиши точно — регистр, пунктуация и правописание важны. Числа пиши словами.</div>
+
+<div id="lat-questions"></div>
+</div>
+
+<!-- ===================== WRITE ABOUT PHOTO ===================== -->
+<div class="section-block on" id="block-watp">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--teal-pale)">📸</div>
+    <div>
+      <div class="sec-name">Write About the Photo</div>
+      <div class="sec-count">15 фото · одно предложение · AI-проверка</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="watp-score">0</span>/15</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Одно грамматически точное предложение описывающее главное действие на фото. Структура: <strong>The [subject] is/are [verb]-ing [object] in/at [location].</strong> Избегай «I can see» — просто опиши.</div>
+
+<div id="watp-questions"></div>
+</div>
+
+<!-- ===================== WRITE ABOUT TOPIC ===================== -->
+<div class="section-block on" id="block-watt">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--red-pale)">📝</div>
+    <div>
+      <div class="sec-name">Write About the Topic</div>
+      <div class="sec-count">15 тем · мини-эссе · AI-проверка</div>
+    </div>
+  </div>
+  <div class="sec-score">✅ <span id="watt-score">0</span>/15</div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Структура: тезис → 2 аргумента с примерами → вывод. 3–5 предложений достаточно. Академический тон, никаких сокращений. Используй linking words: <em>Furthermore, However, In conclusion.</em></div>
+
+<div id="watt-questions"></div>
+</div>
+
+<!-- ===================== SPEAK ABOUT PHOTO ===================== -->
+<div class="section-block on" id="block-satp">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--purple-pale)">🎤</div>
+    <div>
+      <div class="sec-name">Speak About the Photo</div>
+      <div class="sec-count">15 фото · говори 90 секунд</div>
+    </div>
+  </div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Описывай что видишь → предполагай контекст → делай вывод. Говори уверенно, не молчи. 90 секунд — это много, используй все.</div>
+
+<div id="satp-questions"></div>
+</div>
+
+<!-- ===================== SPEAK ABOUT TOPIC ===================== -->
+<div class="section-block on" id="block-satt">
+<div class="sec-hdr">
+  <div class="sec-hdr-l">
+    <div class="sec-icon" style="background:var(--orange-pale)">🎙️</div>
+    <div>
+      <div class="sec-name">Speak About the Topic</div>
+      <div class="sec-count">15 тем · монолог 3 минуты</div>
+    </div>
+  </div>
+</div>
+<div class="tip"><div class="tip-label">💡 Стратегия</div>Структура монолога: позиция → аргумент 1 + пример → аргумент 2 + пример → вывод. Говори медленнее чем кажется нужным. Пауза лучше чем «uh... um...».</div>
+
+<div id="satt-questions"></div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ===================== DATA =====================
+
+const RAC_DATA = [
+  {text:"The c__________e for the position required extensive exp_________e in data analysis.",blanks:["candidate","experience"],hint:"Существительное + существительное"},
+  {text:"She man_______d to comp_______e the project despite the t_______t deadline.",blanks:["managed","complete","tight"],hint:"Глагол + инфинитив + прилагательное"},
+  {text:"The res________h suggested that reg_________r exercise imp_________s cognitive function.",blanks:["research","regular","improves"],hint:"Три разных части речи"},
+  {text:"His app_________h to prob_________m-solving was both eff_________t and innovative.",blanks:["approach","problem","efficient"],hint:"Существительное + существительное + прилагательное"},
+  {text:"The gov________nt ann_________d new pol_________s to reduce carbon em_________ns.",blanks:["government","announced","policies","emissions"],hint:"4 пропуска — будь внимателен"},
+  {text:"Acc_________g to recent stat_________s, urban pop_________ns are growing rapidly.",blanks:["According","statistics","populations"],hint:"Начало предложения — с большой буквы"},
+  {text:"The sci________sts con_________d that the vac________e was both safe and eff_________ve.",blanks:["scientists","concluded","vaccine","effective"],hint:"4 пропуска в научном тексте"},
+  {text:"Dev_________g strong comm_________n skills is ess_________l for career success.",blanks:["Developing","communication","essential"],hint:"Герундий в начале"},
+  {text:"The env_________nt dep_________nt issued a warning about air qual_________.",blanks:["environment","department","quality"],hint:"Тема: экология"},
+  {text:"Tech_________al adv_________ments have trans_________ed the way we com_________te.",blanks:["Technological","advancements","transformed","communicate"],hint:"4 пропуска в теме технологий"},
+  {text:"The univ_________y's adm_________n proc_________s begins in early Jan_________.",blanks:["university","admission","process","January"],hint:"Академический контекст"},
+  {text:"In_________ty and per_________nce are the key qual_________es of succ_________l leaders.",blanks:["Integrity","perseverance","qualities","successful"],hint:"Тема лидерства"},
+  {text:"The med_________l team rec_________ded a comp_________te course of treat_________.",blanks:["medical","recommended","complete","treatment"],hint:"Медицинский контекст"},
+  {text:"Glob_________tion has sign_________ntly aff_________d trad_________l cultures worldwide.",blanks:["Globalization","significantly","affected","traditional"],hint:"Тема глобализации"},
+  {text:"The arch_________t designed a build_________g that harmon_________y blends with its sur_________ings.",blanks:["architect","building","harmoniously","surroundings"],hint:"Архитектурная тема"},
+  {text:"Fin_________l lit_________cy is inc_________ngly imp_________nt in today's economy.",blanks:["Financial","literacy","increasingly","important"],hint:"Финансовая тема"},
+  {text:"The vol_________rs ded_________ted thous_________ds of hours to the com_________ty project.",blanks:["volunteers","dedicated","thousands","community"],hint:"Тема волонтёрства"},
+  {text:"Sus_________ble dev_________ment req_________res balan_________g eco_________ic growth with env_________ntal protection.",blanks:["Sustainable","development","requires","balancing","economic","environmental"],hint:"Тема устойчивого развития — 6 пропусков!"},
+  {text:"The ath_______e's ded_________n and dis_________ne led to an unpr_________nted victory.",blanks:["athlete","dedication","discipline","unprecedented"],hint:"Спортивная тема"},
+  {text:"Crit_________l think_________g skills help stu_________ts ev_________te inf_________tion eff_________vely.",blanks:["Critical","thinking","students","evaluate","information","effectively"],hint:"Академическая тема"},
+  {text:"The conf_________nce brought tog_________r exp_________ts from over fifty coun_________es.",blanks:["conference","together","experts","countries"],hint:"Конференция / международная тема"},
+  {text:"Arr_________l at the air_________t should occur at least two hours bef_________e dep_________ture.",blanks:["Arrival","airport","before","departure"],hint:"Тема путешествий"},
+  {text:"The corp_________tion's ann_________l rep_________t showed a sig_________nt incr_________e in rev_________e.",blanks:["corporation","annual","report","significant","increase","revenue"],hint:"Бизнес-отчётность — 6 пропусков"},
+  {text:"Biol_________cal div_________sity is ess_________l for the st_________lity of ec_________ystems.",blanks:["Biological","diversity","essential","stability","ecosystems"],hint:"Экологическая тема"},
+  {text:"The pub_________tion of the res_________ch paper was del_________ed due to peer rev_________.",blanks:["publication","research","delayed","review"],hint:"Академическое издание"},
+];
+
+const IR_DATA = [
+  {real:["acquire","benefit","candidate","develop","enhance"],fake:["crendify","svilop","enhavit","bequire","candite"],note:"Тема: карьера"},
+  {real:["analyze","conclude","evidence","hypothesis","variable"],fake:["hypothecrate","varioble","concludify","analizz","evidance"],note:"Тема: наука"},
+  {real:["accommodate","necessary","occurrence","colleague","referred"],fake:["accomodate","neccessary","collegue","refered","occurance"],note:"Частые ошибки в написании"},
+  {real:["achievement","ambition","commitment","determination","perseverance"],fake:["acheivment","ambishon","comitment","determenation","preseverance"],note:"Тема: успех"},
+  {real:["environment","sustainable","pollution","conservation","renewable"],fake:["enviroment","sustainible","pollucion","conservaton","renewible"],note:"Тема: экология"},
+  {real:["algorithm","database","processor","interface","software"],fake:["algorithem","databaze","precessor","interfase","softwear"],note:"Тема: технологии"},
+  {real:["inflation","recession","expenditure","entrepreneur","investment"],fake:["inflacion","recesion","expenditure","entreprener","investement"],note:"Тема: экономика"},
+  {real:["symptom","diagnosis","prescription","vaccination","chronic"],fake:["symtom","diagnossis","presciption","vaccinacion","chronik"],note:"Тема: здоровье"},
+  {real:["legislation","parliament","constitution","judiciary","sovereignty"],fake:["legislacion","parliment","constituion","judisiary","soverignty"],note:"Тема: политика"},
+  {real:["photograph","landscape","architecture","sculpture","exhibition"],fake:["photograf","landscap","architechture","sculture","exhibicion"],note:"Тема: искусство"},
+  {real:["frequency","wavelength","radiation","electromagnetic","spectrum"],fake:["frequensy","wavelenght","radiacion","electomagnetic","specktrum"],note:"Тема: физика"},
+  {real:["metabolism","nutrition","antibody","chromosome","enzyme"],fake:["metabilism","nutricion","antibodi","cromozome","enzime"],note:"Тема: биология"},
+  {real:["mortgage","liability","dividend","portfolio","commodity"],fake:["morgadge","liabilty","dividened","portfilio","comodity"],note:"Тема: финансы"},
+  {real:["curriculum","semester","assignment","scholarship","graduate"],fake:["curricullum","semister","assigment","scholership","graduat"],note:"Тема: образование"},
+  {real:["humidity","atmosphere","precipitation","longitude","elevation"],fake:["humidety","atmosfere","precipitacion","longitud","elevasion"],note:"Тема: география"},
+  {real:["psychology","behavior","perception","subconscious","cognitive"],fake:["psycology","behavor","percepcion","subconcious","cognetive"],note:"Тема: психология"},
+  {real:["parliament","democracy","referendum","bureaucracy","legislation"],fake:["parliment","democrasy","referendom","burocracy","legislacion"],note:"Политические термины"},
+  {real:["telescope","astronomer","galaxy","gravitational","orbit"],fake:["telescop","astranomer","gallaxy","gravitacional","orbet"],note:"Тема: астрономия"},
+  {real:["infrastructure","urbanization","municipality","renovation","zoning"],fake:["infastructure","urbanisacion","municipalety","renovacion","zonyng"],note:"Тема: города"},
+  {real:["contradiction","implication","assertion","rhetoric","paradox"],fake:["contradiccion","implicasion","assertcion","retoric","paradocs"],note:"Академический дискурс"},
+];
+
+const FITB_DATA = [
+  {before:"She has been working at this company",blank:"since",after:"2019, and she loves her job.",options:["since","for","during","from"],correct:"since",expl:"'Since' используется с точкой начала (2019). 'For' — с продолжительностью (5 years)."},
+  {before:"The results of the experiment were",blank:"consistent",after:"with the original hypothesis.",options:["consistent","consisted","consisting","consistency"],correct:"consistent",expl:"'Consistent with' — устойчивое выражение, означает 'согласующийся с'."},
+  {before:"Despite",blank:"working",after:"long hours, she managed to finish on time.",options:["working","to work","work","worked"],correct:"working",expl:"После 'despite' используется герундий (-ing форма)."},
+  {before:"The government has",blank:"implemented",after:"several new policies this year.",options:["implemented","been implementing","implement","implements"],correct:"implemented",expl:"Present Perfect + recently/this year — правильная форма 'has implemented'."},
+  {before:"Not only did he win the competition,",blank:"but",after:"he also broke the world record.",options:["but","and","however","yet"],correct:"but",expl:"'Not only... but also' — парная конструкция усиления."},
+  {before:"The data",blank:"suggests",after:"that urban populations are increasing.",options:["suggests","suggest","suggested","is suggesting"],correct:"suggests",expl:"'Data' в академическом английском часто с глаголом в 3-м лице ед.ч."},
+  {before:"He was so tired",blank:"that",after:"he fell asleep immediately.",options:["that","as","which","so"],correct:"that",expl:"'So... that' — конструкция следствия."},
+  {before:"The new policy will have a significant",blank:"impact",after:"on the economy.",options:["impact","affect","effect","influence"],correct:"impact",expl:"'Have an impact on' — устойчивая коллокация. 'Effect' — тоже верно, но 'impact' чаще в академических текстах."},
+  {before:"By the time she arrives,",blank:"we",after:"will have finished dinner.",options:["we will have finished","we finish","we finished","we will finish"],correct:"we will have finished",expl:"Future Perfect — действие завершится ДО другого будущего события."},
+  {before:"The findings are",blank:"in line with",after:"previous research on this topic.",options:["in line with","according to","based on","due to"],correct:"in line with",expl:"'In line with' = 'согласующийся с' — академическое выражение."},
+  {before:"She",blank:"had been studying",after:"for three hours before the power went out.",options:["had been studying","was studying","studied","has been studying"],correct:"had been studying",expl:"Past Perfect Continuous — длящееся действие до момента в прошлом."},
+  {before:"The experiment",blank:"was carried out",after:"by a team of researchers in Tokyo.",options:["was carried out","carried out","has carried out","is carrying out"],correct:"was carried out",expl:"Пассивный залог в прошедшем времени."},
+  {before:"There is growing",blank:"concern",after:"about the effects of social media on teenagers.",options:["concern","concerned","concerning","concerns"],correct:"concern",expl:"'Growing concern' — устойчивая коллокация. Существительное без артикля в данном контексте."},
+  {before:"The proposal was rejected",blank:"on the grounds that",after:"it was too expensive.",options:["on the grounds that","because of","due to","owing that"],correct:"on the grounds that",expl:"'On the grounds that' + clause — академический способ указать причину."},
+  {before:"She is particularly good",blank:"at",after:"solving complex mathematical problems.",options:["at","in","for","with"],correct:"at",expl:"'Good at' + gerund — фиксированный предлог."},
+  {before:"The company spent a",blank:"considerable",after:"amount of money on research and development.",options:["considerable","considerate","considering","considerably"],correct:"considerable",expl:"Прилагательное перед существительным. 'Considerable' = значительный."},
+  {before:"Unless the weather",blank:"improves",after:", the outdoor event will be cancelled.",options:["improves","will improve","improved","is improving"],correct:"improves",expl:"After 'unless' — Present Simple для будущего (условное предложение)."},
+  {before:"The museum's new exhibit",blank:"attracted",after:"over 10,000 visitors in its first week.",options:["attracted","has attracted","attracts","was attracting"],correct:"attracted",expl:"Конкретный период в прошлом (first week) → Past Simple."},
+  {before:"It is",blank:"estimated",after:"that nearly half of all species are at risk.",options:["estimated","estimating","estimate","been estimated"],correct:"estimated",expl:"'It is estimated that' — безличная пассивная конструкция в академическом письме."},
+  {before:"The more you practice,",blank:"the better",after:"your English will become.",options:["the better","better","more better","the more better"],correct:"the better",expl:"'The more... the better' — сравнительная конструкция."},
+  {before:"She was",blank:"appointed",after:"director of the department last spring.",options:["appointed","been appointed","appointing","appoint"],correct:"appointed",expl:"'Was appointed' — пассив: её назначили."},
+  {before:"The research paper",blank:"argues",after:"that climate change is accelerating faster than expected.",options:["argues","argued","is arguing","has argued"],correct:"argues",expl:"При цитировании текстов используется Present Simple (reporting verb)."},
+  {before:"He finds it difficult to",blank:"concentrate",after:"in noisy environments.",options:["concentrate","concentrating","concentrated","concentration"],correct:"concentrate",expl:"'Find it difficult to' + bare infinitive."},
+  {before:"The number of students enrolling in STEM courses",blank:"has increased",after:"dramatically over the past decade.",options:["has increased","increased","is increasing","have increased"],correct:"has increased",expl:"'Over the past decade' → Present Perfect. 'Number' — ед.ч."},
+  {before:"This policy",blank:"is likely to",after:"have far-reaching consequences.",options:["is likely to","likely","is probable","probably will"],correct:"is likely to",expl:"'Is likely to' — академический способ выразить вероятность."},
+];
+
+const LAT_DATA = [
+  {text:"The scientist presented her findings at the international conference.",note:"Академический контекст"},
+  {text:"Please make sure to submit your assignment before the deadline.",note:"Студенческий контекст"},
+  {text:"The government announced a new initiative to reduce carbon emissions.",note:"Экологическая политика"},
+  {text:"She has been working on the project for three consecutive months.",note:"Present Perfect Continuous"},
+  {text:"The results of the survey were consistent with previous research.",note:"Научный стиль"},
+  {text:"He managed to complete the task despite numerous difficulties.",note:"Сложное предложение"},
+  {text:"The company's revenue increased by fifteen percent last quarter.",note:"Числа словами"},
+  {text:"Children who read regularly tend to develop stronger vocabulary skills.",note:"Общеобразовательный"},
+  {text:"The new legislation requires businesses to reduce their energy consumption.",note:"Правовой контекст"},
+  {text:"Urban planning plays a crucial role in sustainable development.",note:"Градостроительство"},
+  {text:"The researchers concluded that the results were statistically significant.",note:"Научный вывод"},
+  {text:"Access to quality education remains a challenge in many developing countries.",note:"Образование"},
+  {text:"The patient was advised to follow a strict diet and exercise regularly.",note:"Медицинский контекст"},
+  {text:"Technology has fundamentally changed the way people communicate.",note:"Технологии"},
+  {text:"The conference will be held at the National Convention Center next month.",note:"Будущее время"},
+  {text:"Volunteers dedicated thousands of hours to rebuilding the community center.",note:"Прошедшее время"},
+  {text:"The economic impact of the pandemic affected industries worldwide.",note:"Глобальный контекст"},
+  {text:"Students are encouraged to participate actively in classroom discussions.",note:"Пассивный залог"},
+  {text:"The bridge connecting the two cities was built over fifty years ago.",note:"Относительное предложение"},
+  {text:"Environmental conservation requires cooperation between governments and citizens.",note:"Экология"},
+];
+
+const WATP_DATA = [
+  {url:"https://source.unsplash.com/800x450/?office,laptop,work",desc:"Люди работают за ноутбуками в офисе",topic:"office work",ideal:"People are working on laptops at desks in a modern office.",keywords:["working","laptops","office","colleagues","desks"]},
+  {url:"https://source.unsplash.com/800x450/?gym,weightlifting,fitness",desc:"Мужчина поднимает штангу в спортзале",topic:"gym",ideal:"A man is lifting weights at a gym.",keywords:["man","lifting","weights","gym","fitness"]},
+  {url:"https://source.unsplash.com/800x450/?chef,cooking,kitchen,restaurant",desc:"Шеф-повар готовит блюдо на кухне ресторана",topic:"cooking",ideal:"A chef is cooking a dish in a restaurant kitchen.",keywords:["chef","cooking","kitchen","restaurant","preparing"]},
+  {url:"https://source.unsplash.com/800x450/?library,student,reading,books",desc:"Студент читает книги в библиотеке",topic:"library",ideal:"A student is reading books in a library.",keywords:["student","reading","books","library","studying"]},
+  {url:"https://source.unsplash.com/800x450/?classroom,teacher,students,school",desc:"Учитель объясняет урок в классе",topic:"classroom",ideal:"A teacher is explaining a lesson to students in a classroom.",keywords:["teacher","explaining","students","classroom","lesson"]},
+  {url:"https://source.unsplash.com/800x450/?market,fruit,vegetables,outdoor",desc:"Покупатели выбирают фрукты на уличном рынке",topic:"market",ideal:"People are choosing fruit at an outdoor market.",keywords:["people","fruit","market","outdoor","shopping"]},
+  {url:"https://source.unsplash.com/800x450/?laboratory,scientist,research",desc:"Учёный работает в лаборатории",topic:"laboratory",ideal:"A scientist is working in a laboratory.",keywords:["scientist","laboratory","research","working","equipment"]},
+  {url:"https://source.unsplash.com/800x450/?running,park,jogging,exercise",desc:"Люди бегут по дорожке в парке",topic:"running",ideal:"People are running along a path in a park.",keywords:["people","running","path","park","exercise"]},
+  {url:"https://source.unsplash.com/800x450/?family,dinner,table,meal",desc:"Семья сидит за обеденным столом",topic:"family dinner",ideal:"A family is sitting together at a dining table.",keywords:["family","table","sitting","together","dinner"]},
+  {url:"https://source.unsplash.com/800x450/?business,meeting,conference,office",desc:"Деловая встреча в конференц-зале",topic:"business meeting",ideal:"People are having a meeting in a conference room.",keywords:["people","meeting","conference","room","discussing"]},
+  {url:"https://source.unsplash.com/800x450/?garden,flowers,gardening,woman",desc:"Женщина ухаживает за цветами в саду",topic:"garden",ideal:"A woman is taking care of flowers in a garden.",keywords:["woman","flowers","garden","plants","outdoor"]},
+  {url:"https://source.unsplash.com/800x450/?doctor,patient,hospital,medical",desc:"Врач разговаривает с пациентом в кабинете",topic:"doctor",ideal:"A doctor is talking to a patient in a medical office.",keywords:["doctor","patient","hospital","talking","medical"]},
+  {url:"https://source.unsplash.com/800x450/?coworking,team,laptops,collaboration",desc:"Команда работает вместе с ноутбуками",topic:"coworking",ideal:"A group of people are working together on laptops.",keywords:["people","laptops","working","team","collaboration"]},
+  {url:"https://source.unsplash.com/800x450/?construction,workers,building,site",desc:"Строители работают на стройке",topic:"construction",ideal:"Construction workers are working on a building site.",keywords:["workers","construction","building","site","working"]},
+  {url:"https://source.unsplash.com/800x450/?cycling,bicycle,city,street",desc:"Велосипедист едет по городской улице",topic:"cycling",ideal:"A cyclist is riding along a city street.",keywords:["cyclist","riding","bicycle","street","city"]},
+];
+
+const WATT_DATA = [
+  {topic:"Should university education be free for all students?",time:300,keywords:["access","equality","economy","tax","society"]},
+  {topic:"Is social media more harmful than beneficial for teenagers?",time:300,keywords:["mental health","communication","addiction","connection","privacy"]},
+  {topic:"Should cities ban private cars to reduce pollution?",time:300,keywords:["environment","transport","convenience","infrastructure","emissions"]},
+  {topic:"Is remote work better than working in an office?",time:300,keywords:["productivity","collaboration","flexibility","isolation","balance"]},
+  {topic:"Should animals be used in scientific research?",time:300,keywords:["ethics","medicine","alternatives","welfare","progress"]},
+  {topic:"Do people rely too much on technology today?",time:300,keywords:["dependency","efficiency","skills","innovation","distraction"]},
+  {topic:"Should governments control what people eat?",time:300,keywords:["health","freedom","obesity","choice","regulation"]},
+  {topic:"Is it better to live in a city or in the countryside?",time:300,keywords:["lifestyle","opportunity","nature","community","cost"]},
+  {topic:"Should learning a second language be mandatory in schools?",time:300,keywords:["culture","communication","career","cognitive","globalization"]},
+  {topic:"Are zoos beneficial or harmful to animals?",time:300,keywords:["conservation","welfare","education","habitat","captivity"]},
+  {topic:"Should the retirement age be raised?",time:300,keywords:["economy","health","workforce","pension","demographics"]},
+  {topic:"Is fast food responsible for increasing obesity rates?",time:300,keywords:["diet","convenience","advertising","lifestyle","health"]},
+  {topic:"Should wealthy countries do more to help developing nations?",time:300,keywords:["inequality","aid","responsibility","development","economy"]},
+  {topic:"Does technology help or hurt students' learning?",time:300,keywords:["distraction","resources","critical thinking","access","engagement"]},
+  {topic:"Should space exploration be a government priority?",time:300,keywords:["funding","science","discovery","resources","priorities"]},
+];
+
+const SATP_DATA = [
+  {url:"https://source.unsplash.com/800x450/?city,street,pedestrians,urban",desc:"Оживлённая городская улица с пешеходами",prompts:["Опиши улицу и здания","Что делают пешеходы?","Какое время суток?","Большой или маленький город?"]},
+  {url:"https://source.unsplash.com/800x450/?mountains,hiking,landscape,nature",desc:"Живописный горный пейзаж с туристами",prompts:["Опиши пейзаж","Что делают люди?","Какое время года?","Какая атмосфера?"]},
+  {url:"https://source.unsplash.com/800x450/?graduation,ceremony,students,university",desc:"Выпускники на торжественной церемонии",prompts:["Что происходит?","Какие эмоции у людей?","Опиши одежду","Почему это событие важно?"]},
+  {url:"https://source.unsplash.com/800x450/?hiking,trail,backpack,forest",desc:"Туристы идут по лесной тропе с рюкзаками",prompts:["Опиши пейзаж","Что делают люди?","Какое снаряжение?","Какие трудности похода?"]},
+  {url:"https://source.unsplash.com/800x450/?breakfast,cafe,coffee,food,table",desc:"Красиво сервированный завтрак в кафе",prompts:["Что подано на столе?","Опиши место","Кто мог быть здесь?","Какая атмосфера?"]},
+  {url:"https://source.unsplash.com/800x450/?doctor,hospital,medical,patient",desc:"Врач с пациентом в больнице",prompts:["Кто на фото?","Что происходит?","Опиши обстановку","Как выглядит пациент?"]},
+  {url:"https://source.unsplash.com/800x450/?business,meeting,office,team,discussion",desc:"Деловые люди на переговорах в офисе",prompts:["Кто эти люди?","О чём может быть встреча?","Опиши комнату","Кто ведёт встречу?"]},
+  {url:"https://source.unsplash.com/800x450/?children,classroom,school,learning",desc:"Дети занимаются в классе",prompts:["Что происходит в классе?","Сколько детей?","Опиши обстановку","Какое настроение?"]},
+  {url:"https://source.unsplash.com/800x450/?volunteers,community,outdoor,teamwork",desc:"Волонтёры работают вместе на свежем воздухе",prompts:["Кто эти люди?","Что они делают?","Почему они это делают?","Какая погода?"]},
+  {url:"https://source.unsplash.com/800x450/?musician,guitar,concert,performance",desc:"Музыкант выступает с гитарой",prompts:["Опиши исполнителя","Где он выступает?","Есть ли зрители?","Какая атмосфера?"]},
+  {url:"https://source.unsplash.com/800x450/?cooking,kitchen,woman,home,food",desc:"Женщина готовит еду на кухне",prompts:["Кто на фото?","Что она делает?","Опиши кухню","Что она готовит?"]},
+  {url:"https://source.unsplash.com/800x450/?cafe,friends,coffee,talking,conversation",desc:"Друзья разговаривают в кафе за кофе",prompts:["Кто на фото?","Что они делают?","Опиши атмосферу","О чём они говорят?"]},
+  {url:"https://source.unsplash.com/800x450/?market,vegetables,fruits,shopping,vendor",desc:"Продавец показывает свежие овощи на рынке",prompts:["Что продаётся?","Опиши людей","Какое место?","Какая атмосфера?"]},
+  {url:"https://source.unsplash.com/800x450/?yoga,outdoor,group,exercise,park",desc:"Группа людей занимается йогой на улице",prompts:["Что делают люди?","Сколько человек?","Опиши место","Какое время дня?"]},
+  {url:"https://source.unsplash.com/800x450/?programmer,computer,coding,desk,work",desc:"Программист работает за компьютером",prompts:["Кто на фото?","Что он делает?","Опиши рабочее место","Чем он занимается?"]},
+];
+
+const SATT_DATA = [
+  {topic:"Talk about a skill you have learned and how it has helped you.",time:180},
+  {topic:"Describe a person who has had a significant influence on your life.",time:180},
+  {topic:"Talk about a challenge you have faced and how you overcame it.",time:180},
+  {topic:"Describe your ideal future career and explain why you chose it.",time:180},
+  {topic:"Talk about an important environmental issue in your country.",time:180},
+  {topic:"Describe a technological innovation that has changed daily life.",time:180},
+  {topic:"Talk about the importance of learning foreign languages.",time:180},
+  {topic:"Describe a book, film, or piece of music that impressed you.",time:180},
+  {topic:"Talk about the advantages and disadvantages of social media.",time:180},
+  {topic:"Describe your hometown and what makes it special.",time:180},
+  {topic:"Talk about the role of sports in modern society.",time:180},
+  {topic:"Describe a tradition or cultural practice from your country.",time:180},
+  {topic:"Talk about the qualities of a good leader.",time:180},
+  {topic:"Describe how you think cities will change in the next 20 years.",time:180},
+  {topic:"Talk about the impact of tourism on local communities.",time:180},
+];
+
+
+// ===================== STATE =====================
+const STATE = {
+  xp: parseInt(localStorage.getItem('det_xp_practice')||'0'),
+  scores: JSON.parse(localStorage.getItem('det_prac_scores')||'{}'),
+};
+function saveState(){
+  localStorage.setItem('det_xp_practice', STATE.xp);
+  localStorage.setItem('det_prac_scores', JSON.stringify(STATE.scores));
+}
+function addXP(n, el){
+  STATE.xp += n;
+  document.getElementById('xp-total').textContent = STATE.xp;
+  saveState();
+  if(el){
+    const rect = el.getBoundingClientRect();
+    const f = document.createElement('div');
+    f.className='xpf';f.textContent='+'+n+' XP';
+    f.style.cssText=`top:${rect.top+window.scrollY-30}px;left:${rect.right+8}px`;
+    document.body.appendChild(f);setTimeout(()=>f.remove(),1800);
+  }
+}
+function markScore(type, total){
+  if(!STATE.scores[type]) STATE.scores[type]=0;
+  STATE.scores[type]++;
+  if(STATE.scores[type]>total) STATE.scores[type]=total;
+  saveState();
+  updateProgress();
+}
+
+// ===================== PROGRESS BAR =====================
+function updateProgress(){
+  const totals={rac:25,ir:20,fitb:25,lat:20,watp:15,watt:15};
+  Object.entries(totals).forEach(([k,t])=>{
+    const v=STATE.scores[k]||0;
+    const pct=Math.round(v/t*100);
+    const pb=document.getElementById('pb-'+k);
+    const pv=document.getElementById('pv-'+k);
+    if(pb) pb.style.width=pct+'%';
+    if(pv) pv.textContent=v+'/'+t;
+  });
+  // score headers
+  ['rac','ir','fitb','lat','watp','watt'].forEach(k=>{
+    const el=document.getElementById(k+'-score');
+    if(el) el.textContent=STATE.scores[k]||0;
+  });
+}
+
+// ===================== FILTER =====================
+function filterType(type, el){
+  document.querySelectorAll('.filt').forEach(f=>f.classList.remove('on'));
+  el.classList.add('on');
+  const blocks=['rac','ir','fitb','lat','watp','watt','satp','satt'];
+  blocks.forEach(b=>{
+    const bl=document.getElementById('block-'+b);
+    if(!bl) return;
+    if(type==='all' || type===b){bl.classList.add('on');}
+    else{bl.classList.remove('on');}
+  });
+  const pd=document.getElementById('prog-dash');
+  if(pd) pd.style.display=(type==='all')?'':'none';
+}
+
+// ===================== RENDER: READ AND COMPLETE =====================
+function makeRACBlank(ans, qi, bi){
+  // Build letter-by-letter display: first letter shown, last letter shown, middle hidden
+  const len = ans.length;
+  let letters = '';
+  for(let li=0; li<len; li++){
+    const isHint = (li===0 || li===len-1);
+    const cls = isHint ? 'rac-letter hint' : 'rac-letter';
+    const ch = isHint ? ans[li] : '_';
+    letters += `<span class="rac-letter ${isHint?'hint':''}" id="rac-l-${qi}-${bi}-${li}" data-expected="${ans[li]}">${isHint?ans[li]:'&nbsp;'}</span>`;
+  }
+  // Hidden input captures typing
+  return `<span class="rac-blank" id="rac-b-${qi}-${bi}" data-ans="${ans}" data-qi="${qi}" data-bi="${bi}" onclick="focusRACBlank(${qi},${bi})">${letters}<input type="text" id="rac-inp-${qi}-${bi}" data-ans="${ans}" data-qi="${qi}" data-bi="${bi}" autocomplete="off" autocorrect="off" spellcheck="false" oninput="handleRACInput(this)" onkeydown="handleRACKey(event,this)"></span>`;
+}
+function renderRAC(){
+  const cont = document.getElementById('rac-questions');
+  RAC_DATA.forEach((q,i)=>{
+    const div = document.createElement('div');
+    div.className='card';
+    div.id='rac-'+i;
+    let bi=0;
+    const textHtml = q.text.replace(/_+/g,()=>{
+      const ans=q.blanks[bi]||'';
+      const html=makeRACBlank(ans,i,bi);
+      bi++;
+      return html;
+    });
+    div.innerHTML=`
+      <div class="q-label">Read and Complete · ${i+1}/${RAC_DATA.length}</div>
+      <div class="rac-text" id="rac-t-${i}">${textHtml}</div>
+      <div class="rac-hint">💡 ${q.hint} · <strong>${q.blanks.length}</strong> пропус${q.blanks.length===1?'к':'ка/ков'} · длина: ${q.blanks.map(b=>b.length+' букв').join(', ')}</div>
+      <div class="expl" id="rac-e-${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+function focusRACBlank(qi,bi){
+  const inp=document.getElementById(`rac-inp-${qi}-${bi}`);
+  if(inp&&!inp.disabled) inp.focus();
+}
+function handleRACInput(inp){
+  const ans=inp.dataset.ans.toLowerCase();
+  const qi=parseInt(inp.dataset.qi);
+  const bi=parseInt(inp.dataset.bi);
+  const val=inp.value.toLowerCase().replace(/[^a-z]/g,'');
+  inp.value=val; // sanitize
+  const len=ans.length;
+  // Update letter display (skip first and last — they're hints)
+  for(let li=1; li<len-1; li++){
+    const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
+    if(!lel) continue;
+    if(li < val.length+1){ // +1 because li=1 is index 0 of typed
+      const typedIndex=li-1;
+      lel.textContent=val[typedIndex]||' ';
+      lel.className='rac-letter typed';
+    } else {
+      lel.textContent=' ';
+      lel.className='rac-letter';
+    }
+  }
+  // Auto-check when full word typed
+  if(val.length===len-2 || inp.value.length>=len){ // typed all middle letters
+    checkRACBlank(inp, val, ans, qi, bi);
+  }
+}
+function handleRACKey(e, inp){
+  if(e.key==='Enter') checkRACBlank(inp, inp.value.toLowerCase(), inp.dataset.ans.toLowerCase(), parseInt(inp.dataset.qi), parseInt(inp.dataset.bi));
+}
+function checkRACBlank(inp, val, ans, qi, bi){
+  // val contains only the MIDDLE letters (user typed); prepend first + append last
+  const fullTyped=(ans[0]+val+ans[ans.length-1]).toLowerCase().replace(/[^a-z]/g,'');
+  const correct=ans.toLowerCase();
+  const len=ans.length;
+  const isOk=fullTyped===correct || val===ans.slice(1,-1).toLowerCase() || (ans[0]+val).toLowerCase()===correct.slice(0,val.length+1)&&val.length===len-2;
+  // Simpler: check if middle letters match
+  const middle=ans.slice(1,-1).toLowerCase();
+  const typedMiddle=val.replace(/[^a-z]/g,'').slice(0,middle.length);
+  const ok=typedMiddle===middle;
+  
+  // Color all letters
+  for(let li=0;li<len;li++){
+    const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
+    if(!lel)continue;
+    lel.textContent=ans[li];
+    lel.className='rac-letter '+(ok?'ok-l':'no-l');
+  }
+  inp.disabled=true;
+  const span=document.getElementById(`rac-b-${qi}-${bi}`);
+  if(ok){
+    addXP(5,span);
+    markScore('rac',25);
+    // check all done
+    const card=document.getElementById('rac-'+qi);
+    const inputs=card.querySelectorAll('.rac-blank input');
+    if([...inputs].every(i=>i.disabled)){
+      const expl=document.getElementById('rac-e-'+qi);
+      expl.innerHTML='✅ Все пропуски заполнены верно! +'+inputs.length*5+' XP';
+      expl.classList.add('on');
+    }
+  } else {
+    // show correction after 1.5s
+    setTimeout(()=>{
+      for(let li=1;li<len-1;li++){
+        const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
+        if(lel){lel.textContent=ans[li];lel.className='rac-letter ok-l';}
+      }
+    },1500);
+    const expl=document.getElementById('rac-e-'+qi);
+    if(!expl.classList.contains('on')){
+      expl.innerHTML=`❌ Правильный ответ показан выше через 1.5 сек. Продолжай!`;
+      expl.classList.add('on');
+    }
+  }
+}
+
+// ===================== RENDER: INTERACTIVE READING =====================
+function renderIR(){
+  const cont=document.getElementById('ir-questions');
+  IR_DATA.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='card';div.id='ir-'+i;
+    const allWords=[...q.real,...q.fake].sort(()=>Math.random()-.5);
+    const wordHtml=allWords.map(w=>`<div class="ir-word" onclick="toggleIRWord(this,'${w}',${i})">${w}</div>`).join('');
+    div.innerHTML=`
+      <div class="q-label">Interactive Reading · ${i+1}/${IR_DATA.length} · ${q.note}</div>
+      <div class="q-text">Выбери все настоящие английские слова:</div>
+      <div class="ir-grid">${wordHtml}</div>
+      <button class="check-btn" onclick="checkIR(${i},${JSON.stringify(q.real)})">Проверить →</button>
+      <div class="expl" id="ir-e-${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+function toggleIRWord(el,w,i){
+  if(el.classList.contains('ok')||el.classList.contains('no')) return;
+  el.classList.toggle('sel');
+}
+function checkIR(i, realWords){
+  const card=document.getElementById('ir-'+i);
+  const words=card.querySelectorAll('.ir-word');
+  let correct=0,total=realWords.length;
+  words.forEach(w=>{
+    const word=w.textContent;
+    const isReal=realWords.includes(word);
+    const isSel=w.classList.contains('sel');
+    w.classList.remove('sel');
+    if(isReal&&isSel){w.classList.add('ok');correct++;}
+    else if(!isReal&&isSel){w.classList.add('no');}
+    else if(isReal&&!isSel){w.classList.add('missed');}
+  });
+  const expl=document.getElementById('ir-e-'+i);
+  expl.innerHTML=`${correct===total?'🏆':'📊'} Правильных: <strong>${correct}/${total}</strong>. Жёлтые — реальные слова которые ты пропустил.`;
+  expl.classList.add('on');
+  card.querySelector('.check-btn').disabled=true;
+  if(correct>=Math.ceil(total*.7)){addXP(8,card);markScore('ir',20);}
+  else addXP(3,card);
+}
+
+// ===================== RENDER: FILL IN THE BLANKS =====================
+function renderFITB(){
+  const cont=document.getElementById('fitb-questions');
+  FITB_DATA.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='card';div.id='fitb-'+i;
+    const optsHtml=q.options.map(o=>`<button class="opt" onclick="checkFITB(this,'${o}','${q.correct}',${i})"><span class="ol">${q.options.indexOf(o)+1}</span>${o}</button>`).join('');
+    div.innerHTML=`
+      <div class="q-label">Fill in the Blanks · ${i+1}/${FITB_DATA.length}</div>
+      <div class="q-text">${q.before} ________ ${q.after}</div>
+      <div class="opts">${optsHtml}</div>
+      <div class="expl" id="fitb-e-${i}">${q.expl}</div>`;
+    cont.appendChild(div);
+  });
+}
+function checkFITB(btn, chosen, correct, i){
+  const card=document.getElementById('fitb-'+i);
+  const btns=card.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  if(chosen===correct){
+    btn.classList.add('ok');addXP(6,btn);markScore('fitb',25);
+  } else {
+    btn.classList.add('no');
+    btns.forEach(b=>{if(b.textContent.includes(correct))b.classList.add('reveal');});
+  }
+  document.getElementById('fitb-e-'+i).classList.add('on');
+}
+
+// ===================== RENDER: LISTEN AND TYPE =====================
+let _ttsVoice=null;
+function _loadVoices(){const vs=window.speechSynthesis?.getVoices();if(!vs?.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_ttsVoice=f;return;}}}
+if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_loadVoices;_loadVoices();}
+function speakText(text, rate=0.82){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-GB';u.rate=rate;if(_ttsVoice)u.voice=_ttsVoice;
+  window.speechSynthesis.speak(u);
+}
+function renderLAT(){
+  const cont=document.getElementById('lat-questions');
+  LAT_DATA.forEach((q,i)=>{
+    const bars=Array.from({length:20},(_,b)=>`<div class="lat-bar" style="height:${10+Math.random()*30}px"></div>`).join('');
+    const div=document.createElement('div');div.className='card';div.id='lat-'+i;
+    div.innerHTML=`
+      <div class="q-label">Listen and Type · ${i+1}/${LAT_DATA.length} · ${q.note}</div>
+      <div class="lat-player">
+        <button class="lat-play" onclick="speakText('${q.text.replace(/'/g,"\\'")}')">▶</button>
+        <div class="lat-wave"><div class="lat-bars">${bars}</div></div>
+        <button class="ra-btn ra-btn-slow" onclick="speakText('${q.text.replace(/'/g,"\\'")}',0.55)" style="padding:8px 14px;font-size:12px">🐢 Медленно</button>
+      </div>
+      <textarea class="lat-textarea" id="lat-inp-${i}" rows="2" placeholder="Напечатай то что слышишь..."></textarea>
+      <br><button class="check-btn" onclick="checkLAT(${i})">Проверить →</button>
+      <div class="expl" id="lat-e-${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+function checkLAT(i){
+  const inp=document.getElementById('lat-inp-'+i);
+  const card=document.getElementById('lat-'+i);
+  const val=inp.value.trim().toLowerCase().replace(/[.,!?;:]/g,'');
+  const correct=LAT_DATA[i].text.toLowerCase().replace(/[.,!?;:]/g,'');
+  const valW=val.split(/\s+/);const corW=correct.split(/\s+/);
+  let matches=0;
+  valW.forEach(w=>{if(corW.includes(w))matches++;});
+  const pct=matches/corW.length;
+  const expl=document.getElementById('lat-e-'+i);
+  if(pct>=0.9){
+    expl.innerHTML=`✅ Отлично! Точность: <strong>${Math.round(pct*100)}%</strong><br><em>Правильно: ${LAT_DATA[i].text}</em>`;
+    addXP(10,card);markScore('lat',20);
+  } else if(pct>=0.7){
+    expl.innerHTML=`👍 Хорошо! Точность: <strong>${Math.round(pct*100)}%</strong>. Несколько слов пропущено.<br><em>Правильно: ${LAT_DATA[i].text}</em>`;
+    addXP(5,card);
+  } else {
+    expl.innerHTML=`📖 Точность: <strong>${Math.round(pct*100)}%</strong>. Послушай ещё раз и попробуй снова.<br><em>Правильно: ${LAT_DATA[i].text}</em>`;
+    addXP(2,card);
+  }
+  expl.classList.add('on');
+  card.querySelector('.check-btn').disabled=true;
+  inp.disabled=true;
+}
+
+// ===================== RENDER: WRITE ABOUT PHOTO =====================
+function renderWATP(){
+  const cont=document.getElementById('watp-questions');
+  WATP_DATA.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='card';div.id='watp-'+i;
+    // Build photo element separately to avoid src interpolation issues
+    const imgWATP = document.createElement('img');
+    imgWATP.src = q.url;
+    imgWATP.alt = q.desc;
+    imgWATP.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    imgWATP.loading = 'lazy';
+    imgWATP.onerror = function(){this.parentElement.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;color:var(--tx-faint)">📷 Фото не загрузилось</div>';};
+    div.innerHTML=`
+      <div class="q-label">Write About the Photo · ${i+1}/${WATP_DATA.length}</div>
+      <div class="photo-wrap" id="pw-watp-${i}">
+        <span class="photo-label">${q.topic}</span>
+      </div>
+
+      <div class="write-timer">⏱ <span class="t" id="watp-t-${i}">1:00</span> — напиши ОДНО предложение на английском</div>
+      <textarea class="write-area" id="watp-inp-${i}" rows="2" placeholder="The ... is/are ...ing ... in/at ..."></textarea>
+      <div class="wc" id="watp-wc-${i}">0 слов</div>
+      <button class="submit-btn" onclick="submitWATP(${i})">🤖 Проверить через AI →</button>
+      <div class="ai-feedback" id="watp-ai-${i}"></div>`;
+    cont.appendChild(div);
+    // Insert photo after append so DOM element exists
+    const pwWATP = document.getElementById('pw-watp-'+i);
+    if(pwWATP) pwWATP.insertBefore(imgWATP, pwWATP.firstChild);
+    // word counter
+    document.getElementById('watp-inp-'+i).addEventListener('input',function(){
+      const wc=this.value.trim().split(/\s+/).filter(Boolean).length;
+      document.getElementById('watp-wc-'+i).textContent=wc+' слов';
+    });
+    startWATPTimer(i);
+  });
+}
+function startWATPTimer(i){
+  let sec=60;
+  const el=document.getElementById('watp-t-'+i);
+  if(!el)return;
+  const iv=setInterval(()=>{
+    sec--;
+    const m=Math.floor(sec/60),s=sec%60;
+    if(el) el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(sec<=10&&el) el.classList.add('warn');
+    if(sec<=0){clearInterval(iv);if(el)el.textContent='⏰ Время!';}
+  },1000);
+}
+async function submitWATP(i){
+  const inp=document.getElementById('watp-inp-'+i);
+  const text=inp.value.trim();
+  if(!text){alert('Напиши предложение!');return;}
+  const fb=document.getElementById('watp-ai-'+i);
+  fb.innerHTML=`<div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>AI анализирует твой ответ...</span></div>`;
+  fb.classList.add('on');
+  inp.disabled=true;
+  document.getElementById('watp-'+i).querySelector('.submit-btn').disabled=true;
+  const photo=WATP_DATA[i];
+  const prompt=`You are a DET (Duolingo English Test) examiner. A student wrote ONE sentence describing a photo.
+
+Photo description: "${photo.desc}" (emoji: ${photo.emoji}, topic: ${photo.topic})
+Ideal sentence example: "${photo.ideal}"
+Key content words expected: ${photo.keywords.join(', ')}
+
+Student's sentence: "${text}"
+
+Evaluate on a scale of 1-5 for each criterion. Respond ONLY with valid JSON, no markdown:
+{
+  "score": <overall 1-5>,
+  "grammar": <1-5>,
+  "vocabulary": <1-5>,
+  "content": <1-5>,
+  "clarity": <1-5>,
+  "feedback": "<2-3 sentences in Russian: what is good, what to improve>",
+  "corrected": "<corrected version if needed, or same sentence if correct>"
+}`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const raw=data.content?.[0]?.text||'{}';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    showWATPFeedback(i, parsed, text);
+    if(parsed.score>=3){addXP(15,fb);markScore('watp',15);}
+    else addXP(5,fb);
+  }catch(e){
+    fb.innerHTML=`<div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось подключиться к AI. Проверь интернет и попробуй снова.<br><br><em>Идеальный ответ: ${photo.ideal}</em></div>`;
+  }
+}
+function showWATPFeedback(i, p, original){
+  const fb=document.getElementById('watp-ai-'+i);
+  const stars='⭐'.repeat(p.score)+'☆'.repeat(5-p.score);
+  fb.innerHTML=`
+    <div class="ai-top">
+      <span class="ai-badge">AI Оценка</span>
+      <div class="ai-score-wrap"><span class="ai-score">${p.score}/5</span><span class="ai-score-label">${stars}</span></div>
+    </div>
+    <div class="ai-text">${p.feedback}${p.corrected&&p.corrected!==original?`<br><br><strong>Исправленный вариант:</strong> <em>${p.corrected}</em>`:''}</div>
+    <div class="ai-criteria">
+      <div class="ai-crit"><div class="ai-crit-name">Грамматика</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.grammar*20}%"></div></div><div class="ai-crit-val">${p.grammar}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Словарный запас</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.vocabulary*20}%"></div></div><div class="ai-crit-val">${p.vocabulary}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Содержание</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.content*20}%"></div></div><div class="ai-crit-val">${p.content}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Ясность</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.clarity*20}%"></div></div><div class="ai-crit-val">${p.clarity}/5</div></div>
+    </div>`;
+}
+
+// ===================== RENDER: WRITE ABOUT TOPIC =====================
+function renderWATT(){
+  const cont=document.getElementById('watt-questions');
+  WATT_DATA.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='card';div.id='watt-'+i;
+    div.innerHTML=`
+      <div class="q-label">Write About the Topic · ${i+1}/${WATT_DATA.length}</div>
+      <div class="q-text">${q.topic}</div>
+      <div class="write-timer">⏱ <span class="t" id="watt-t-${i}">5:00</span></div>
+      <textarea class="write-area" id="watt-inp-${i}" rows="5" placeholder="Write your response here. Aim for 3-5 sentences with a clear position, 1-2 supporting arguments, and a conclusion."></textarea>
+      <div class="wc" id="watt-wc-${i}">0 слов (цель: 50–100)</div>
+      <div style="font-size:12px;color:var(--tx-faint);margin-top:6px">💡 Ключевые слова: <em>${q.keywords.join(' · ')}</em></div>
+      <button class="submit-btn" onclick="submitWATT(${i})">🤖 Проверить через AI →</button>
+      <div class="ai-feedback" id="watt-ai-${i}"></div>`;
+    cont.appendChild(div);
+    document.getElementById('watt-inp-'+i).addEventListener('input',function(){
+      const wc=this.value.trim().split(/\s+/).filter(Boolean).length;
+      document.getElementById('watt-wc-'+i).textContent=wc+' слов (цель: 50–100)';
+    });
+    startCountdown('watt-t-'+i, q.time);
+  });
+}
+function startCountdown(elId, totalSec){
+  let sec=totalSec;
+  const el=document.getElementById(elId);if(!el)return;
+  const iv=setInterval(()=>{
+    sec--;
+    const m=Math.floor(sec/60),s=sec%60;
+    if(el) el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(sec<=30&&el) el.classList.add('warn');
+    if(sec<=0){clearInterval(iv);if(el)el.textContent='⏰ Время!';}
+  },1000);
+}
+async function submitWATT(i){
+  const inp=document.getElementById('watt-inp-'+i);
+  const text=inp.value.trim();
+  if(text.split(/\s+/).length<15){alert('Напиши хотя бы 15 слов.');return;}
+  const fb=document.getElementById('watt-ai-'+i);
+  fb.innerHTML=`<div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>AI анализирует твоё эссе...</span></div>`;
+  fb.classList.add('on');
+  inp.disabled=true;
+  document.getElementById('watt-'+i).querySelector('.submit-btn').disabled=true;
+  const q=WATT_DATA[i];
+  const prompt=`You are a DET (Duolingo English Test) examiner evaluating a "Write About the Topic" response.
+
+Topic: "${q.topic}"
+Expected keywords/themes: ${q.keywords.join(', ')}
+
+Student's response: "${text}"
+
+Evaluate comprehensively. Respond ONLY with valid JSON, no markdown:
+{
+  "score": <overall 1-5>,
+  "grammar": <1-5>,
+  "vocabulary": <1-5>,
+  "coherence": <1-5>,
+  "argumentation": <1-5>,
+  "estimated_det_score": <number like 95, 110, 125, 140, 155>,
+  "feedback": "<3-4 sentences in Russian: strengths, weaknesses, specific improvements>",
+  "best_sentence": "<quote the strongest sentence from their text>",
+  "suggestion": "<one concrete sentence they could add or improve>"
+}`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const raw=data.content?.[0]?.text||'{}';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    showWATTFeedback(i, parsed);
+    if(parsed.score>=3){addXP(20,fb);markScore('watt',15);}
+    else addXP(8,fb);
+  }catch(e){
+    fb.innerHTML=`<div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось подключиться к AI. Проверь интернет и попробуй снова.</div>`;
+  }
+}
+function showWATTFeedback(i, p){
+  const fb=document.getElementById('watt-ai-'+i);
+  const stars='⭐'.repeat(p.score)+'☆'.repeat(5-p.score);
+  fb.innerHTML=`
+    <div class="ai-top">
+      <span class="ai-badge">AI Оценка</span>
+      <div class="ai-score-wrap"><span class="ai-score">${p.score}/5</span><span style="font-size:11px;color:rgba(255,255,255,.3);margin-left:4px">≈ DET ${p.estimated_det_score}</span></div>
+    </div>
+    <div class="ai-text">${p.feedback}${p.best_sentence?`<br><br><strong>Сильное предложение:</strong> <em>"${p.best_sentence}"</em>`:''}${p.suggestion?`<br><br><strong>Улучши:</strong> ${p.suggestion}`:''}</div>
+    <div class="ai-criteria">
+      <div class="ai-crit"><div class="ai-crit-name">Грамматика</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.grammar*20}%"></div></div><div class="ai-crit-val">${p.grammar}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Словарный запас</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.vocabulary*20}%"></div></div><div class="ai-crit-val">${p.vocabulary}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Связность</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.coherence*20}%"></div></div><div class="ai-crit-val">${p.coherence}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Аргументация</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.argumentation*20}%"></div></div><div class="ai-crit-val">${p.argumentation}/5</div></div>
+    </div>`;
+}
+
+// ===================== RENDER: SPEAK ABOUT PHOTO =====================
+function renderSATP(){
+  const cont=document.getElementById('satp-questions');
+  SATP_DATA.forEach((q,i)=>{
+    const promptsHtml=q.prompts.map(p=>`<li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.5)">${p}</li>`).join('');
+    const div=document.createElement('div');div.className='card';div.id='satp-'+i;
+    div.innerHTML=`
+      <div class="q-label">Speak About the Photo · ${i+1}/${SATP_DATA.length}</div>
+      <div class="photo-wrap" id="pw-satp-${i}">
+        <span class="photo-label">90 секунд</span>
+      </div>
+
+      <div style="background:var(--dark);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">💬 Структура ответа:</div>
+        <ul style="list-style:none;padding:0">${promptsHtml}</ul>
+      </div>
+      <div class="ra-controls">
+        <button class="ra-btn ra-btn-play" onclick="startSATTimer(${i})">▶ Начать (90 сек)</button>
+      </div>
+      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--dark);display:none" id="satp-timer-${i}">1:30</div>`;
+    cont.appendChild(div);
+    const imgSATP = new Image();
+    imgSATP.src = q.url;
+    imgSATP.alt = q.desc;
+    imgSATP.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    imgSATP.onerror = function(){this.parentElement.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;color:var(--tx-faint)">📷 Фото не загрузилось</div>';};
+    const pwSATP = document.getElementById('pw-satp-'+i);
+    if(pwSATP) pwSATP.insertBefore(imgSATP, pwSATP.firstChild);
+  });
+}
+function startSATTimer(i){
+  let sec=90;
+  const el=document.getElementById('satp-timer-'+i);
+  el.style.display='block';
+  const iv=setInterval(()=>{
+    sec--;
+    const m=Math.floor(sec/60),s=sec%60;
+    el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(sec<=10) el.style.color='var(--red)';
+    if(sec<=0){clearInterval(iv);el.textContent='✅ Время вышло!';}
+  },1000);
+}
+
+// ===================== RENDER: SPEAK ABOUT TOPIC =====================
+function renderSATT(){
+  const cont=document.getElementById('satt-questions');
+  SATT_DATA.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='card';div.id='satt-'+i;
+    div.innerHTML=`
+      <div class="q-label">Speak About the Topic · ${i+1}/${SATT_DATA.length} · 3 минуты</div>
+      <div class="q-text" style="font-size:18px;line-height:1.5;padding:16px;background:var(--dark);color:#fff;border-radius:var(--radius-sm);margin-bottom:14px">${q.topic}</div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;font-size:13px;color:var(--tx-dim);line-height:1.7">
+        <strong>Структура:</strong> Позиция (15 сек) → Аргумент 1 + пример (60 сек) → Аргумент 2 + пример (60 сек) → Вывод (25 сек)
+      </div>
+      <div class="ra-controls">
+        <button class="ra-btn ra-btn-play" onclick="startSATTTimer(${i})">▶ Начать (3 мин)</button>
+      </div>
+      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--dark);display:none" id="satt-timer-${i}">3:00</div>`;
+    cont.appendChild(div);
+  });
+}
+function startSATTTimer(i){
+  let sec=180;
+  const el=document.getElementById('satt-timer-'+i);
+  el.style.display='block';
+  const iv=setInterval(()=>{
+    sec--;
+    const m=Math.floor(sec/60),s=sec%60;
+    el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(sec<=30) el.style.color='var(--red)';
+    if(sec<=0){clearInterval(iv);el.textContent='✅ Время вышло!';}
+  },1000);
+}
+
+
+// ===================== INIT =====================
+document.getElementById('xp-total').textContent = STATE.xp;
+renderRAC();
+renderIR();
+renderFITB();
+renderLAT();
+renderWATP();
+renderWATT();
+renderSATP();
+renderSATT();
+updateProgress();
+</script>
+</body>
+</html>
