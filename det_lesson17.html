@@ -2,14 +2,6 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<script>
-(function(){
-  if(localStorage.getItem('det_access')!=='granted'){
-    sessionStorage.setItem('det_redirect',location.href);
-    location.replace('activate.html');
-  }
-})();
-</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0to160 · Урок 17: Грамматика без учебников</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -189,13 +181,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 </style>
 </head>
 <body>
-  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+<div id="paywall-overlay" style="display:none;position:fixed;inset:0;background:rgba(15,14,11,.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)"><div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
   <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
   <p style="font-size:15px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
   <a href="activate.html" style="display:block;background:#ff9600;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;position:relative;z-index:1">Ввести код активации →</a>
   <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:14px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
-</div>
-
+</div></div>
+<script>
+(function(){
+  var pw = document.getElementById('paywall-overlay');
+  if(localStorage.getItem('det_access')==='granted'){
+    if(pw) pw.style.display='none';
+  } else {
+    if(pw){ pw.style.display='flex'; }
+    sessionStorage.setItem('det_redirect', location.href);
+  }
+})();
+</script>
 <nav><div class="nav-in">
   <a href="index.html" class="logo">0<span>to</span>160</a>
   <div class="nav-right">
@@ -487,7 +489,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
   <div class="tab-nav">
     <a href="det_lesson16.html" class="nb-prev">← Урок 16</a>
     <div onclick="showTab('tenses',document.querySelectorAll('.tab')[1])" class="nb-prev" role="button">← Времена</div>
-    <a href="det_lesson18.html" class="nb-next">Урок 18: Симуляция теста →</a>
+    <div onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next" role="button">Тест →</div>
   </div>
 </div>
 
@@ -614,10 +616,7 @@ function uTUI(s){const arc=document.getElementById('t-arc'),n=document.getElemen
 function tOut(q){if(_S.over||_S.ans[q])return;_S.ans[q]='T';document.querySelectorAll('#q'+q+'-o .opt').forEach(b=>b.disabled=true);const ck=window._cm&&window._cm[q];if(ck){const cb=document.getElementById('q'+q+'-'+ck);if(cb)cb.classList.add('reveal');}const ep=document.getElementById('q'+q+'-e');if(ep){ep.classList.add('on');ep.scrollIntoView({behavior:'smooth',block:'nearest'});}if(!_S.wrong.includes(q))_S.wrong.push(q);lLife();chkDone();}
 function lLife(){if(_S.lives<=0)return;_S.lives--;const h=document.getElementById('h'+_S.lives);if(h)h.classList.add('lost');playWrong();if(_S.lives===0){stpTmr();setTimeout(showGO,800);}}
 function showGO(){_S.over=true;document.getElementById('go').classList.add('on');}
-function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson17',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();window.scrollTo({top:0,behavior:'smooth'});
-  const _tabs=document.querySelectorAll('.tab');
-  let _ti=0;for(let _i=0;_i<_tabs.length;_i++){if(_tabs[_i].classList.contains('on')){_ti=_i;break;}}
-  const _pb=document.getElementById('pb');if(_pb)_pb.style.width=Math.round((_ti/(_tabs.length-1))*100)+'%';}
+function restartLesson(){_S={lives:3,score:0,ans:{},wrong:[],cons:0,timer:null,tLeft:15,tStats:{},sXP:0,fast:0,total:10,lkey:'det_lesson17',over:false,_ret:false};document.getElementById('go').classList.remove('on');document.querySelectorAll('.opt').forEach(b=>{b.disabled=false;b.classList.remove('ok','no','reveal');});document.querySelectorAll('.expl').forEach(e=>e.classList.remove('on'));const sc=document.getElementById('sc');if(sc)sc.classList.remove('on');document.querySelector('.retry')?.remove();document.getElementById('pb').style.width='0%';rHUD();setTimeout(()=>stTmr(1),600);window.scrollTo({top:0,behavior:'smooth'});}
 function dlA(q,ch,ck,tag){
   if(_S.ans[q]||_S.over)return;
   const fast=_S.tLeft>=10;stpTmr();_S.ans[q]=ch;
@@ -655,9 +654,13 @@ function showScore(){
   if(pct===100)boom();
 }
 function rTS(){const el=document.getElementById('ts');if(!el)return;let html='<div class="ts">';for(const[t,d]of Object.entries(_S.tStats)){if(!d.total)continue;const pct=Math.round(d.ok/d.total*100);const col={w:'#9f6ff0',s:'#58cc02',p:'#1cb0f6'}[t]||'#58cc02';const lbl={w:'Слова',s:'Стратегия',p:'Паттерны'}[t]||t;html+=`<div class="ts-i"><div class="ts-l">${lbl}</div><div class="ts-bw"><div class="ts-bf" style="width:${pct}%;background:${col}"></div></div><div class="ts-n">${d.ok}/${d.total} (${pct}%)</div></div>`;}html+='</div>';el.innerHTML=html;}
-function showTab(id,el){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));const s=document.getElementById('t-'+id);if(s)s.classList.add('on');if(el)el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});const _tabs=document.querySelectorAll('.tab');let _ti=0;for(let _i=0;_i<_tabs.length;_i++){if(_tabs[_i].classList.contains('on')){_ti=_i;break;}}const _pb=document.getElementById('pb');if(_pb)_pb.style.width=Math.round((_ti/Math.max(_tabs.length-1,1))*100)+'%';if(id==='quiz'&&typeof _S!=='undefined'&&!_S.over&&Object.keys(_S.ans).length===0){setTimeout(()=>stTmr(1),400);}});
+function showTab(id,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  const s=document.getElementById('t-'+id);if(s)s.classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
   if(id==='game'){buildRound(1);buildRound(2);buildRound(3);}
-  if(id==='quiz'&&!_S.over&&Object.keys(_S.ans).length===0){setTimeout(()=>stTmr(1),400);}
 }
 
 
@@ -683,7 +686,7 @@ window.addEventListener('load',()=>{
   document.getElementById('str-n').textContent=gStr();
   document.getElementById('xp-hdr').textContent=gXP();
   rHUD();
-  
+  setTimeout(()=>stTmr(1),1200);
 });
 </script>
 </body>

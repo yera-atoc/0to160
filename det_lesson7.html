@@ -2,16 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<script>
-(function(){
-  if(localStorage.getItem('det_access')!=='granted'){
-    sessionStorage.setItem('det_redirect',location.href);
-    location.replace('activate.html');
-  }
-})();
-</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>0to160 · Урок 7: Write About the Photo</title>
+<title>0to160 · Урок 7: Read Aloud</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -189,13 +181,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 </style>
 </head>
 <body>
-  <div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
+<div id="paywall-overlay" style="display:none;position:fixed;inset:0;background:rgba(15,14,11,.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;backdrop-filter:blur(20px)"><div style="font-size:56px;margin-bottom:20px;position:relative;z-index:1">🔒</div>
   <div style="font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:12px;position:relative;z-index:1">Нужен <span style="color:#ffc800">доступ</span><br>к урокам</div>
   <p style="font-size:15px;color:rgba(255,255,255,.4);line-height:1.75;max-width:320px;margin:0 auto 28px;position:relative;z-index:1">Этот урок входит в платную часть. Введи код активации или купи доступ.</p>
   <a href="activate.html" style="display:block;background:#9f6ff0;color:#fff;font-size:15px;font-weight:700;padding:15px 36px;border-radius:100px;text-decoration:none;max-width:280px;margin:0 auto 10px;position:relative;z-index:1">Ввести код активации →</a>
   <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:14px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1);position:relative;z-index:1">← К урокам</a>
-</div>
-
+</div></div>
+<script>
+(function(){
+  var pw = document.getElementById('paywall-overlay');
+  if(localStorage.getItem('det_access')==='granted'){
+    if(pw) pw.style.display='none';
+  } else {
+    if(pw){ pw.style.display='flex'; }
+    sessionStorage.setItem('det_redirect', location.href);
+  }
+})();
+</script>
 <nav><div class="nav-in">
   <a href="index.html" class="logo">0<span>to</span>160</a>
   <div class="nav-right">
@@ -221,13 +223,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 <div class="hero"><div class="hero-in">
   <div class="hero-chips">
     <span class="chip chip-orange">Урок 7 из 20</span>
-    <span class="chip chip-teal">✍️ Письмо · 15 мин</span>
+    <span class="chip chip-gold">🎤 Произношение · 16 мин</span>
   </div>
-  <h1 class="hero-h">Write About<br><span class="hl">the Photo</span></h1>
-  <p class="hero-sub">Опиши фото одним точным предложением. Узнай формулу идеального ответа и избегай 7 ошибок которые снижают балл.</p>
+  <h1 class="hero-h">Read<br><span class="hl">Aloud</span></h1>
+  <p class="hero-sub">Прочитай текст вслух убедительно. Узнай 10 звуков которые снижают балл и научись звучать естественно.</p>
   <div class="hero-meta">
-    <div class="meta-item">✍️ <strong>Формула ответа</strong></div>
-    <div class="meta-item">🚫 <strong>7 частых ошибок</strong></div>
+    <div class="meta-item">🔊 <strong>10 сложных звуков</strong></div>
+    <div class="meta-item">⏸️ <strong>Паузы и ритм</strong></div>
+    <div class="meta-item">💎 <strong>+150 XP</strong></div>
+  </div>
+    <div class="meta-item">🎮 <strong>Игра с 3 раундами</strong></div>
     <div class="meta-item">💎 <strong>+150 XP</strong></div>
   </div>
   <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
@@ -235,8 +240,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 
 <div class="tabs-wrap"><div class="tabs">
   <div class="tab on" onclick="showTab('theory',this)">📖 Теория</div>
-  <div class="tab" onclick="showTab('formula',this)">🧩 Формула</div>
-  <div class="tab" onclick="showTab('mistakes',this)">🚫 Ошибки</div>
+  <div class="tab" onclick="showTab('sounds',this)">🔊 Звуки</div>
+  <div class="tab" onclick="showTab('technique',this)">⏸️ Техника</div>
   <div class="tab" onclick="showTab('quiz',this)">⚡ Тест</div>
 </div>
 </div></div>
@@ -246,322 +251,287 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 <!-- THEORY -->
 <div class="sec on" id="t-theory">
   <div class="hook">
-    <div class="hook-label">📸 Что такое Write About the Photo</div>
-    <div class="hook-h">Одно предложение.<br><span class="hl">30 секунд на обдумывание.</span></div>
-    <div class="hook-body">DET показывает фото и даёт тебе 1 минуту. Твоя задача — написать <strong>одно грамматически точное предложение</strong> которое описывает что происходит на фото. AI оценивает грамматику, лексику и точность описания.</div>
+    <div class="hook-label">🎤 Что такое Read Aloud</div>
+    <div class="hook-h">AI слышит не только слова.<br><span class="hl">Он слышит как ты дышишь.</span></div>
+    <div class="hook-body">Read Aloud — единственный тип где оценивается произношение, ритм и беглость одновременно. Большинство студентов читают как роботы. После этого урока — будешь звучать естественно.</div>
   </div>
 
   <div class="card">
     <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🤖</span>Что оценивает AI</div>
-    <div class="fact"><span class="fact-key">Грамматика</span><span class="fact-val">Правильная структура предложения — времена, артикли, предлоги</span></div>
-    <div class="fact"><span class="fact-key">Лексика</span><span class="fact-val">Точные слова для описания действий и объектов на фото</span></div>
-    <div class="fact"><span class="fact-key">Соответствие</span><span class="fact-val">Предложение должно описывать именно то что на фото</span></div>
-    <div class="fact"><span class="fact-key">Длина</span><span class="fact-val">Оптимально 10–20 слов. Одно предложение, не два.</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--teal-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🔊</div>
+        <div><div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Произношение</div><div style="font-size:14px;color:#0a4060;line-height:1.6">Насколько правильно ты произносишь каждый звук. Особенно [θ], [ð], [w], [æ].</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🎵</div>
+        <div><div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Интонация и ритм</div><div style="font-size:14px;color:#2a5c00;line-height:1.6">Естественные подъёмы и спады голоса. Монотонная речь снижает балл.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--gold-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">⏸️</div>
+        <div><div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Паузы</div><div style="font-size:14px;color:#5a4000;line-height:1.6">Паузы на знаках препинания, логические паузы между смысловыми группами.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--purple-pale);border-radius:var(--radius-sm)">
+        <div style="font-size:20px;flex-shrink:0">🏃</div>
+        <div><div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px">Беглость</div><div style="font-size:14px;color:#5a20c0;line-height:1.6">Плавность без длинных пауз и запинок. Не нужно читать быстро — нужно читать без остановок.</div></div>
+      </div>
+    </div>
   </div>
 
   <div class="card">
-    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">⏱️</span>Формат задания</div>
-    <div class="fact"><span class="fact-key">Время</span><span class="fact-val">1 минута на написание</span></div>
-    <div class="fact"><span class="fact-key">Объём</span><span class="fact-val">Одно предложение (не абзац)</span></div>
-    <div class="fact"><span class="fact-key">Сколько раз</span><span class="fact-val">2–4 раза в одном тесте DET</span></div>
-    <div class="fact"><span class="fact-key">Темы фото</span><span class="fact-val">Люди за работой, спорт, еда, город, природа, учёба</span></div>
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🎯</span>3 шага стратегии</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--teal-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:#0a82b8;flex-shrink:0;width:28px">1</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:15px">Прочитай текст глазами первые 5 секунд</div><div style="font-size:14px;color:#0a4060;line-height:1.65">Найди длинные слова, знаки препинания, незнакомые слова. Сделай мысленный план.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--green-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:var(--green2);flex-shrink:0;width:28px">2</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:15px">Читай группами слов, не по одному</div><div style="font-size:14px;color:#2a5c00;line-height:1.65">«The scientists | conducted research | on climate change» — не «The-scientists-conducted...». Смысловые группы звучат естественно.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--gold-pale);border-radius:var(--radius-sm)">
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:#8a6800;flex-shrink:0;width:28px">3</div>
+        <div><div style="font-weight:700;color:var(--dark);margin-bottom:4px;font-size:15px">Не останавливайся на ошибке</div><div style="font-size:14px;color:#5a4000;line-height:1.65">Если споткнулся — продолжай. Пауза хуже неправильного произношения. AI оценивает поток речи.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIO DEMO -->
+  <div style="background:var(--dark);border-radius:var(--radius);padding:28px;margin-bottom:14px;border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent)"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:16px">🎧 Пример разметки текста</div>
+    <div style="font-size:15px;color:#fff;line-height:2;margin-bottom:14px;font-weight:500">
+      The <span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">scien</span>tists <span style="color:rgba(255,255,255,.25);font-size:12px;font-family:'JetBrains Mono',monospace">|</span> con<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">duc</span>ted ex<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">ten</span>sive re<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">search</span> <span style="color:rgba(255,255,255,.25);font-size:12px;font-family:'JetBrains Mono',monospace">||</span> on the ef<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">fects</span> of cli<span style="color:var(--teal);text-decoration:underline;text-decoration-style:dotted">mate</span> change.
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:14px">
+      <span style="color:var(--teal)">подчёркнуто</span> = ударный слог &nbsp;·&nbsp;
+      <span style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.4)">|</span> = короткая пауза &nbsp;·&nbsp;
+      <span style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.4)">||</span> = длинная пауза
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button onclick="readAloud()" style="display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:700;font-family:Manrope,sans-serif;cursor:pointer;border:none;background:var(--teal);color:#fff;transition:all .2s">▶ Послушать пример</button>
+      <button onclick="readAloudSlow()" style="display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:700;font-family:Manrope,sans-serif;cursor:pointer;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1)">🐢 Медленно</button>
+    </div>
   </div>
 
   <div class="tip">
-    <div class="tip-label">✨ Главный вывод</div>
-    Write About the Photo проверяет не твой английский в целом — а умение точно описать конкретное действие. Один раз выучи формулу — и этот тип заданий станет самым лёгким в тесте.
+    <div class="tip-label">✨ Скорость</div>
+    Читай чуть медленнее чем в обычной речи. AI распознаёт слова лучше когда они чётко разделены. Медленно и чётко > быстро и нечётко.
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('formula',document.querySelectorAll('.tab')[1])" class="nb-next">Далее: Формула ответа →</button>
+    <div onclick="showTab('sounds',document.querySelectorAll('.tab')[1])" class="nb-next" role="button">Далее →</div>
   </div>
 </div>
 
-<!-- FORMULA -->
-<div class="sec" id="t-formula">
+<!-- SOUNDS -->
+<div class="sec" id="t-sounds">
   <div class="hook">
-    <div class="hook-label">🧩 Универсальная формула</div>
-    <div class="hook-h">The [subject] is/are<br><span class="hl">[verb]-ing [object].</span></div>
-    <div class="hook-body">Эта структура работает для 90% фото в DET. Выучи её наизусть — и пиши автоматически.</div>
+    <div class="hook-label">🔊 Сложные звуки</div>
+    <div class="hook-h">10 звуков которые<br><span class="hl">выдают русский акцент</span></div>
+    <div class="hook-body">AI распознаёт нетипичные паттерны произношения. Исправь эти звуки — и твой балл за произношение вырастет значительно.</div>
   </div>
 
   <div class="card">
-    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">📐</span>Разбор формулы</div>
-    <div class="fact"><span class="fact-key">The [subject]</span><span class="fact-val">Кто или что на фото: <em>A woman / Two men / A group of students / The children</em></span></div>
-    <div class="fact"><span class="fact-key">is / are</span><span class="fact-val">is — один человек/предмет. are — несколько</span></div>
-    <div class="fact"><span class="fact-key">[verb]-ing</span><span class="fact-val">Что делает: <em>working, eating, running, studying, talking</em></span></div>
-    <div class="fact"><span class="fact-key">[object/place]</span><span class="fact-val">Где или что: <em>at a desk / in a park / on a laptop / together</em></span></div>
-  </div>
-
-  <div class="card">
-    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">✅</span>Примеры идеальных ответов</div>
-    <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
-      <div style="background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:10px;font-weight:700;color:var(--green2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">📸 Фото: офис, человек за ноутбуком</div>
-        <div style="font-size:15px;font-weight:700;color:var(--dark)">A woman is working on a laptop at her desk in a modern office.</div>
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">🔊</span>Звуки которых нет в русском</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('think three through')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[θ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">язык между зубами + выдох</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>think</strong>, three, through, both, math</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «с», не «т»</div>
       </div>
-      <div style="background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:10px;font-weight:700;color:var(--green2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">📸 Фото: дети играют на улице</div>
-        <div style="font-size:15px;font-weight:700;color:var(--dark)">Two children are playing with a ball in a park.</div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('the this that')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[ð] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">язык между зубами + голос</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>the</strong>, this, that, there, though</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «з», не «д»</div>
       </div>
-      <div style="background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:10px;font-weight:700;color:var(--green2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">📸 Фото: повар на кухне</div>
-        <div style="font-size:15px;font-weight:700;color:var(--dark)">A chef is preparing a meal in a professional kitchen.</div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('cat man back black')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[æ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">между «э» и «а» — рот широко</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>cat</strong>, man, back, black, that</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не просто «э»</div>
       </div>
-      <div style="background:var(--green-pale);border:1px solid rgba(88,204,2,.2);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:10px;font-weight:700;color:var(--green2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">📸 Фото: студенты в библиотеке</div>
-        <div style="font-size:15px;font-weight:700;color:var(--dark)">A group of students are studying at a table in a university library.</div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('sing running long')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[ŋ] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">нг — но без «г» в конце</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>sing</strong>, running, long, king</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «нг» полностью</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('water world what')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[w] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">губы трубочкой → «у» быстро</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>water</strong>, world, what, woman</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «в»!</div>
+      </div>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s" onclick="spk('have him ahead')">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--teal);margin-bottom:6px">[h] 🔊</div>
+        <div style="font-size:11px;color:var(--tx-faint);margin-bottom:6px">мягкий выдох без трения</div>
+        <div style="font-size:12px;color:var(--tx-dim)"><strong>have</strong>, him, ahead, behind</div>
+        <div style="font-size:11px;color:var(--red);margin-top:4px">❌ Не «х» как в «хорошо»</div>
       </div>
     </div>
+    <p style="font-size:12px;color:var(--tx-faint);margin-top:12px">👆 Нажми на карточку чтобы услышать звук</p>
   </div>
 
   <div class="card">
-    <div class="sec-title"><span class="sec-icon" style="background:var(--purple-pale)">📝</span>Полезные глаголы для фото</div>
-    <div class="vocab-grid">
-      <div class="vi" onclick="spk('working')"><div class="vi-word">working 🔊</div><div class="vi-ipa">[ˈwɜːkɪŋ]</div><div class="vi-ru">работает</div></div>
-      <div class="vi" onclick="spk('talking')"><div class="vi-word">talking 🔊</div><div class="vi-ipa">[ˈtɔːkɪŋ]</div><div class="vi-ru">разговаривает</div></div>
-      <div class="vi" onclick="spk('studying')"><div class="vi-word">studying 🔊</div><div class="vi-ipa">[ˈstʌdiɪŋ]</div><div class="vi-ru">учится</div></div>
-      <div class="vi" onclick="spk('running')"><div class="vi-word">running 🔊</div><div class="vi-ipa">[ˈrʌnɪŋ]</div><div class="vi-ru">бежит</div></div>
-      <div class="vi" onclick="spk('preparing')"><div class="vi-word">preparing 🔊</div><div class="vi-ipa">[prɪˈpeərɪŋ]</div><div class="vi-ru">готовит</div></div>
-      <div class="vi" onclick="spk('eating')"><div class="vi-word">eating 🔊</div><div class="vi-ipa">[ˈiːtɪŋ]</div><div class="vi-ru">ест</div></div>
-      <div class="vi" onclick="spk('carrying')"><div class="vi-word">carrying 🔊</div><div class="vi-ipa">[ˈkæriɪŋ]</div><div class="vi-ru">несёт</div></div>
-      <div class="vi" onclick="spk('looking at')"><div class="vi-word">looking at 🔊</div><div class="vi-ipa">[ˈlʊkɪŋ æt]</div><div class="vi-ru">смотрит на</div></div>
-    </div>
-  </div>
-
-  <div class="tab-nav">
-    <button onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev">← Теория</button>
-    <button onclick="showTab('mistakes',document.querySelectorAll('.tab')[2])" class="nb-next">Далее: Частые ошибки →</button>
-  </div>
-</div>
-
-<!-- MISTAKES -->
-<div class="sec" id="t-mistakes">
-  <div class="hook">
-    <div class="hook-label">🚫 7 ошибок которые снижают балл</div>
-    <div class="hook-h">Знай врага<br><span class="hl">в лицо.</span></div>
-    <div class="hook-body">AI штрафует за конкретные паттерны. Вот что чаще всего делают русскоязычные студенты — и как это исправить.</div>
-  </div>
-
-  <div class="card">
-    <div class="sec-title"><span class="sec-icon" style="background:var(--red-pale)">❌</span>Типичные ошибки</div>
-    <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 1 — «I can see»</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>I can see a woman working in an office.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ Никогда не начинай с «I can see» или «There is/are». Просто опиши напрямую.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A woman is working in an office.</div>
+    <div class="sec-title"><span class="sec-icon" style="background:var(--green-pale)">💡</span>Звуки которые произносятся иначе чем в русском</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:14px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[r]</span>
+        <div>Язык НЕ касается нёба. Завёрнут назад. «red», «right», «research» — совсем не как русское «р».</div>
       </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 2 — неправильное время</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>A man works at his desk.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ На фото изображено действие в моменте — всегда используй Present Continuous.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A man is working at his desk.</div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:14px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[l]</span>
+        <div>В конце слова — тёмное «л». «feel», «school», «global» — не такое чёткое как в начале.</div>
       </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 3 — пропуск артикля</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>Woman is sitting at desk.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ В английском нельзя пропускать артикль перед существительным.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A woman is sitting at a desk.</div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:14px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[t]</span>
+        <div>В середине слова между гласными превращается в быстрое [d]: «water» → «wader», «better» → «bedder».</div>
       </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 4 — два предложения</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>A woman is working. She has a laptop.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ Задание просит ОДНО предложение. Всё лишнее — риск ошибки.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A woman is working on a laptop at her desk.</div>
-      </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 5 — неверный предлог</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>A man is sitting on a desk.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ on a desk = сидеть НА столе. at a desk = сидеть ЗА столом. Предлоги важны!</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A man is sitting at a desk.</div>
-      </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 6 — слишком расплывчато</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>A person is doing something.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ AI ценит точность. Называй конкретное действие и место.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A chef is cutting vegetables in a kitchen.</div>
-      </div>
-
-      <div style="background:var(--red-pale);border:1px solid rgba(255,75,75,.15);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ ОШИБКА 7 — описание эмоций или мыслей</div>
-        <div style="font-size:13px;color:#8a0000;margin-bottom:6px"><em>A woman is happy because she loves her work.</em></div>
-        <div style="font-size:13px;color:var(--tx-dim)">→ Описывай только то что видно. Не додумывай эмоции и причины.</div>
-        <div style="font-size:13px;font-weight:700;color:var(--green2);margin-top:6px">✅ A woman is smiling while working at her desk.</div>
+      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm);font-size:14px;align-items:flex-start">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);min-width:40px;font-size:16px">[v]</span>
+        <div>Верхние зубы на нижнюю губу. Не «б» и не «ф»: «very», «voice», «environment».</div>
       </div>
     </div>
   </div>
 
   <div class="tip">
-    <div class="tip-label">💡 Правило 30 секунд</div>
-    Увидел фото → 30 секунд смотришь и думаешь → пишешь. За 30 секунд определи: <strong>Кто? Что делает? Где?</strong> — и у тебя готова формула.
+    <div class="tip-label">✨ Как тренировать</div>
+    Метод shadowing — включай английские подкасты или видео и повторяй вслух сразу за диктором. 15 минут в день в течение недели = заметный результат.
   </div>
 
   <div class="tab-nav">
-    <button onclick="showTab('formula',document.querySelectorAll('.tab')[1])" class="nb-prev">← Формула</button>
-    <button onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next">Проверь себя →</button>
+    <div onclick="showTab('theory',document.querySelectorAll('.tab')[0])" class="nb-prev" role="button">← Назад</div>
+    <div onclick="showTab('technique',document.querySelectorAll('.tab')[2])" class="nb-next" role="button">Далее →</div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="sec" id="t-technique">
+  <div class="hook">
+    <div class="hook-label">⏸️ Техника</div>
+    <div class="hook-h">Паузы и ударения —<br><span class="hl">секрет естественной речи</span></div>
+    <div class="hook-body">Носители языка не читают каждое слово отдельно. Они читают смысловыми группами с правильными паузами. Это и есть беглость которую оценивает AI.</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--teal-pale)">⏸️</span>Где делать паузы</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--teal)">
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px">После запятой — короткая пауза</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--teal)">«However, <span style="opacity:.5">|</span> the results suggest...»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--teal)">
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px">После точки — длинная пауза</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--teal)">«...showed significant results. <span style="opacity:.5">||</span> The study...»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--green)">
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px">Между смысловыми группами</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--green2)">«The scientists <span style="opacity:.5">|</span> at the university <span style="opacity:.5">|</span> conducted research»</div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--gold)">
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px">Перед вводными словами</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#8a6800">«The study, <span style="opacity:.5">|</span> which was conducted over five years, <span style="opacity:.5">|</span> showed...»</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title"><span class="sec-icon" style="background:var(--gold-pale)">🎵</span>Ударения в предложении</div>
+    <p style="font-size:15px;color:var(--tx-dim);line-height:1.8;margin-bottom:14px">В английском предложении выделяются <strong>content words</strong> — существительные, глаголы, прилагательные, наречия. Function words (артикли, предлоги, местоимения) произносятся слабее.</p>
+    <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--tx-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Пример:</div>
+      <div style="font-size:15px;line-height:2;color:var(--dark)">
+        The <strong style="color:var(--teal)">scientists</strong> <em style="color:var(--tx-faint)">(слабо)</em> <strong style="color:var(--teal)">published</strong> a <strong style="color:var(--teal)">significant</strong> <strong style="color:var(--teal)">study</strong> on <strong style="color:var(--teal)">climate change</strong>.
+      </div>
+    </div>
+    <div style="font-size:14px;color:var(--tx-dim);line-height:1.7">Жирным — ударные слова. «the», «a», «on» — произносятся быстро и тихо. Это делает речь естественной.</div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ Главная ошибка</div>
+    Студенты читают каждое слово с одинаковым ударением. Это звучит как робот. Выделяй content words — и речь сразу станет живее.
+  </div>
+
+  <div class="tab-nav">
+    <a href="det_lesson6.html" class="nb-prev">← Урок 6</a>
+    <div onclick="showTab('sounds',document.querySelectorAll('.tab')[1])" class="nb-prev" role="button">← Назад</div>
+    <div onclick="showTab('quiz',document.querySelectorAll('.tab')[3])" class="nb-next" role="button">Тест →</div>
   </div>
 </div>
 
 <!-- QUIZ -->
 <div class="sec" id="t-quiz">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 16px;background:var(--gold-pale);border:1px solid rgba(255,200,0,.2);border-radius:var(--radius-sm)">
+    <span style="font-size:20px">⚡</span>
+    <div><div style="font-weight:700;font-size:14px;color:var(--dark)">Проверь что усвоил</div><div style="font-size:11px;color:var(--tx-dim);margin-top:2px">10 вопросов · 3 жизни · 15 секунд на вопрос</div></div>
+  </div>
   <div class="hud" id="hud"></div>
 
-  <div class="qc" id="q1">
-    <div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Формула</span></div>
-    <div class="q-text">На фото: мужчина читает книгу в кресле. Какое предложение правильное?</div>
-    <div class="opts" id="q1-o">
-      <button class="opt" onclick="dlA(1,'A','D','s')"><span class="ol">A</span>I can see a man reading a book.</button>
-      <button class="opt" onclick="dlA(1,'B','D','s')"><span class="ol">B</span>A man reads book in chair.</button>
-      <button class="opt" onclick="dlA(1,'C','D','s')"><span class="ol">C</span>There is a man. He is reading.</button>
-      <button class="opt" onclick="dlA(1,'D','D','s')"><span class="ol">D</span>A man is reading a book in an armchair.</button>
-    </div>
-    <div class="expl" id="q1-e">✅ <strong>D</strong> — формула: subject + is/are + verb-ing + object + place. Без «I can see», с артиклем, одно предложение.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 1 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Что делать если споткнулся на слове?</div><div class="opts" id="q1-o"><button class="opt" id="q1-A" onclick="dlA(1,'A','D','s')"><span class="ol">A</span>Остановиться и повторить</button><button class="opt" id="q1-B" onclick="dlA(1,'B','D','s')"><span class="ol">B</span>Начать сначала</button><button class="opt" id="q1-C" onclick="dlA(1,'C','D','s')"><span class="ol">C</span>Сделать длинную паузу</button><button class="opt" id="q1-D" onclick="dlA(1,'D','D','s')"><span class="ol">D</span>Продолжить без остановки</button></div><div class="expl" id="q1-e">✅ <strong>Продолжить</strong> — пауза хуже неправильного произношения. AI оценивает поток речи. Никогда не начинай сначала.</div></div>
 
-  <div class="qc" id="q2">
-    <div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Время</span></div>
-    <div class="q-text">Почему в Write About the Photo нужно использовать Present Continuous (is/are + -ing)?</div>
-    <div class="opts" id="q2-o">
-      <button class="opt" onclick="dlA(2,'A','C','s')"><span class="ol">A</span>Потому что это правило DET</button>
-      <button class="opt" onclick="dlA(2,'B','C','s')"><span class="ol">B</span>Present Simple тоже подходит</button>
-      <button class="opt" onclick="dlA(2,'C','C','s')"><span class="ol">C</span>Фото показывает действие в моменте — Present Continuous для этого</button>
-      <button class="opt" onclick="dlA(2,'D','C','s')"><span class="ol">D</span>AI специально проверяет -ing форму</button>
-    </div>
-    <div class="expl" id="q2-e">✅ <strong>C</strong> — фото фиксирует момент. Present Continuous = действие прямо сейчас. Present Simple = привычка/факт.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 2 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Звук [θ] в слове «think» — как его правильно произносить?</div><div class="opts" id="q2-o"><button class="opt" id="q2-A" onclick="dlA(2,'A','C','p')"><span class="ol">A</span>Как русское «с»</button><button class="opt" id="q2-B" onclick="dlA(2,'B','C','p')"><span class="ol">B</span>Как русское «т»</button><button class="opt" id="q2-C" onclick="dlA(2,'C','C','p')"><span class="ol">C</span>Язык между зубами + выдох</button><button class="opt" id="q2-D" onclick="dlA(2,'D','C','p')"><span class="ol">D</span>Как русское «ф»</button></div><div class="expl" id="q2-e">✅ <strong>Язык между зубами + выдох</strong> — этот звук нет в русском языке. Кончик языка слегка выходит между зубами.</div></div>
 
-  <div class="qc" id="q3">
-    <div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Ошибки</span></div>
-    <div class="q-text">Что не так с предложением: «Woman is sitting on desk and working»?</div>
-    <div class="opts" id="q3-o">
-      <button class="opt" onclick="dlA(3,'A','B','p')"><span class="ol">A</span>Неправильное время глагола</button>
-      <button class="opt" onclick="dlA(3,'B','B','p')"><span class="ol">B</span>Нет артикля «A», неверный предлог «on» вместо «at»</button>
-      <button class="opt" onclick="dlA(3,'C','B','p')"><span class="ol">C</span>Слишком короткое предложение</button>
-      <button class="opt" onclick="dlA(3,'D','B','p')"><span class="ol">D</span>Нельзя использовать «and»</button>
-    </div>
-    <div class="expl" id="q3-e">✅ <strong>B</strong> — пропущен артикль «A woman», и «on desk» = на столе, нужно «at a desk» = за столом.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 3 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Какие слова произносятся с ударением в предложении?</div><div class="opts" id="q3-o"><button class="opt" id="q3-A" onclick="dlA(3,'A','B','s')"><span class="ol">A</span>Артикли и предлоги</button><button class="opt" id="q3-B" onclick="dlA(3,'B','B','s')"><span class="ol">B</span>Существительные, глаголы, прилагательные</button><button class="opt" id="q3-C" onclick="dlA(3,'C','B','s')"><span class="ol">C</span>Все слова одинаково</button><button class="opt" id="q3-D" onclick="dlA(3,'D','B','s')"><span class="ol">D</span>Только первое слово</button></div><div class="expl" id="q3-e">✅ <strong>Content words</strong> — существительные, глаголы, прилагательные, наречия. Артикли и предлоги произносятся слабее.</div></div>
 
-  <div class="qc" id="q4">
-    <div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Предлоги</span></div>
-    <div class="q-text">Фото: студент за компьютером. Выбери правильный предлог:</div>
-    <div class="opts" id="q4-o">
-      <button class="opt" onclick="dlA(4,'A','C','p')"><span class="ol">A</span>A student is working on computer.</button>
-      <button class="opt" onclick="dlA(4,'B','C','p')"><span class="ol">B</span>A student is working in a computer.</button>
-      <button class="opt" onclick="dlA(4,'C','C','p')"><span class="ol">C</span>A student is working on a computer.</button>
-      <button class="opt" onclick="dlA(4,'D','C','p')"><span class="ol">D</span>A student is working at computer.</button>
-    </div>
-    <div class="expl" id="q4-e">✅ <strong>C</strong> — «work on a computer» — фиксированная коллокация. Плюс нужен артикль «a».</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 4 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Чем отличается звук [w] от русского «в»?</div><div class="opts" id="q4-o"><button class="opt" id="q4-A" onclick="dlA(4,'A','C','p')"><span class="ol">A</span>Они одинаковые</button><button class="opt" id="q4-B" onclick="dlA(4,'B','C','p')"><span class="ol">B</span>[w] тише чем «в»</button><button class="opt" id="q4-C" onclick="dlA(4,'C','C','p')"><span class="ol">C</span>[w] — губы трубочкой, «в» — зубы на губу</button><button class="opt" id="q4-D" onclick="dlA(4,'D','C','p')"><span class="ol">D</span>Разная длина</button></div><div class="expl" id="q4-e">✅ <strong>Губы трубочкой</strong> — [w] образуется губами без участия зубов. «water», «world», «what» — не «ватер», «ворлд».</div></div>
 
-  <div class="qc" id="q5">
-    <div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Формула</span></div>
-    <div class="q-text">Фото: группа людей обедает на улице. Лучший ответ:</div>
-    <div class="opts" id="q5-o">
-      <button class="opt" onclick="dlA(5,'A','B','s')"><span class="ol">A</span>People eat food outside and they look happy.</button>
-      <button class="opt" onclick="dlA(5,'B','B','s')"><span class="ol">B</span>A group of people are having lunch outdoors.</button>
-      <button class="opt" onclick="dlA(5,'C','B','s')"><span class="ol">C</span>There are some people eating.</button>
-      <button class="opt" onclick="dlA(5,'D','B','s')"><span class="ol">D</span>I can see people who are eating lunch outside.</button>
-    </div>
-    <div class="expl" id="q5-e">✅ <strong>B</strong> — точная формула, нет лишних слов, нет «I can see», нет «There are», правильное время.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 5 / 10</span><span class="q-tag">Стратегия</span></div><div class="q-text">Что нужно сделать за первые 5 секунд до начала чтения?</div><div class="opts" id="q5-o"><button class="opt" id="q5-A" onclick="dlA(5,'A','C','s')"><span class="ol">A</span>Начать читать сразу</button><button class="opt" id="q5-B" onclick="dlA(5,'B','C','s')"><span class="ol">B</span>Выучить текст наизусть</button><button class="opt" id="q5-C" onclick="dlA(5,'C','C','s')"><span class="ol">C</span>Просмотреть текст глазами — найти сложные слова и знаки</button><button class="opt" id="q5-D" onclick="dlA(5,'D','C','s')"><span class="ol">D</span>Переводить текст</button></div><div class="expl" id="q5-e">✅ <strong>Просмотреть глазами</strong> — найди длинные слова, знаки препинания, незнакомые слова. Сделай план паузы.</div></div>
 
-  <div class="qc" id="q6">
-    <div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Словарь</span></div>
-    <div class="q-text">Какой глагол лучше всего описывает действие «готовит еду»?</div>
-    <div class="opts" id="q6-o">
-      <button class="opt" onclick="dlA(6,'A','B','w')"><span class="ol">A</span>making food</button>
-      <button class="opt" onclick="dlA(6,'B','B','w')"><span class="ol">B</span>preparing a meal / cooking</button>
-      <button class="opt" onclick="dlA(6,'C','B','w')"><span class="ol">C</span>doing food</button>
-      <button class="opt" onclick="dlA(6,'D','B','w')"><span class="ol">D</span>producing a dish</button>
-    </div>
-    <div class="expl" id="q6-e">✅ <strong>B</strong> — «preparing a meal» и «cooking» — академические варианты. «Making food» нейтрально, «doing food» — ошибка.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 6 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Как правильно читать — по словам или группами?</div><div class="opts" id="q6-o"><button class="opt" id="q6-A" onclick="dlA(6,'A','B','s')"><span class="ol">A</span>Каждое слово отдельно</button><button class="opt" id="q6-B" onclick="dlA(6,'B','B','s')"><span class="ol">B</span>Смысловыми группами</button><button class="opt" id="q6-C" onclick="dlA(6,'C','B','s')"><span class="ol">C</span>Как можно быстрее</button><button class="opt" id="q6-D" onclick="dlA(6,'D','B','s')"><span class="ol">D</span>По слогам</button></div><div class="expl" id="q6-e">✅ <strong>Смысловыми группами</strong> — «The scientists | at the university | published results». Это делает речь естественной.</div></div>
 
-  <div class="qc" id="q7">
-    <div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Ошибки</span></div>
-    <div class="q-text">Что лишнее в предложении: «A woman is happily smiling because she enjoys working»?</div>
-    <div class="opts" id="q7-o">
-      <button class="opt" onclick="dlA(7,'A','C','s')"><span class="ol">A</span>Слово «happily»</button>
-      <button class="opt" onclick="dlA(7,'B','C','s')"><span class="ol">B</span>Present Continuous</button>
-      <button class="opt" onclick="dlA(7,'C','C','s')"><span class="ol">C</span>«because she enjoys working» — додумывание причин</button>
-      <button class="opt" onclick="dlA(7,'D','C','s')"><span class="ol">D</span>Ничего лишнего</button>
-    </div>
-    <div class="expl" id="q7-e">✅ <strong>C</strong> — описывай только видимое. Причины, мысли, эмоции — это интерпретация. AI оценивает точность описания факта.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 7 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Что такое звук [ŋ] в словах sing, running, long?</div><div class="opts" id="q7-o"><button class="opt" id="q7-A" onclick="dlA(7,'A','C','p')"><span class="ol">A</span>«нг» полностью</button><button class="opt" id="q7-B" onclick="dlA(7,'B','C','p')"><span class="ol">B</span>Только «н»</button><button class="opt" id="q7-C" onclick="dlA(7,'C','C','p')"><span class="ol">C</span>«нг» но без «г» в конце</button><button class="opt" id="q7-D" onclick="dlA(7,'D','C','p')"><span class="ol">D</span>Тихое «г»</button></div><div class="expl" id="q7-e">✅ <strong>«нг» без «г»</strong> — звук производится в горле. Слышно «нг» но «г» не отрывается отдельно.</div></div>
 
-  <div class="qc" id="q8">
-    <div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Артикли</span></div>
-    <div class="q-text">Фото: один человек в магазине. Какой артикль правильный?</div>
-    <div class="opts" id="q8-o">
-      <button class="opt" onclick="dlA(8,'A','B','p')"><span class="ol">A</span>The man is shopping in the store.</button>
-      <button class="opt" onclick="dlA(8,'B','B','p')"><span class="ol">B</span>A man is shopping in a store.</button>
-      <button class="opt" onclick="dlA(8,'C','B','p')"><span class="ol">C</span>Man is shopping in store.</button>
-      <button class="opt" onclick="dlA(8,'D','B','p')"><span class="ol">D</span>The man is shopping in a store.</button>
-    </div>
-    <div class="expl" id="q8-e">✅ <strong>B</strong> — первое упоминание незнакомого человека — артикль «a». Оба существительных новые — оба с «a».</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 8 / 10</span><span class="q-tag">Техника</span></div><div class="q-text">Что такое shadowing и зачем он нужен?</div><div class="opts" id="q8-o"><button class="opt" id="q8-A" onclick="dlA(8,'A','C','s')"><span class="ol">A</span>Чтение в темноте</button><button class="opt" id="q8-B" onclick="dlA(8,'B','C','s')"><span class="ol">B</span>Перевод текста</button><button class="opt" id="q8-C" onclick="dlA(8,'C','C','s')"><span class="ol">C</span>Повторение вслух вслед за диктором</button><button class="opt" id="q8-D" onclick="dlA(8,'D','C','s')"><span class="ol">D</span>Запись своего голоса</button></div><div class="expl" id="q8-e">✅ <strong>Повторение за диктором</strong> — включаешь подкаст и повторяешь вслух сразу. Лучший метод для развития беглости и произношения.</div></div>
 
-  <div class="qc" id="q9">
-    <div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Стратегия</span></div>
-    <div class="q-text">Сколько времени оптимально тратить на обдумывание перед написанием?</div>
-    <div class="opts" id="q9-o">
-      <button class="opt" onclick="dlA(9,'A','B','s')"><span class="ol">A</span>Сразу пишем — каждая секунда важна</button>
-      <button class="opt" onclick="dlA(9,'B','B','s')"><span class="ol">B</span>~20–30 секунд: определить кто, что делает, где</button>
-      <button class="opt" onclick="dlA(9,'C','B','s')"><span class="ol">C</span>Половину времени — 30 секунд думаем, 30 пишем</button>
-      <button class="opt" onclick="dlA(9,'D','B','s')"><span class="ol">D</span>Время не важно — главное точность</button>
-    </div>
-    <div class="expl" id="q9-e">✅ <strong>B</strong> — 20–30 секунд на структуру мысли, остальное на написание и проверку. Сразу писать — риск ошибок.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 9 / 10</span><span class="q-tag">Скорость</span></div><div class="q-text">Какая скорость чтения оптимальна для Read Aloud?</div><div class="opts" id="q9-o"><button class="opt" id="q9-A" onclick="dlA(9,'A','C','s')"><span class="ol">A</span>Как можно быстрее</button><button class="opt" id="q9-B" onclick="dlA(9,'B','C','s')"><span class="ol">B</span>Очень медленно по слогам</button><button class="opt" id="q9-C" onclick="dlA(9,'C','C','s')"><span class="ol">C</span>Чуть медленнее обычной речи — чётко и плавно</button><button class="opt" id="q9-D" onclick="dlA(9,'D','C','s')"><span class="ol">D</span>Скорость не важна</button></div><div class="expl" id="q9-e">✅ <strong>Чуть медленнее</strong> — AI распознаёт слова лучше. Медленно и чётко > быстро и нечётко. Но не по слогам!</div></div>
 
-  <div class="qc" id="q10">
-    <div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Всё вместе</span></div>
-    <div class="q-text">Фото: женщина-учёный рассматривает пробирку в лаборатории. Лучший ответ:</div>
-    <div class="opts" id="q10-o">
-      <button class="opt" onclick="dlA(10,'A','C','s')"><span class="ol">A</span>I can see a scientist in a lab.</button>
-      <button class="opt" onclick="dlA(10,'B','C','s')"><span class="ol">B</span>Woman examines test tube in laboratory.</button>
-      <button class="opt" onclick="dlA(10,'C','C','s')"><span class="ol">C</span>A female scientist is examining a test tube in a laboratory.</button>
-      <button class="opt" onclick="dlA(10,'D','C','s')"><span class="ol">D</span>A scientist is in the laboratory and she looks at test tube.</button>
-    </div>
-    <div class="expl" id="q10-e">✅ <strong>C</strong> — точная формула: артикль + subject + is + verb-ing + object + place. Без «I can see», без лишних предложений.</div>
-  </div>
+  <div class="qc"><div class="q-meta"><span class="q-num">Вопрос 10 / 10</span><span class="q-tag">Звуки</span></div><div class="q-text">Как правильно произносить [h] в словах have, him?</div><div class="opts" id="q10-o"><button class="opt" id="q10-A" onclick="dlA(10,'A','C','p')"><span class="ol">A</span>Как русское «х» в слове «хорошо»</button><button class="opt" id="q10-B" onclick="dlA(10,'B','C','p')"><span class="ol">B</span>Не произносить</button><button class="opt" id="q10-C" onclick="dlA(10,'C','C','p')"><span class="ol">C</span>Мягкий выдох без трения</button><button class="opt" id="q10-D" onclick="dlA(10,'D','C','p')"><span class="ol">D</span>Как «г» в украинском</button></div><div class="expl" id="q10-e">✅ <strong>Мягкий выдох</strong> — [h] намного мягче русского «х». Представь что дышишь на стекло чтобы протереть его.</div></div>
 
-  <div id="sc" class="sc">
-    <span class="sc-em" id="sc-em">🏆</span>
+  <div class="sc" id="sc">
+    <span class="sc-em" id="sc-em">✨</span>
     <div class="sc-score" id="sc-n">0/10</div>
     <div class="sc-label">правильных ответов</div>
     <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
     <div class="sc-msg" id="sc-m"></div>
     <div class="sc-badges">
       <div class="sc-badge"><span class="sb-ic">🔥</span><span class="sb-l">Серия</span><span class="sb-v" id="sc-str">0</span></div>
-      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP заработано</span><span class="sb-v" id="sc-xp">+0</span></div>
+      <div class="sc-badge"><span class="sb-ic">💎</span><span class="sb-l">XP</span><span class="sb-v" id="sc-xp">+0</span></div>
       <div class="sc-badge"><span class="sb-ic">⚡</span><span class="sb-l">Быстрых</span><span class="sb-v" id="sc-fast">0</span></div>
     </div>
     <div id="ts" style="margin-bottom:16px"></div>
     <div class="sc-btns">
-      <a href="det_lesson8.html" class="btn-next">Урок 8: Write About the Topic →</a>
-      <a href="lessons.html" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:14px;padding:13px 24px;border-radius:100px;text-decoration:none;max-width:280px;margin:8px auto 0;border:1px solid rgba(255,255,255,.1)">← К урокам</a>
+      <a href="det_lesson8.html" class="btn-next">Урок 8: Write About the Photo →</a>
+      <button class="btn-sec" onclick="showTab('sounds',document.querySelectorAll('.tab')[1])">Повторить звуки</button>
     </div>
-  </div>
-
-  <div class="tab-nav">
-    <a href="det_lesson6.html" class="nb-prev">← Урок 6</a>
-    <button onclick="showTab('mistakes',document.querySelectorAll('.tab')[2])" class="nb-prev">← Ошибки</button>
-    <a href="det_lesson8.html" class="nb-next">Урок 8: Write About the Topic →</a>
   </div>
 </div>
 
+
+
 <script>
 // WORD GAME
+const ROUNDS=[
+  {words:[{w:'government',r:true},{w:'achievation',r:false},{w:'important',r:true},{w:'developation',r:false},{w:'community',r:true},{w:'significous',r:false},{w:'establish',r:true},{w:'runness',r:false},{w:'research',r:true}]},
+  {words:[{w:'sustainable',r:true},{w:'sustainative',r:false},{w:'innovation',r:true},{w:'innovatement',r:false},{w:'awareness',r:true},{w:'awarement',r:false},{w:'effective',r:true},{w:'effectiful',r:false},{w:'substantial',r:true}]},
+  {words:[{w:'gradually',r:true},{w:'gradualish',r:false},{w:'reliable',r:true},{w:'reliabment',r:false},{w:'significant',r:true},{w:'significate',r:false},{w:'achievement',r:true},{w:'achievation',r:false},{w:'blemish',r:true}]}
+];
 let gameState={1:{clicks:{},done:false},2:{clicks:{},done:false},3:{clicks:{},done:false}};
 
+function buildRound(n){
+  const grid=document.getElementById(`r${n}-grid`);
+  const round=ROUNDS[n-1];grid.innerHTML='';
+  round.words.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className='word-btn';
+    btn.innerHTML=`${item.w}<span class="badge">${item.r?'✓':'✗'}</span>`;
+    btn.onclick=()=>handleWordClick(n,i,item,btn);
+    grid.appendChild(btn);
+  });
+  updateRoundScore(n);
+}
 function handleWordClick(rn,i,item,btn){
   if(gameState[rn].done||gameState[rn].clicks[i])return;
   gameState[rn].clicks[i]=true;btn.classList.add('revealed');
@@ -659,7 +629,7 @@ function showTab(id,el){
   const s=document.getElementById('t-'+id);if(s)s.classList.add('on');
   if(el)el.classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
-
+  if(id==='game'){buildRound(1);buildRound(2);buildRound(3);}
 }
 
 
@@ -668,12 +638,20 @@ let _v=null;
 function _pv(){const vs=window.speechSynthesis.getVoices();if(!vs.length)return;const p=[v=>v.name==='Samantha',v=>v.name==='Karen',v=>/google.*uk.*female/i.test(v.name),v=>v.lang==='en-GB',v=>v.lang.startsWith('en')];for(const t of p){const f=vs.find(t);if(f){_v=f;return;}}}
 if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=_pv;_pv();}
 function spk(w){if(!window.speechSynthesis)return;const c=String(w).replace(/[^\x00-\x7F]/g,'').trim();if(!c)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c);u.lang='en-GB';u.rate=0.82;if(_v)u.voice=_v;window.speechSynthesis.speak(u);}
+function readAloud(){spk('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');}
+function readAloudSlow(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance('The scientists conducted extensive research on the effects of climate change on marine ecosystems.');
+  u.lang='en-GB';u.rate=0.55;if(_v)u.voice=_v;window.speechSynthesis.speak(u);
+}
 
-window._cm={1:'D',2:'C',3:'B',4:'C',5:'B',6:'B',7:'C',8:'B',9:'B',10:'C'};
+window._cm={1:'D',2:'C',3:'B',4:'C',5:'C',6:'B',7:'C',8:'C',9:'C',10:'C'};
 window.addEventListener('load',()=>{
   document.getElementById('str-n').textContent=gStr();
   document.getElementById('xp-hdr').textContent=gXP();
   rHUD();
+  buildRound(1);buildRound(2);buildRound(3);
   setTimeout(()=>stTmr(1),1200);
 });
 </script>
