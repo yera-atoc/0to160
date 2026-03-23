@@ -294,7 +294,9 @@ function activate() {
 
     // Confetti!
     boom();
-    setTimeout(() => show('s-success'), 600);
+    const redirect = sessionStorage.getItem('det_redirect');
+    if(redirect){ sessionStorage.removeItem('det_redirect'); setTimeout(()=>location.replace(redirect), 1200); }
+    else { setTimeout(() => show('s-success'), 600); }
 
   } else {
     // FAIL

@@ -2,6 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){
+  if(localStorage.getItem('det_access')!=='granted'){
+    sessionStorage.setItem('det_redirect',location.href);
+    location.replace('activate.html');
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0to160 · Урок 7: Write About the Photo</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
