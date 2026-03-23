@@ -431,31 +431,160 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 // ===================== DATA =====================
 
 const RAC_DATA = [
-  {text:"The c__________e for the position required extensive exp_________e in data analysis.",blanks:["candidate","experience"],hint:"Существительное + существительное"},
-  {text:"She man_______d to comp_______e the project despite the t_______t deadline.",blanks:["managed","complete","tight"],hint:"Глагол + инфинитив + прилагательное"},
-  {text:"The res________h suggested that reg_________r exercise imp_________s cognitive function.",blanks:["research","regular","improves"],hint:"Три разных части речи"},
-  {text:"His app_________h to prob_________m-solving was both eff_________t and innovative.",blanks:["approach","problem","efficient"],hint:"Существительное + существительное + прилагательное"},
-  {text:"The gov________nt ann_________d new pol_________s to reduce carbon em_________ns.",blanks:["government","announced","policies","emissions"],hint:"4 пропуска — будь внимателен"},
-  {text:"Acc_________g to recent stat_________s, urban pop_________ns are growing rapidly.",blanks:["According","statistics","populations"],hint:"Начало предложения — с большой буквы"},
-  {text:"The sci________sts con_________d that the vac________e was both safe and eff_________ve.",blanks:["scientists","concluded","vaccine","effective"],hint:"4 пропуска в научном тексте"},
-  {text:"Dev_________g strong comm_________n skills is ess_________l for career success.",blanks:["Developing","communication","essential"],hint:"Герундий в начале"},
-  {text:"The env_________nt dep_________nt issued a warning about air qual_________.",blanks:["environment","department","quality"],hint:"Тема: экология"},
-  {text:"Tech_________al adv_________ments have trans_________ed the way we com_________te.",blanks:["Technological","advancements","transformed","communicate"],hint:"4 пропуска в теме технологий"},
-  {text:"The univ_________y's adm_________n proc_________s begins in early Jan_________.",blanks:["university","admission","process","January"],hint:"Академический контекст"},
-  {text:"In_________ty and per_________nce are the key qual_________es of succ_________l leaders.",blanks:["Integrity","perseverance","qualities","successful"],hint:"Тема лидерства"},
-  {text:"The med_________l team rec_________ded a comp_________te course of treat_________.",blanks:["medical","recommended","complete","treatment"],hint:"Медицинский контекст"},
-  {text:"Glob_________tion has sign_________ntly aff_________d trad_________l cultures worldwide.",blanks:["Globalization","significantly","affected","traditional"],hint:"Тема глобализации"},
-  {text:"The arch_________t designed a build_________g that harmon_________y blends with its sur_________ings.",blanks:["architect","building","harmoniously","surroundings"],hint:"Архитектурная тема"},
-  {text:"Fin_________l lit_________cy is inc_________ngly imp_________nt in today's economy.",blanks:["Financial","literacy","increasingly","important"],hint:"Финансовая тема"},
-  {text:"The vol_________rs ded_________ted thous_________ds of hours to the com_________ty project.",blanks:["volunteers","dedicated","thousands","community"],hint:"Тема волонтёрства"},
-  {text:"Sus_________ble dev_________ment req_________res balan_________g eco_________ic growth with env_________ntal protection.",blanks:["Sustainable","development","requires","balancing","economic","environmental"],hint:"Тема устойчивого развития — 6 пропусков!"},
-  {text:"The ath_______e's ded_________n and dis_________ne led to an unpr_________nted victory.",blanks:["athlete","dedication","discipline","unprecedented"],hint:"Спортивная тема"},
-  {text:"Crit_________l think_________g skills help stu_________ts ev_________te inf_________tion eff_________vely.",blanks:["Critical","thinking","students","evaluate","information","effectively"],hint:"Академическая тема"},
-  {text:"The conf_________nce brought tog_________r exp_________ts from over fifty coun_________es.",blanks:["conference","together","experts","countries"],hint:"Конференция / международная тема"},
-  {text:"Arr_________l at the air_________t should occur at least two hours bef_________e dep_________ture.",blanks:["Arrival","airport","before","departure"],hint:"Тема путешествий"},
-  {text:"The corp_________tion's ann_________l rep_________t showed a sig_________nt incr_________e in rev_________e.",blanks:["corporation","annual","report","significant","increase","revenue"],hint:"Бизнес-отчётность — 6 пропусков"},
-  {text:"Biol_________cal div_________sity is ess_________l for the st_________lity of ec_________ystems.",blanks:["Biological","diversity","essential","stability","ecosystems"],hint:"Экологическая тема"},
-  {text:"The pub_________tion of the res_________ch paper was del_________ed due to peer rev_________.",blanks:["publication","research","delayed","review"],hint:"Академическое издание"},
+  {text:"The _____ for the position required extensive _____ in data analysis.",
+   blanks:[
+     {word:"candidate",ru:"кандидат",expl:"candidate for a position — устойчивое выражение «кандидат на должность»"},
+     {word:"experience",ru:"опыт",expl:"extensive experience — «обширный опыт», распространённая академическая коллокация"}
+   ],hint:"Существительное + существительное"},
+  {text:"She _____ to _____ the project despite the _____ deadline.",
+   blanks:[
+     {word:"managed",ru:"смогла",expl:"managed to do — «удалось сделать», конструкция с инфинитивом"},
+     {word:"complete",ru:"завершить",expl:"complete a project — «завершить проект», точный глагол для академического текста"},
+     {word:"tight",ru:"жёсткий",expl:"tight deadline — устойчивое выражение «жёсткие сроки»"}
+   ],hint:"Глагол + инфинитив + прилагательное"},
+  {text:"The _____ suggested that _____ exercise _____ cognitive function.",
+   blanks:[
+     {word:"research",ru:"исследование",expl:"research suggested — «исследование показало», типичная академическая конструкция"},
+     {word:"regular",ru:"регулярный",expl:"regular exercise — устойчивое выражение «регулярные упражнения»"},
+     {word:"improves",ru:"улучшает",expl:"improve cognitive function — «улучшать когнитивные функции», Present Simple для научных фактов"}
+   ],hint:"Три разных части речи"},
+  {text:"His _____ to problem-solving was both _____ and innovative.",
+   blanks:[
+     {word:"approach",ru:"подход",expl:"approach to something — «подход к чему-либо», предлог to обязателен"},
+     {word:"efficient",ru:"эффективный",expl:"efficient and innovative — пара прилагательных; efficient = результативный при минимуме ресурсов"}
+   ],hint:"Существительное + прилагательное"},
+  {text:"The _____ _____ new _____ to reduce carbon _____.",
+   blanks:[
+     {word:"government",ru:"правительство",expl:"the government announced — подлежащее + глагол в Past Simple"},
+     {word:"announced",ru:"объявило",expl:"announce new policies — «объявить новые меры»"},
+     {word:"policies",ru:"меры/политику",expl:"policies (мн.ч.) — конкретные меры, не policy (общий курс)"},
+     {word:"emissions",ru:"выбросы",expl:"carbon emissions — «выбросы углерода», устойчивое выражение в теме экологии"}
+   ],hint:"4 пропуска — экология"},
+  {text:"_____ to recent _____, urban _____ are growing rapidly.",
+   blanks:[
+     {word:"According",ru:"Согласно",expl:"According to — вводная конструкция «согласно», всегда с заглавной в начале предложения"},
+     {word:"statistics",ru:"статистике",expl:"statistics (мн.ч.) — «статистические данные», часто во мн.ч. в академических текстах"},
+     {word:"populations",ru:"население",expl:"urban populations — «городское население», мн.ч. для обозначения разных групп"}
+   ],hint:"Начало предложения — с большой буквы"},
+  {text:"The _____ _____ that the _____ was both safe and _____.",
+   blanks:[
+     {word:"scientists",ru:"учёные",expl:"scientists concluded — «учёные пришли к выводу»"},
+     {word:"concluded",ru:"пришли к выводу",expl:"conclude that + clause — академический глагол для вывода"},
+     {word:"vaccine",ru:"вакцина",expl:"the vaccine was safe — определённый артикль, так как речь о конкретной вакцине"},
+     {word:"effective",ru:"эффективна",expl:"safe and effective — классическая пара прилагательных в медицинском контексте"}
+   ],hint:"4 пропуска — наука"},
+  {text:"_____ strong _____ skills is _____ for career success.",
+   blanks:[
+     {word:"Developing",ru:"Развитие",expl:"Developing skills is... — герундий как подлежащее, глагол в ед.ч."},
+     {word:"communication",ru:"коммуникационных",expl:"communication skills — «навыки общения», устойчивое словосочетание"},
+     {word:"essential",ru:"необходимо",expl:"essential for — «необходимо для», предлог for обязателен"}
+   ],hint:"Герундий в начале"},
+  {text:"The _____ _____ issued a warning about air _____.",
+   blanks:[
+     {word:"environment",ru:"экологический",expl:"environment department = экологический отдел/департамент"},
+     {word:"department",ru:"департамент",expl:"issue a warning — «выпустить предупреждение», устойчивое выражение"},
+     {word:"quality",ru:"качество",expl:"air quality — «качество воздуха», устойчивое выражение"}
+   ],hint:"Тема: экология"},
+  {text:"_____ _____ have _____ the way we _____.",
+   blanks:[
+     {word:"Technological",ru:"Технологические",expl:"Technological advancements — «технологические достижения», прилагательное перед существительным"},
+     {word:"advancements",ru:"достижения",expl:"advancements have transformed — Present Perfect, так как эффект актуален сейчас"},
+     {word:"transformed",ru:"изменили",expl:"transform the way — «изменить то, как...», глагол + the way + clause"},
+     {word:"communicate",ru:"общаемся",expl:"the way we communicate — «то, как мы общаемся», относительное придаточное"}
+   ],hint:"4 пропуска — технологии"},
+  {text:"The _____ admission _____ begins in early _____.",
+   blanks:[
+     {word:"university",ru:"университета",expl:"university admission process — «процесс поступления в университет»"},
+     {word:"process",ru:"процесс",expl:"the process begins — «процесс начинается», Present Simple для расписания"},
+     {word:"January",ru:"январе",expl:"in early January — «в начале января», месяц пишется с заглавной буквы"}
+   ],hint:"Академический контекст"},
+  {text:"_____ and _____ are the key _____ of _____ leaders.",
+   blanks:[
+     {word:"Integrity",ru:"Честность",expl:"Integrity — «честность/порядочность», абстрактное существительное, заглавная в начале"},
+     {word:"perseverance",ru:"настойчивость",expl:"perseverance — «настойчивость», uncountable noun без артикля"},
+     {word:"qualities",ru:"качества",expl:"key qualities — «ключевые качества», мн.ч."},
+     {word:"successful",ru:"успешных",expl:"successful leaders — прилагательное перед существительным"}
+   ],hint:"Тема лидерства"},
+  {text:"The _____ team _____ a complete course of _____.",
+   blanks:[
+     {word:"medical",ru:"медицинская",expl:"medical team — «медицинская команда/бригада»"},
+     {word:"recommended",ru:"рекомендовала",expl:"recommend a course of treatment — устойчивое медицинское выражение"},
+     {word:"treatment",ru:"лечения",expl:"course of treatment — «курс лечения», устойчивое выражение"}
+   ],hint:"Медицинский контекст"},
+  {text:"_____ has _____ _____ traditional cultures worldwide.",
+   blanks:[
+     {word:"Globalization",ru:"Глобализация",expl:"Globalization has affected — Present Perfect, долгосрочный эффект"},
+     {word:"significantly",ru:"значительно",expl:"significantly affected — наречие усиливает глагол"},
+     {word:"affected",ru:"затронула",expl:"affect cultures — «влиять на культуры», глагол в Past Participle"}
+   ],hint:"Тема глобализации"},
+  {text:"The _____ designed a _____ that _____ blends with its _____.",
+   blanks:[
+     {word:"architect",ru:"архитектор",expl:"the architect designed — «архитектор спроектировал», Past Simple"},
+     {word:"building",ru:"здание",expl:"design a building — «проектировать здание»"},
+     {word:"harmoniously",ru:"гармонично",expl:"harmoniously blends — наречие образа действия"},
+     {word:"surroundings",ru:"окружением",expl:"surroundings (мн.ч.) — «окружающая среда/обстановка», всегда во мн.ч."}
+   ],hint:"Архитектурная тема"},
+  {text:"_____ _____ is _____ important in today's economy.",
+   blanks:[
+     {word:"Financial",ru:"Финансовая",expl:"Financial literacy — «финансовая грамотность»"},
+     {word:"literacy",ru:"грамотность",expl:"literacy is increasingly important — подлежащее + предикатив"},
+     {word:"increasingly",ru:"всё более",expl:"increasingly important — «всё более важный», наречие перед прилагательным"}
+   ],hint:"Финансовая тема"},
+  {text:"The _____ _____ thousands of hours to the _____ project.",
+   blanks:[
+     {word:"volunteers",ru:"волонтёры",expl:"the volunteers dedicated — «волонтёры посвятили»"},
+     {word:"dedicated",ru:"посвятили",expl:"dedicate hours to — «посвятить часы чему-то», предлог to"},
+     {word:"community",ru:"общественному",expl:"community project — «общественный проект», прилагательное-существительное"}
+   ],hint:"Тема волонтёрства"},
+  {text:"_____ development requires _____ economic growth with _____ protection.",
+   blanks:[
+     {word:"Sustainable",ru:"Устойчивое",expl:"Sustainable development — «устойчивое развитие», ключевой термин"},
+     {word:"balancing",ru:"балансирования",expl:"requires balancing — «требует балансирования», герундий после requires"},
+     {word:"environmental",ru:"экологической",expl:"environmental protection — «охрана окружающей среды»"}
+   ],hint:"Устойчивое развитие"},
+  {text:"The _____'s _____ and _____ led to an _____ victory.",
+   blanks:[
+     {word:"athlete",ru:"спортсмена",expl:"the athlete's dedication — притяжательный падеж"},
+     {word:"dedication",ru:"преданность делу",expl:"dedication and discipline — пара абстрактных существительных"},
+     {word:"discipline",ru:"дисциплина",expl:"discipline led to success — «дисциплина привела к успеху»"},
+     {word:"unprecedented",ru:"беспрецедентной",expl:"unprecedented victory — «беспрецедентная победа», un+precedented"}
+   ],hint:"Спортивная тема"},
+  {text:"_____ thinking skills help students _____ information _____.",
+   blanks:[
+     {word:"Critical",ru:"Критическое",expl:"Critical thinking — «критическое мышление», устойчивый термин"},
+     {word:"evaluate",ru:"оценивать",expl:"help students evaluate — «помогать студентам оценивать», bare infinitive после help"},
+     {word:"effectively",ru:"эффективно",expl:"evaluate effectively — наречие образа действия в конце"}
+   ],hint:"Академическая тема"},
+  {text:"The _____ brought together _____ from over fifty _____.",
+   blanks:[
+     {word:"conference",ru:"конференция",expl:"the conference brought together — «конференция объединила»"},
+     {word:"experts",ru:"экспертов",expl:"experts from — «эксперты из», мн.ч."},
+     {word:"countries",ru:"стран",expl:"fifty countries — «пятьдесят стран», мн.ч."}
+   ],hint:"Конференция"},
+  {text:"_____ at the _____ should occur at least two hours before _____.",
+   blanks:[
+     {word:"Arrival",ru:"Прибытие",expl:"Arrival at the airport — «прибытие в аэропорт», предлог at"},
+     {word:"airport",ru:"аэропорт",expl:"at the airport — определённый артикль, конкретный аэропорт"},
+     {word:"departure",ru:"отправления",expl:"before departure — «до отправления», без артикля как абстрактное понятие"}
+   ],hint:"Тема путешествий"},
+  {text:"The company's annual _____ showed a significant _____ in _____.",
+   blanks:[
+     {word:"report",ru:"отчёт",expl:"annual report — «годовой отчёт», устойчивое деловое выражение"},
+     {word:"increase",ru:"рост",expl:"significant increase in — «значительный рост», предлог in"},
+     {word:"revenue",ru:"выручке",expl:"increase in revenue — «рост выручки», uncountable noun"}
+   ],hint:"Бизнес-отчётность"},
+  {text:"_____ _____ is essential for the _____ of ecosystems.",
+   blanks:[
+     {word:"Biological",ru:"Биологическое",expl:"Biological diversity — «биологическое разнообразие»"},
+     {word:"diversity",ru:"разнообразие",expl:"diversity is essential for — «разнообразие необходимо для»"},
+     {word:"stability",ru:"стабильности",expl:"stability of ecosystems — «стабильность экосистем», предлог of"}
+   ],hint:"Экологическая тема"},
+  {text:"The _____ of the research paper was _____ due to peer _____.",
+   blanks:[
+     {word:"publication",ru:"публикация",expl:"the publication of — «публикация чего-либо», предлог of"},
+     {word:"delayed",ru:"задержана",expl:"was delayed — пассивный залог «была задержана»"},
+     {word:"review",ru:"рецензирования",expl:"peer review — «рецензирование коллегами», устойчивый академический термин"}
+   ],hint:"Академическое издание"},
 ];
 
 const IR_DATA = [
@@ -669,24 +798,31 @@ function filterType(type, el){
 
 // ===================== RENDER: READ AND COMPLETE =====================
 function makeRACBlank(ans, qi, bi){
-  const len = ans.length;
-  // Placeholder = first letter + dashes for middle + last letter, e.g. "c_______e"
-  const placeholder = ans[0] + '_'.repeat(Math.max(1, len - 2)) + (len > 1 ? ans[len-1] : '');
-  const w = Math.max(70, len * 13 + 20);
-  return `<input
-    class="rac-input"
-    id="rac-inp-${qi}-${bi}"
-    type="text"
-    placeholder="${placeholder}"
-    data-ans="${ans}"
-    data-qi="${qi}"
-    data-bi="${bi}"
-    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-    style="width:${w}px"
-    oninput="handleRACInput(this)"
-    onkeydown="if(event.key==='Enter')checkRACBlank(this)"
-  >`;
-}
+  const word = typeof ans === 'object' ? ans.word : ans;
+  const len = word.length;
+  const first = word[0];
+  const last = word[len-1];
+  const middleLen = Math.max(1, len - 2);
+  // Each dash = one middle letter, so student knows exactly how many letters
+  const dashes = '_ '.repeat(middleLen).trim(); // spaced dashes for clarity
+  const charW = 14; // px per character in the input
+  const w = Math.max(60, middleLen * charW + 24);
+  return `<span style="display:inline-flex;align-items:center;gap:2px;vertical-align:middle;margin:0 2px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--green2)">${first}</span><input
+      class="rac-input"
+      id="rac-inp-${qi}-${bi}"
+      type="text"
+      placeholder="${dashes}"
+      data-ans="${word}"
+      data-len="${middleLen}"
+      data-qi="${qi}"
+      data-bi="${bi}"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      style="width:${w}px;letter-spacing:2px"
+      oninput="handleRACInput(this)"
+      onkeydown="if(event.key==='Enter')checkRACBlank(this)"
+    ><span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--green2)">${last}</span>
+  </span>`;
 }
 function renderRAC(){
   const cont = document.getElementById('rac-questions');
@@ -696,8 +832,9 @@ function renderRAC(){
     div.id='rac-'+i;
     let bi=0;
     const textHtml = q.text.replace(/_+/g,()=>{
-      const ans=q.blanks[bi]||'';
-      const html=makeRACBlank(ans,i,bi);
+      const blankObj=q.blanks[bi]||{word:''};
+      const ans=typeof blankObj==='object'?blankObj.word:blankObj;
+      const html=makeRACBlank(blankObj,i,bi);
       bi++;
       return html;
     });
@@ -711,45 +848,60 @@ function renderRAC(){
 }
 function handleRACInput(inp){
   inp.classList.remove('ok','no');
-  // Auto-check when typed length matches answer length
-  const ans = inp.dataset.ans.toLowerCase();
-  const val = inp.value.trim().toLowerCase();
-  if(val.length >= ans.length){
+  const middleLen = parseInt(inp.dataset.len || inp.dataset.ans.length - 2);
+  const val = inp.value.trim();
+  // Auto-check when student has typed all middle letters
+  if(val.length >= middleLen){
     checkRACBlank(inp);
   }
 }
 function checkRACBlank(inp){
-  const ans = inp.dataset.ans.toLowerCase();
+  const fullAns = inp.dataset.ans.toLowerCase();
+  const word = fullAns;
+  const middle = fullAns.slice(1, fullAns.length - 1); // middle letters only
   const val = inp.value.trim().toLowerCase();
   const qi = parseInt(inp.dataset.qi);
   const bi = parseInt(inp.dataset.bi);
-  const ok = val === ans;
+  // Accept: just middle letters OR full word
+  const ok = val === middle || val === fullAns;
+  const ans = fullAns; // keep for display
   inp.disabled = true;
   inp.classList.add(ok ? 'ok' : 'no');
   if(!ok){
-    // Show correct answer after 1.5s
     setTimeout(()=>{
       inp.value = inp.dataset.ans;
       inp.classList.remove('no');
       inp.classList.add('ok');
-      inp.style.opacity='.6';
+      inp.style.opacity='.7';
     }, 1500);
   }
-  if(ok){
-    addXP(5, inp);
-    markScore('rac', 25);
+  if(ok){ addXP(5, inp); markScore('rac', 25); }
+  // Show explanation for this blank
+  const blankData = RAC_DATA[qi]?.blanks[bi];
+  if(blankData && typeof blankData === 'object'){
+    let explEl = document.getElementById(`rac-expl-${qi}-${bi}`);
+    if(!explEl){
+      explEl = document.createElement('div');
+      explEl.id = `rac-expl-${qi}-${bi}`;
+      explEl.style.cssText = 'margin-top:6px;padding:8px 12px;border-radius:8px;font-size:13px;line-height:1.6;' +
+        (ok ? 'background:var(--green-pale);color:#1a4800;border:1px solid rgba(88,204,2,.2)' 
+             : 'background:var(--red-pale);color:#5a0000;border:1px solid rgba(255,75,75,.15)');
+      explEl.innerHTML = `<strong>${inp.dataset.ans}</strong> — <em>${blankData.ru}</em><br>${blankData.expl}`;
+      inp.closest('.rac-blank, span')?.after(explEl);
+      // Insert after the wrapper span
+      const wrapper = inp.closest('span[style*="inline-flex"]');
+      if(wrapper) wrapper.insertAdjacentElement('afterend', explEl);
+    }
   }
-  // Check if all blanks in this card are done
+  // Check if all blanks done
   const card = document.getElementById('rac-'+qi);
   const inputs = card.querySelectorAll('.rac-input');
   const allDone = [...inputs].every(i=>i.disabled);
   if(allDone){
-    const allOk = [...inputs].every(i=>i.classList.contains('ok') && !i.style.opacity);
     const expl = document.getElementById('rac-e-'+qi);
     if(expl && !expl.classList.contains('on')){
-      expl.innerHTML = allOk
-        ? `✅ Отлично! Правильно: <strong>${[...inputs].map(i=>i.dataset.ans).join(', ')}</strong>`
-        : `📖 Правильно: <strong>${[...inputs].map(i=>i.dataset.ans).join(', ')}</strong>`;
+      const allCorrect = [...inputs].every(i=>i.classList.contains('ok') && !i.style.opacity);
+      expl.innerHTML = allCorrect ? '✅ Все слова правильно!' : `📖 Правильные ответы: <strong>${RAC_DATA[qi].blanks.map(b=>typeof b==='object'?b.word:b).join(', ')}</strong>`;
       expl.classList.add('on');
     }
   }
