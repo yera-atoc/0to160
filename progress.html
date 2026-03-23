@@ -256,19 +256,34 @@
 const allLessons = [
   { id: 1, title: "Что такое Duolingo English Test", file: "det_lesson1.html" },
   { id: 2, title: "Как набрать 130+ за 2 недели", file: "det_lesson2.html" },
-  { id: 3, title: "Технические требования и подготовка комнаты", file: "det_lesson3.html" },
-  { id: 4, title: "Read and Complete — заполни пропущенные буквы", file: "det_lesson4.html" },
-  { id: 5, title: "Interactive Reading — реальные слова среди фейковых", file: "det_lesson5.html" },
-  { id: 6, title: "Fill in the Blanks — заполни пропуски в предложениях", file: "det_lesson6.html" },
-  { id: 7, title: "Read Aloud — прочитай текст вслух", file: "det_lesson7.html" },
-  // Добавляй следующие уроки сюда
-  // { id: 8, title: "Write About the Photo", file: "det_lesson8.html" },
-  // ...
-  { id: 20, title: "Финальный тест и советы перед сдачей", file: "det_lesson20.html" }
+  { id: 3, title: "Технические требования DET", file: "det_lesson3.html" },
+  { id: 4, title: "Read and Complete", file: "det_lesson4.html" },
+  { id: 5, title: "Interactive Reading", file: "det_lesson5.html" },
+  { id: 6, title: "Fill in the Blanks", file: "det_lesson6.html" },
+  { id: 7, title: "Write About the Photo", file: "det_lesson7.html" },
+  { id: 8, title: "Write About the Topic", file: "det_lesson8.html" },
+  { id: 9, title: "Speak About the Photo", file: "det_lesson9.html" },
+  { id: 10, title: "Speak About the Topic", file: "det_lesson10.html" },
+  { id: 11, title: "Произношение для 130+", file: "det_lesson11.html" },
+  { id: 12, title: "Listen and Type", file: "det_lesson12.html" },
+  { id: 13, title: "Аудирование и акценты", file: "det_lesson13.html" },
+  { id: 14, title: "Словарный запас", file: "det_lesson14.html" },
+  { id: 15, title: "Грамматика без учебников", file: "det_lesson15.html" },
+  { id: 16, title: "Академический стиль", file: "det_lesson16.html" },
+  { id: 17, title: "Симуляция теста", file: "det_lesson17.html" },
+  { id: 18, title: "День перед тестом", file: "det_lesson18.html" },
+  { id: 19, title: "После теста — что дальше", file: "det_lesson19.html" },
+  { id: 20, title: "Финальный урок и разбор", file: "det_lesson20.html" },
 ];
 
 function getLessonProgress(id) {
-  const stored = localStorage.getItem(`det_lesson${id}_score`);
+  try {
+    const stored = localStorage.getItem(`det_lesson${id}`);
+    if (!stored) return 0;
+    const parsed = JSON.parse(stored);
+    return parsed.pct || 0;
+  } catch(e) { return 0; }
+}`);
   return stored ? JSON.parse(stored).pct || 0 : 0;
 }
 
@@ -282,10 +297,10 @@ function renderProgress() {
     if (pct === 100) {
       done++;
       lastCompleted = lesson.id;
-      totalXP += 150; // примерное XP за урок, можно уточнить
     }
   });
 
+  const totalXPval = parseInt(localStorage.getItem('det_xp') || '0');
   const totalLessons = allLessons.length;
   const progress = totalLessons > 0 ? Math.round((done / totalLessons) * 100) : 0;
 
@@ -297,8 +312,8 @@ function renderProgress() {
 
   // Статистика
   document.getElementById('lessonsDone').textContent = done;
-  document.getElementById('totalXP').textContent = totalXP;
-  document.getElementById('currentStreak').textContent = localStorage.getItem('det_streak')?.c || 0;
+  document.getElementById('totalXP').textContent = totalXPval;
+  document.getElementById('currentStreak').textContent = (() => { try { return JSON.parse(localStorage.getItem('det_streak') || '{"c":0}').c || 0; } catch(e) { return 0; } })();
 
   // Кнопка продолжить
   const btn = document.getElementById('continueBtn');
