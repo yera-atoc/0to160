@@ -69,13 +69,24 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
 /* --- READ AND COMPLETE --- */
 .rac-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px}
 .rac-text{font-size:16px;line-height:2;color:var(--dark);margin-bottom:16px}
-.rac-blank{display:inline-flex;align-items:flex-end;gap:2px;vertical-align:middle;margin:0 5px;position:relative;cursor:text}
-.rac-blank input{position:absolute;opacity:0;width:1px;height:1px;top:0;left:0;border:none;outline:none}
-.rac-letter{width:16px;height:28px;border-bottom:2.5px solid var(--border2);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;padding-bottom:2px;transition:all .1s;color:transparent}
-.rac-letter.hint{color:var(--tx-dim);border-bottom-color:var(--green)}
-.rac-letter.typed{color:var(--dark);border-bottom-color:var(--purple)}
-.rac-letter.ok-l{color:var(--green2)!important;border-bottom-color:var(--green)!important;background:var(--green-pale);border-radius:3px 3px 0 0}
-.rac-letter.no-l{color:var(--red)!important;border-bottom-color:var(--red)!important;background:var(--red-pale);border-radius:3px 3px 0 0}
+.rac-blank{display:inline-block;vertical-align:middle;margin:0 3px}
+.rac-input{
+  border:2px solid var(--border2);
+  border-radius:8px;
+  background:#fff;
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;font-weight:700;
+  color:var(--dark);
+  outline:none;
+  padding:6px 10px;
+  text-align:center;
+  transition:all .2s;
+  cursor:text;
+}
+.rac-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(159,111,240,.12)}
+.rac-input::placeholder{color:var(--tx-faint);font-weight:500;letter-spacing:.03em}
+.rac-input.ok{border-color:var(--green)!important;background:var(--green-pale)!important;color:var(--green2)!important}
+.rac-input.no{border-color:var(--red)!important;background:var(--red-pale)!important;color:var(--red)!important;animation:shake .35s ease}
 .rac-hint{font-size:12px;color:var(--tx-faint);margin-top:8px}
 
 /* --- INTERACTIVE READING (real words) --- */
@@ -658,17 +669,24 @@ function filterType(type, el){
 
 // ===================== RENDER: READ AND COMPLETE =====================
 function makeRACBlank(ans, qi, bi){
-  // Build letter-by-letter display: first letter shown, last letter shown, middle hidden
   const len = ans.length;
-  let letters = '';
-  for(let li=0; li<len; li++){
-    const isHint = (li===0 || li===len-1);
-    const cls = isHint ? 'rac-letter hint' : 'rac-letter';
-    const ch = isHint ? ans[li] : '_';
-    letters += `<span class="rac-letter ${isHint?'hint':''}" id="rac-l-${qi}-${bi}-${li}" data-expected="${ans[li]}">${isHint?ans[li]:'&nbsp;'}</span>`;
-  }
-  // Hidden input captures typing
-  return `<span class="rac-blank" id="rac-b-${qi}-${bi}" data-ans="${ans}" data-qi="${qi}" data-bi="${bi}" onclick="focusRACBlank(${qi},${bi})">${letters}<input type="text" id="rac-inp-${qi}-${bi}" data-ans="${ans}" data-qi="${qi}" data-bi="${bi}" autocomplete="off" autocorrect="off" spellcheck="false" oninput="handleRACInput(this)" onkeydown="handleRACKey(event,this)"></span>`;
+  // Placeholder = first letter + dashes for middle + last letter, e.g. "c_______e"
+  const placeholder = ans[0] + '_'.repeat(Math.max(1, len - 2)) + (len > 1 ? ans[len-1] : '');
+  const w = Math.max(70, len * 13 + 20);
+  return `<input
+    class="rac-input"
+    id="rac-inp-${qi}-${bi}"
+    type="text"
+    placeholder="${placeholder}"
+    data-ans="${ans}"
+    data-qi="${qi}"
+    data-bi="${bi}"
+    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    style="width:${w}px"
+    oninput="handleRACInput(this)"
+    onkeydown="if(event.key==='Enter')checkRACBlank(this)"
+  >`;
+}
 }
 function renderRAC(){
   const cont = document.getElementById('rac-questions');
@@ -686,91 +704,61 @@ function renderRAC(){
     div.innerHTML=`
       <div class="q-label">Read and Complete · ${i+1}/${RAC_DATA.length}</div>
       <div class="rac-text" id="rac-t-${i}">${textHtml}</div>
-      <div class="rac-hint">💡 ${q.hint} · <strong>${q.blanks.length}</strong> пропус${q.blanks.length===1?'к':'ка/ков'} · длина: ${q.blanks.map(b=>b.length+' букв').join(', ')}</div>
+      <div class="rac-hint">💡 ${q.hint}</div>
       <div class="expl" id="rac-e-${i}"></div>`;
     cont.appendChild(div);
   });
 }
+function handleRACInput(inp){
+  inp.classList.remove('ok','no');
+  // Auto-check when typed length matches answer length
+  const ans = inp.dataset.ans.toLowerCase();
+  const val = inp.value.trim().toLowerCase();
+  if(val.length >= ans.length){
+    checkRACBlank(inp);
+  }
+}
+function checkRACBlank(inp){
+  const ans = inp.dataset.ans.toLowerCase();
+  const val = inp.value.trim().toLowerCase();
+  const qi = parseInt(inp.dataset.qi);
+  const bi = parseInt(inp.dataset.bi);
+  const ok = val === ans;
+  inp.disabled = true;
+  inp.classList.add(ok ? 'ok' : 'no');
+  if(!ok){
+    // Show correct answer after 1.5s
+    setTimeout(()=>{
+      inp.value = inp.dataset.ans;
+      inp.classList.remove('no');
+      inp.classList.add('ok');
+      inp.style.opacity='.6';
+    }, 1500);
+  }
+  if(ok){
+    addXP(5, inp);
+    markScore('rac', 25);
+  }
+  // Check if all blanks in this card are done
+  const card = document.getElementById('rac-'+qi);
+  const inputs = card.querySelectorAll('.rac-input');
+  const allDone = [...inputs].every(i=>i.disabled);
+  if(allDone){
+    const allOk = [...inputs].every(i=>i.classList.contains('ok') && !i.style.opacity);
+    const expl = document.getElementById('rac-e-'+qi);
+    if(expl && !expl.classList.contains('on')){
+      expl.innerHTML = allOk
+        ? `✅ Отлично! Правильно: <strong>${[...inputs].map(i=>i.dataset.ans).join(', ')}</strong>`
+        : `📖 Правильно: <strong>${[...inputs].map(i=>i.dataset.ans).join(', ')}</strong>`;
+      expl.classList.add('on');
+    }
+  }
+}
 function focusRACBlank(qi,bi){
   const inp=document.getElementById(`rac-inp-${qi}-${bi}`);
-  if(inp&&!inp.disabled) inp.focus();
-}
-function handleRACInput(inp){
-  const ans=inp.dataset.ans.toLowerCase();
-  const qi=parseInt(inp.dataset.qi);
-  const bi=parseInt(inp.dataset.bi);
-  const val=inp.value.toLowerCase().replace(/[^a-z]/g,'');
-  inp.value=val; // sanitize
-  const len=ans.length;
-  // Update letter display (skip first and last — they're hints)
-  for(let li=1; li<len-1; li++){
-    const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
-    if(!lel) continue;
-    if(li < val.length+1){ // +1 because li=1 is index 0 of typed
-      const typedIndex=li-1;
-      lel.textContent=val[typedIndex]||' ';
-      lel.className='rac-letter typed';
-    } else {
-      lel.textContent=' ';
-      lel.className='rac-letter';
-    }
-  }
-  // Auto-check when full word typed
-  if(val.length===len-2 || inp.value.length>=len){ // typed all middle letters
-    checkRACBlank(inp, val, ans, qi, bi);
-  }
-}
-function handleRACKey(e, inp){
-  if(e.key==='Enter') checkRACBlank(inp, inp.value.toLowerCase(), inp.dataset.ans.toLowerCase(), parseInt(inp.dataset.qi), parseInt(inp.dataset.bi));
-}
-function checkRACBlank(inp, val, ans, qi, bi){
-  // val contains only the MIDDLE letters (user typed); prepend first + append last
-  const fullTyped=(ans[0]+val+ans[ans.length-1]).toLowerCase().replace(/[^a-z]/g,'');
-  const correct=ans.toLowerCase();
-  const len=ans.length;
-  const isOk=fullTyped===correct || val===ans.slice(1,-1).toLowerCase() || (ans[0]+val).toLowerCase()===correct.slice(0,val.length+1)&&val.length===len-2;
-  // Simpler: check if middle letters match
-  const middle=ans.slice(1,-1).toLowerCase();
-  const typedMiddle=val.replace(/[^a-z]/g,'').slice(0,middle.length);
-  const ok=typedMiddle===middle;
-  
-  // Color all letters
-  for(let li=0;li<len;li++){
-    const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
-    if(!lel)continue;
-    lel.textContent=ans[li];
-    lel.className='rac-letter '+(ok?'ok-l':'no-l');
-  }
-  inp.disabled=true;
-  const span=document.getElementById(`rac-b-${qi}-${bi}`);
-  if(ok){
-    addXP(5,span);
-    markScore('rac',25);
-    // check all done
-    const card=document.getElementById('rac-'+qi);
-    const inputs=card.querySelectorAll('.rac-blank input');
-    if([...inputs].every(i=>i.disabled)){
-      const expl=document.getElementById('rac-e-'+qi);
-      expl.innerHTML='✅ Все пропуски заполнены верно! +'+inputs.length*5+' XP';
-      expl.classList.add('on');
-    }
-  } else {
-    // show correction after 1.5s
-    setTimeout(()=>{
-      for(let li=1;li<len-1;li++){
-        const lel=document.getElementById(`rac-l-${qi}-${bi}-${li}`);
-        if(lel){lel.textContent=ans[li];lel.className='rac-letter ok-l';}
-      }
-    },1500);
-    const expl=document.getElementById('rac-e-'+qi);
-    if(!expl.classList.contains('on')){
-      expl.innerHTML=`❌ Правильный ответ показан выше через 1.5 сек. Продолжай!`;
-      expl.classList.add('on');
-    }
-  }
+  if(inp&&!inp.disabled)inp.focus();
 }
 
-// ===================== RENDER: INTERACTIVE READING =====================
 function renderIR(){
   const cont=document.getElementById('ir-questions');
   IR_DATA.forEach((q,i)=>{
