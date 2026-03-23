@@ -139,23 +139,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,245,240,
     </div>
   </div>
 </nav>
-
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge"><div class="dot"></div>20 уроков · от нуля до 160</div>
-    <h1 class="hero-h">Программа <span>0to160</span></h1>
-    <p class="hero-sub">Каждый урок — один тип вопроса DET. Теория, стратегия, практика. На русском языке.</p>
-    <div class="prog-summary">
-      <div class="ps-item"><div class="ps-num green" id="done-count">0</div><div class="ps-label">Пройдено</div></div>
-      <div class="ps-div"></div>
-      <div class="ps-item"><div class="ps-num">20</div><div class="ps-label">Всего уроков</div></div>
-      <div class="ps-div"></div>
-      <div class="ps-item"><div class="ps-num gold" id="xp-total">0</div><div class="ps-label">XP набрано</div></div>
+<div style="background:var(--dark);border-radius:20px;padding:28px 28px 24px;margin:80px 20px 0;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 100% 0%,rgba(28,176,246,.12),transparent 60%);pointer-events:none"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),#1cb0f6,var(--purple))"></div>
+  <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1cb0f6;margin-bottom:8px">🔥 Банк практики</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900;color:#fff;margin-bottom:6px">500+ вопросов · AI-проверка</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.45)">Read &amp; Complete, Fill in the Blanks, Write About Photo/Topic и другие типы DET</div>
     </div>
+    <a href="practice.html" style="flex-shrink:0;background:#1cb0f6;color:#fff;font-size:14px;font-weight:700;padding:13px 24px;border-radius:100px;text-decoration:none;font-family:'Manrope',sans-serif;white-space:nowrap">Открыть практику →</a>
   </div>
 </div>
 
-<!-- FILTERS -->
 <div class="filters-wrap">
   <button class="filter-btn on" onclick="filterLessons('all',this)">Все уроки</button>
   <button class="filter-btn" onclick="filterLessons('free',this)">🆓 Бесплатные</button>
