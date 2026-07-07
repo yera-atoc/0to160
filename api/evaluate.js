@@ -1,14 +1,23 @@
 // /api/evaluate.js
-// Serverless-функция Vercel (Node.js). Живёт ТОЛЬКО на сервере.
-// Ключ ANTHROPIC_API_KEY никогда не попадает в браузер пользователя.
+// Serverless-функция Vercel (Node.js). Использует БЕСПЛАТНЫЙ Gemini API от Google.
+// Ключ GEMINI_API_KEY никогда не попадает в браузер пользователя.
 //
 // Настройка (один раз):
-// 1. Vercel Dashboard → твой проект → Settings → Environment Variables
-// 2. Добавь: ANTHROPIC_API_KEY = sk-ant-... (ключ из console.anthropic.com)
-// 3. Redeploy проект, чтобы переменная подхватилась.
+// 1. Зайди на https://aistudio.google.com/apikey (вход через Google-аккаунт, карта не нужна)
+// 2. "Create API Key" → выбери "Create API key in new project" (если это первый ключ)
+// 3. Скопируй ключ
+// 4. Vercel Dashboard → проект → Settings → Environment Variables
+//    Key: GEMINI_API_KEY, Value: твой ключ (в поле Value!)
+// 5. Redeploy
+//
+// Бесплатный тариф Flash: 1500 запросов в день — с огромным запасом на старте.
+// ВАЖНО: на бесплатном тарифе Google может использовать присланные тексты
+// для улучшения своих моделей (в отличие от платного тарифа). Это стоит
+// учитывать, так как через эту функцию проходят тексты студентов.
+
+const GEMINI_MODEL = 'gemini-flash-latest';
 
 export default async function handler(req, res) {
-  // Разрешаем только POST
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
@@ -20,41 +29,43 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing or invalid "prompt"' });
   }
 
-  // Простая защита от слишком длинных промптов (экономим бюджет)
   if (prompt.length > 6000) {
     return res.status(400).json({ error: 'Prompt too long' });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.error('ANTHROPIC_API_KEY is not set in environment variables');
+    console.error('GEMINI_API_KEY is not set in environment variables');
     return res.status(500).json({ error: 'Server is not configured' });
   }
 
   try {
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+
+    const geminiRes = await fetch(geminiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-5',
-        max_tokens: Math.min(Number(max_tokens) || 500, 800),
-        messages: [{ role: 'user', content: prompt }],
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          maxOutputTokens: Math.min(Number(max_tokens) || 500, 800),
+          // Просим Gemini сразу вернуть чистый JSON — без ```json оберток
+          responseMimeType: 'application/json',
+        },
       }),
     });
 
-    if (!anthropicRes.ok) {
-      const errText = await anthropicRes.text();
-      console.error('Anthropic API error:', anthropicRes.status, errText);
+    if (!geminiRes.ok) {
+      const errText = await geminiRes.text();
+      console.error('Gemini API error:', geminiRes.status, errText);
       return res.status(502).json({ error: 'AI service temporarily unavailable' });
     }
 
-    const data = await anthropicRes.json();
-    const text = data.content?.[0]?.text || '';
+    const data = await geminiRes.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
+    // Отдаём в том же формате {text: "..."}, что и раньше — фронтенду
+    // (practice.html) не нужно ничего менять при смене провайдера AI.
     return res.status(200).json({ text });
   } catch (err) {
     console.error('Proxy error:', err);
