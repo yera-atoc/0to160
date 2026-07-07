@@ -1,21 +1,82 @@
 // /api/evaluate.js
-// Serverless-функция Vercel (Node.js). Использует БЕСПЛАТНЫЙ Gemini API от Google.
-// Ключ GEMINI_API_KEY никогда не попадает в браузер пользователя.
+// Serverless-функция Vercel (Node.js).
+// Пробует бесплатные AI-провайдеры по очереди: сначала Gemini, если он
+// недоступен (как сейчас — известный сбой на стороне Google для новых
+// проектов) — автоматически переключается на Groq. Ничего чинить руками
+// не придётся: как только Google починит доступ, Gemini снова станет
+// первым в очереди и заработает сам, без правок кода.
 //
-// Настройка (один раз):
-// 1. Зайди на https://aistudio.google.com/apikey (вход через Google-аккаунт, карта не нужна)
-// 2. "Create API Key" → выбери "Create API key in new project" (если это первый ключ)
-// 3. Скопируй ключ
-// 4. Vercel Dashboard → проект → Settings → Environment Variables
-//    Key: GEMINI_API_KEY, Value: твой ключ (в поле Value!)
-// 5. Redeploy
+// Настройка (нужен хотя бы один ключ, лучше оба для надёжности):
 //
-// Бесплатный тариф Flash: 1500 запросов в день — с огромным запасом на старте.
-// ВАЖНО: на бесплатном тарифе Google может использовать присланные тексты
-// для улучшения своих моделей (в отличие от платного тарифа). Это стоит
-// учитывать, так как через эту функцию проходят тексты студентов.
+// GEMINI_API_KEY:
+//   1. aistudio.google.com/apikey → Create API Key (без карты)
+//   2. Vercel → Settings → Environment Variables → GEMINI_API_KEY
+//
+// GROQ_API_KEY:
+//   1. console.groq.com → зарегистрируйся (без карты)
+//   2. API Keys → Create API Key
+//   3. Vercel → Settings → Environment Variables → GROQ_API_KEY
+//
+// После добавления любого из ключей — Redeploy.
 
 const GEMINI_MODEL = 'gemini-flash-latest';
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
+
+async function tryGemini(prompt, maxTokens) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: maxTokens, responseMimeType: 'application/json' },
+      }),
+    });
+    if (!r.ok) {
+      console.error('Gemini error:', r.status, await r.text());
+      return null;
+    }
+    const data = await r.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || null;
+  } catch (e) {
+    console.error('Gemini exception:', e.message);
+    return null;
+  }
+}
+
+async function tryGroq(prompt, maxTokens) {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: maxTokens,
+        response_format: { type: 'json_object' },
+      }),
+    });
+    if (!r.ok) {
+      console.error('Groq error:', r.status, await r.text());
+      return null;
+    }
+    const data = await r.json();
+    return data.choices?.[0]?.message?.content || null;
+  } catch (e) {
+    console.error('Groq exception:', e.message);
+    return null;
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -24,51 +85,24 @@ export default async function handler(req, res) {
   }
 
   const { prompt, max_tokens } = req.body || {};
-
   if (!prompt || typeof prompt !== 'string') {
     return res.status(400).json({ error: 'Missing or invalid "prompt"' });
   }
-
   if (prompt.length > 6000) {
     return res.status(400).json({ error: 'Prompt too long' });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error('GEMINI_API_KEY is not set in environment variables');
-    return res.status(500).json({ error: 'Server is not configured' });
-  }
+  const maxTokens = Math.min(Number(max_tokens) || 500, 800);
 
-  try {
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-
-    const geminiRes = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          maxOutputTokens: Math.min(Number(max_tokens) || 500, 800),
-          // Просим Gemini сразу вернуть чистый JSON — без ```json оберток
-          responseMimeType: 'application/json',
-        },
-      }),
-    });
-
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      console.error('Gemini API error:', geminiRes.status, errText);
-      return res.status(502).json({ error: 'AI service temporarily unavailable' });
+  // Пробуем провайдеров по очереди — первый, кто ответил, тот и используется
+  const providers = [tryGemini, tryGroq];
+  for (const provider of providers) {
+    const text = await provider(prompt, maxTokens);
+    if (text) {
+      return res.status(200).json({ text });
     }
-
-    const data = await geminiRes.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    // Отдаём в том же формате {text: "..."}, что и раньше — фронтенду
-    // (practice.html) не нужно ничего менять при смене провайдера AI.
-    return res.status(200).json({ text });
-  } catch (err) {
-    console.error('Proxy error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
   }
+
+  console.error('Все AI-провайдеры недоступны (проверь GEMINI_API_KEY / GROQ_API_KEY в Vercel)');
+  return res.status(502).json({ error: 'AI service temporarily unavailable' });
 }
