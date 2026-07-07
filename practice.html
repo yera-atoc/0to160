@@ -1096,7 +1096,7 @@ function renderWATP(){
       const wc=this.value.trim().split(/\s+/).filter(Boolean).length;
       document.getElementById('watp-wc-'+i).textContent=wc+' слов';
     });
-    startWATPTimer(i);
+    document.getElementById('watp-inp-'+i).addEventListener('focus',function(){ startWATPTimer(i); }, {once:true});
   });
 }
 function startWATPTimer(i){
@@ -1189,7 +1189,7 @@ function renderWATT(){
       const wc=this.value.trim().split(/\s+/).filter(Boolean).length;
       document.getElementById('watt-wc-'+i).textContent=wc+' слов (цель: 50–100)';
     });
-    startCountdown('watt-t-'+i, q.time);
+    document.getElementById('watt-inp-'+i).addEventListener('focus',function(){ startCountdown('watt-t-'+i, q.time); }, {once:true});
   });
 }
 function startCountdown(elId, totalSec){
