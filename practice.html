@@ -295,6 +295,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.95);backdrop-
       <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-watt" style="width:0%;background:var(--red)"></div></div>
       <div class="prog-item-val" id="pv-watt">0/15</div>
     </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Speak About Photo</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-satp" style="width:0%;background:var(--purple)"></div></div>
+      <div class="prog-item-val" id="pv-satp">0/15</div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-item-name">Speak About Topic</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="pb-satt" style="width:0%;background:var(--gold)"></div></div>
+      <div class="prog-item-val" id="pv-satt">0/15</div>
+    </div>
   </div>
 </div>
 
@@ -773,7 +783,7 @@ function markScore(type, total){
 
 // ===================== PROGRESS BAR =====================
 function updateProgress(){
-  const totals={rac:25,ir:20,fitb:25,lat:20,watp:15,watt:15};
+  const totals={rac:25,ir:20,fitb:25,lat:20,watp:15,watt:15,satp:15,satt:15};
   Object.entries(totals).forEach(([k,t])=>{
     const v=STATE.scores[k]||0;
     const pct=Math.round(v/t*100);
@@ -1129,9 +1139,13 @@ Key content words expected: ${photo.keywords.join(', ')}
 
 Student's sentence: "${text}"
 
+The real Duolingo English Test reports scores on a 10-160 scale in 5-point increments, mapped to CEFR levels (A1≈10-25, A2≈30-50, B1≈55-75, B2≈80-100, C1≈105-130, C2≈135-160). Estimate what overall DET band this response's quality corresponds to if this level of English were consistent across a full test.
+
 Evaluate on a scale of 1-5 for each criterion. Respond ONLY with valid JSON, no markdown:
 {
   "score": <overall 1-5>,
+  "estimated_det_score": <10-160, multiple of 5>,
+  "cefr_level": "<A1|A2|B1|B2|C1|C2>",
   "grammar": <1-5>,
   "vocabulary": <1-5>,
   "content": <1-5>,
@@ -1158,9 +1172,13 @@ function showWATPFeedback(i, p, original){
   const stars='⭐'.repeat(p.score)+'☆'.repeat(5-p.score);
   fb.innerHTML=`
     <div class="ai-top">
-      <span class="ai-badge">AI Оценка</span>
-      <div class="ai-score-wrap"><span class="ai-score">${p.score}/5</span><span class="ai-score-label">${stars}</span></div>
+      <span class="ai-badge">AI Оценка · как в DET</span>
+      <div class="ai-score-wrap">
+        <span class="ai-score" style="font-size:28px">${p.estimated_det_score}<span style="font-size:14px;color:rgba(255,255,255,.4)">/160</span></span>
+        <span class="ai-score-label" style="background:rgba(88,204,2,.15);color:var(--green);padding:2px 8px;border-radius:6px;font-weight:700;margin-left:6px">${p.cefr_level}</span>
+      </div>
     </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:-8px;margin-bottom:10px">${stars} · оценка ИИ, не официальный балл теста</div>
     <div class="ai-text">${p.feedback}${p.corrected&&p.corrected!==original?`<br><br><strong>Исправленный вариант:</strong> <em>${p.corrected}</em>`:''}</div>
     <div class="ai-criteria">
       <div class="ai-crit"><div class="ai-crit-name">Грамматика</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.grammar*20}%"></div></div><div class="ai-crit-val">${p.grammar}/5</div></div>
@@ -1220,6 +1238,8 @@ Expected keywords/themes: ${q.keywords.join(', ')}
 
 Student's response: "${text}"
 
+The real Duolingo English Test reports scores on a 10-160 scale in 5-point increments, mapped to CEFR levels (A1≈10-25, A2≈30-50, B1≈55-75, B2≈80-100, C1≈105-130, C2≈135-160). Estimate what overall DET band this response's quality corresponds to if this level of English were consistent across a full test.
+
 Evaluate comprehensively. Respond ONLY with valid JSON, no markdown:
 {
   "score": <overall 1-5>,
@@ -1227,7 +1247,8 @@ Evaluate comprehensively. Respond ONLY with valid JSON, no markdown:
   "vocabulary": <1-5>,
   "coherence": <1-5>,
   "argumentation": <1-5>,
-  "estimated_det_score": <number like 95, 110, 125, 140, 155>,
+  "estimated_det_score": <10-160, multiple of 5>,
+  "cefr_level": "<A1|A2|B1|B2|C1|C2>",
   "feedback": "<3-4 sentences in Russian: strengths, weaknesses, specific improvements>",
   "best_sentence": "<quote the strongest sentence from their text>",
   "suggestion": "<one concrete sentence they could add or improve>"
@@ -1251,9 +1272,13 @@ function showWATTFeedback(i, p){
   const stars='⭐'.repeat(p.score)+'☆'.repeat(5-p.score);
   fb.innerHTML=`
     <div class="ai-top">
-      <span class="ai-badge">AI Оценка</span>
-      <div class="ai-score-wrap"><span class="ai-score">${p.score}/5</span><span style="font-size:11px;color:rgba(255,255,255,.3);margin-left:4px">≈ DET ${p.estimated_det_score}</span></div>
+      <span class="ai-badge">AI Оценка · как в DET</span>
+      <div class="ai-score-wrap">
+        <span class="ai-score" style="font-size:28px">${p.estimated_det_score}<span style="font-size:14px;color:rgba(255,255,255,.4)">/160</span></span>
+        <span class="ai-score-label" style="background:rgba(88,204,2,.15);color:var(--green);padding:2px 8px;border-radius:6px;font-weight:700;margin-left:6px">${p.cefr_level}</span>
+      </div>
     </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:-8px;margin-bottom:10px">${stars} · оценка ИИ, не официальный балл теста</div>
     <div class="ai-text">${p.feedback}${p.best_sentence?`<br><br><strong>Сильное предложение:</strong> <em>"${p.best_sentence}"</em>`:''}${p.suggestion?`<br><br><strong>Улучши:</strong> ${p.suggestion}`:''}</div>
     <div class="ai-criteria">
       <div class="ai-crit"><div class="ai-crit-name">Грамматика</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.grammar*20}%"></div></div><div class="ai-crit-val">${p.grammar}/5</div></div>
@@ -1280,9 +1305,11 @@ function renderSATP(){
         <ul style="list-style:none;padding:0">${promptsHtml}</ul>
       </div>
       <div class="ra-controls">
-        <button class="ra-btn ra-btn-play" onclick="startSATTimer(${i})">▶ Начать (90 сек)</button>
+        <button class="ra-btn ra-btn-play" id="satp-rec-btn-${i}" onclick="startSpeakingRecording('satp',${i},90)">🎤 Начать запись (90 сек)</button>
+        <button class="ra-btn" id="satp-stop-btn-${i}" onclick="stopSpeakingRecording('satp',${i})" style="display:none;background:var(--red);color:#fff">⏹ Остановить</button>
       </div>
-      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--dark);display:none" id="satp-timer-${i}">1:30</div>`;
+      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--dark);display:none" id="satp-timer-${i}">1:30</div>
+      <div id="satp-result-${i}" style="margin-top:14px"></div>`;
     cont.appendChild(div);
     const imgSATP = new Image();
     imgSATP.alt = q.desc;
@@ -1293,17 +1320,185 @@ function renderSATP(){
     if(pwSATP) pwSATP.insertBefore(imgSATP, pwSATP.firstChild);
   });
 }
-function startSATTimer(i){
-  let sec=90;
-  const el=document.getElementById('satp-timer-'+i);
-  el.style.display='block';
-  const iv=setInterval(()=>{
-    sec--;
-    const m=Math.floor(sec/60),s=sec%60;
-    el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-    if(sec<=10) el.style.color='var(--red)';
-    if(sec<=0){clearInterval(iv);el.textContent='✅ Время вышло!';}
-  },1000);
+
+// ===================== ЗАПИСЬ И ПРОВЕРКА РЕЧИ (SATP + SATT) =====================
+// Общая логика для Speak About Photo и Speak About Topic:
+// запись голоса → расшифровка через Whisper (Groq) → AI-оценка в стиле DET
+const speakingState = {};
+function speakingKey(kind,i){ return kind+'-'+i; }
+
+async function startSpeakingRecording(kind, i, durationSec){
+  const key = speakingKey(kind,i);
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    const mimeType = (window.MediaRecorder && MediaRecorder.isTypeSupported('audio/webm')) ? 'audio/webm' : 'audio/mp4';
+    const recorder = new MediaRecorder(stream, {mimeType});
+    const chunks = [];
+    recorder.ondataavailable = e => { if(e.data.size>0) chunks.push(e.data); };
+    recorder.onstop = () => { onSpeakingStop(kind, i, chunks, mimeType, stream); };
+    recorder.start();
+    speakingState[key] = { recorder, stream };
+
+    document.getElementById(`${kind}-rec-btn-${i}`).style.display='none';
+    document.getElementById(`${kind}-stop-btn-${i}`).style.display='inline-block';
+    document.getElementById(`${kind}-result-${i}`).innerHTML = '';
+
+    let sec = durationSec;
+    const el = document.getElementById(`${kind}-timer-${i}`);
+    el.style.display='block';
+    el.style.color='';
+    el.textContent = `${Math.floor(sec/60)}:${(sec%60).toString().padStart(2,'0')}`;
+    const iv = setInterval(()=>{
+      sec--;
+      const m=Math.floor(sec/60), s=sec%60;
+      el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      if(sec<=10) el.style.color='var(--red)';
+      if(sec<=0){ clearInterval(iv); stopSpeakingRecording(kind,i); }
+    },1000);
+    speakingState[key].interval = iv;
+  }catch(e){
+    console.error(e);
+    document.getElementById(`${kind}-result-${i}`).innerHTML = '<div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось получить доступ к микрофону. Разреши доступ в настройках браузера и попробуй снова.</div>';
+  }
+}
+
+function stopSpeakingRecording(kind, i){
+  const key = speakingKey(kind,i);
+  const st = speakingState[key];
+  if(!st) return;
+  if(st.interval) clearInterval(st.interval);
+  if(st.recorder && st.recorder.state !== 'inactive') st.recorder.stop();
+  const stopBtn = document.getElementById(`${kind}-stop-btn-${i}`);
+  if(stopBtn) stopBtn.style.display='none';
+  const el = document.getElementById(`${kind}-timer-${i}`);
+  if(el) el.textContent='✅ Время вышло!';
+}
+
+function blobToBase64(blob){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function onSpeakingStop(kind, i, chunks, mimeType, stream){
+  stream.getTracks().forEach(t=>t.stop());
+  const resultEl = document.getElementById(`${kind}-result-${i}`);
+  const blob = new Blob(chunks, {type: mimeType});
+  const audioUrl = URL.createObjectURL(blob);
+
+  resultEl.innerHTML = `
+    <audio controls src="${audioUrl}" style="width:100%;margin-bottom:10px"></audio>
+    <div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Расшифровываем твою речь...</span></div>`;
+
+  try{
+    const base64 = await blobToBase64(blob);
+    const res = await fetch('/api/transcribe', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({audio: base64, mimeType})});
+    if(!res.ok) throw new Error('transcribe failed');
+    const data = await res.json();
+    const transcript = (data.text || '').trim();
+
+    if(!transcript){
+      resultEl.innerHTML = `
+        <audio controls src="${audioUrl}" style="width:100%;margin-bottom:10px"></audio>
+        <div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось распознать речь. Попробуй ещё раз и говори чётче, ближе к микрофону.</div>`;
+      return;
+    }
+
+    speakingState[speakingKey(kind,i)].transcript = transcript;
+
+    resultEl.innerHTML = `
+      <audio controls src="${audioUrl}" style="width:100%;margin-bottom:10px"></audio>
+      <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px;font-size:14px;color:var(--tx-dim);line-height:1.6"><strong style="color:var(--dark)">Расшифровка:</strong> ${transcript}</div>
+      <button class="submit-btn" onclick="submitSpeaking('${kind}',${i})">🤖 Проверить через AI →</button>
+      <div class="ai-feedback" id="${kind}-ai-${i}"></div>`;
+  }catch(e){
+    console.error(e);
+    resultEl.innerHTML = `
+      <audio controls src="${audioUrl}" style="width:100%;margin-bottom:10px"></audio>
+      <div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось расшифровать запись. Проверь интернет и попробуй снова.</div>`;
+  }
+}
+
+async function submitSpeaking(kind, i){
+  const key = speakingKey(kind, i);
+  const transcript = speakingState[key] && speakingState[key].transcript;
+  if(!transcript) return;
+  const fb = document.getElementById(`${kind}-ai-${i}`);
+  fb.innerHTML = `<div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>AI анализирует твою речь...</span></div>`;
+  fb.classList.add('on');
+
+  let context, durationLabel;
+  if(kind === 'satp'){
+    const q = SATP_DATA[i];
+    context = `Photo topic: ${q.desc}\nExpected talking points: ${q.prompts.join(', ')}`;
+    durationLabel = '90 seconds';
+  } else {
+    const q = SATT_DATA[i];
+    context = `Topic: "${q.topic}"`;
+    durationLabel = '3 minutes';
+  }
+
+  const prompt = `You are a DET (Duolingo English Test) examiner evaluating a spoken response, transcribed via speech-to-text.
+
+${context}
+Time allowed: ${durationLabel}
+
+Transcribed response: "${transcript}"
+
+Note: this is a TRANSCRIPT of spoken English, not written text — do not penalize for missing punctuation or capitalization. Judge fluency by sentence flow, presence of filler words (um, uh, like), repeated words/false starts, and whether the length is appropriate for the time given (too short = incomplete/hesitant, reasonable length = fluent).
+
+The real Duolingo English Test reports scores on a 10-160 scale in 5-point increments, mapped to CEFR levels (A1≈10-25, A2≈30-50, B1≈55-75, B2≈80-100, C1≈105-130, C2≈135-160). Estimate what overall DET band this response's quality corresponds to if this level of spoken English were consistent across a full test.
+
+Respond ONLY with valid JSON, no markdown:
+{
+  "score": <overall 1-5>,
+  "estimated_det_score": <10-160, multiple of 5>,
+  "cefr_level": "<A1|A2|B1|B2|C1|C2>",
+  "fluency": <1-5>,
+  "vocabulary": <1-5>,
+  "coherence": <1-5>,
+  "task_completion": <1-5>,
+  "feedback": "<3-4 sentences in Russian: strengths, weaknesses, specific improvements>",
+  "suggestion": "<one concrete tip to sound more fluent or complete next time>"
+}`;
+
+  try{
+    const res = await fetch('/api/evaluate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({prompt, max_tokens:600})});
+    if(!res.ok) throw new Error('AI proxy error');
+    const data = await res.json();
+    const raw = data.text || '{}';
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    showSpeakingFeedback(kind, i, parsed);
+    if(parsed.score>=3){ addXP(20,fb); markScore(kind,15); }
+    else addXP(8,fb);
+  }catch(e){
+    fb.innerHTML = `<div class="ai-text" style="color:rgba(255,255,255,.6)">⚠️ Не удалось подключиться к AI. Проверь интернет и попробуй снова.</div>`;
+  }
+}
+
+function showSpeakingFeedback(kind, i, p){
+  const fb = document.getElementById(`${kind}-ai-${i}`);
+  const stars = '⭐'.repeat(p.score) + '☆'.repeat(5-p.score);
+  fb.innerHTML = `
+    <div class="ai-top">
+      <span class="ai-badge">AI Оценка · как в DET</span>
+      <div class="ai-score-wrap">
+        <span class="ai-score" style="font-size:28px">${p.estimated_det_score}<span style="font-size:14px;color:rgba(255,255,255,.4)">/160</span></span>
+        <span class="ai-score-label" style="background:rgba(88,204,2,.15);color:var(--green);padding:2px 8px;border-radius:6px;font-weight:700;margin-left:6px">${p.cefr_level}</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:-8px;margin-bottom:10px">${stars} · оценка ИИ, не официальный балл теста</div>
+    <div class="ai-text">${p.feedback}${p.suggestion?`<br><br><strong>Совет:</strong> ${p.suggestion}`:''}</div>
+    <div class="ai-criteria">
+      <div class="ai-crit"><div class="ai-crit-name">Беглость</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.fluency*20}%"></div></div><div class="ai-crit-val">${p.fluency}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Словарный запас</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.vocabulary*20}%"></div></div><div class="ai-crit-val">${p.vocabulary}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Связность</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.coherence*20}%"></div></div><div class="ai-crit-val">${p.coherence}/5</div></div>
+      <div class="ai-crit"><div class="ai-crit-name">Раскрытие темы</div><div class="ai-crit-bar"><div class="ai-crit-fill" style="width:${p.task_completion*20}%"></div></div><div class="ai-crit-val">${p.task_completion}/5</div></div>
+    </div>`;
 }
 
 // ===================== RENDER: SPEAK ABOUT TOPIC =====================
@@ -1318,23 +1513,13 @@ function renderSATT(){
         <strong>Структура:</strong> Позиция (15 сек) → Аргумент 1 + пример (60 сек) → Аргумент 2 + пример (60 сек) → Вывод (25 сек)
       </div>
       <div class="ra-controls">
-        <button class="ra-btn ra-btn-play" onclick="startSATTTimer(${i})">▶ Начать (3 мин)</button>
+        <button class="ra-btn ra-btn-play" id="satt-rec-btn-${i}" onclick="startSpeakingRecording('satt',${i},180)">🎤 Начать запись (3 мин)</button>
+        <button class="ra-btn" id="satt-stop-btn-${i}" onclick="stopSpeakingRecording('satt',${i})" style="display:none;background:var(--red);color:#fff">⏹ Остановить</button>
       </div>
-      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--dark);display:none" id="satt-timer-${i}">3:00</div>`;
+      <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--dark);display:none" id="satt-timer-${i}">3:00</div>
+      <div id="satt-result-${i}" style="margin-top:14px"></div>`;
     cont.appendChild(div);
   });
-}
-function startSATTTimer(i){
-  let sec=180;
-  const el=document.getElementById('satt-timer-'+i);
-  el.style.display='block';
-  const iv=setInterval(()=>{
-    sec--;
-    const m=Math.floor(sec/60),s=sec%60;
-    el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-    if(sec<=30) el.style.color='var(--red)';
-    if(sec<=0){clearInterval(iv);el.textContent='✅ Время вышло!';}
-  },1000);
 }
 
 
